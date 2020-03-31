@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity {
 
     //switch to user screen
     private void goToUserscreen(){
-        Intent intent=new Intent(this,UserScreenActivity.class);
+        Intent intent=new Intent(this,HomeActivity.class);
         startActivity(intent);
     }
 
