@@ -1,0 +1,135 @@
+package com.example.newproj;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.provider.ContactsContract;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+
+import com.example.newproj.models.CurrentUser;
+import com.example.newproj.models.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.Tasks;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+
+public class MainActivity extends AppCompatActivity {
+    private TextView emailText,passwordText,registerText;
+    private Button loginButton;
+    private FirebaseAuth mAuth;
+    private FirebaseDatabase database;
+    private String type;
+    private FirebaseFirestore db;
+    private DocumentReference user;
+    private Users LoginUser;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        emailText=findViewById(R.id.EmailText);
+        passwordText=findViewById(R.id.PasswordText);
+        registerText=findViewById(R.id.register_label);
+        loginButton=findViewById(R.id.login_btn);
+        mAuth=FirebaseAuth.getInstance();
+        database=FirebaseDatabase.getInstance();
+        db = FirebaseFirestore.getInstance();
+        LoginUser =new Users();
+        CurrentUser.currentUserEmail=null;
+
+
+        registerText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                switchToRegisterActivitiy();
+            }
+        });
+
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SignIn();
+
+
+            }
+        });
+
+    }
+
+    //sign in method
+    private void SignIn() {
+        user = db.collection("users").document(emailText.getText().toString());
+        user.get().addOnCompleteListener(new OnCompleteListener < DocumentSnapshot > () {
+            @Override
+            public void onComplete(@NonNull Task < DocumentSnapshot > task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    if(doc.exists()) {
+                        LoginUser.setEmail(doc.get("Email").toString());
+                        LoginUser.setPassword(doc.get("Password").toString());
+                        LoginUser.setType(doc.get("Type").toString());
+                        CheckUserDitails();
+                    }
+                    else{
+                        Toast.makeText(MainActivity.this,"Email is not exsits\n please try again",Toast.LENGTH_LONG).show();
+                    }
+                }
+                else {
+                    Toast.makeText(MainActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
+                }
+            }
+
+        });
+    }
+
+    private void CheckUserDitails() {
+        String password=passwordText.getText().toString();
+        if(LoginUser.getPassword().equals(password)){
+            CurrentUser.currentUserEmail=LoginUser.getEmail();
+            if (LoginUser.getType().equals("user"))
+                goToUserscreen();
+            else if (LoginUser.getType().equals("admin")){
+                Toast.makeText(MainActivity.this,"admin test",Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    //switch to RegisterActivity
+    private void switchToRegisterActivitiy(){
+        Intent intent = new Intent(this,RegisterActivity.class);
+        startActivity(intent);
+    }
+
+    //switch to user screen
+    private void goToUserscreen(){
+        Intent intent=new Intent(this,UserScreenActivity.class);
+        startActivity(intent);
+    }
+
+}

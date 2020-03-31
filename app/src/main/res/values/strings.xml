@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">NewProj</string>
+    <string name="register">Register</string>
+    <string name="sing_up">Sing Up</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="age">Age</string>
+    <string name="name">Name</string>
+    <string name="last_name">Last Name</string>
+</resources>
