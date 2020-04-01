@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                     if(doc.exists()) {
                         LoginUser.setEmail(doc.get("Email").toString());
                         LoginUser.setPassword(doc.get("Password").toString());
-                        LoginUser.setType(doc.get("Type").toString());
+                        LoginUser.setType(doc.get("UserType").toString());
                         CheckUserDitails();
                     }
                     else{
@@ -101,9 +101,9 @@ public class MainActivity extends AppCompatActivity {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
-            if (LoginUser.getType().equals("user"))
+            if (LoginUser.getUserType().equals("user"))
                 goToUserscreen();
-            else if (LoginUser.getType().equals("admin")){
+            else if (LoginUser.getUserType().equals("admin")){
                 Toast.makeText(MainActivity.this,"admin test",Toast.LENGTH_SHORT).show();
             }
         }
