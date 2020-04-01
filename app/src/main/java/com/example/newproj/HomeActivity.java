@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -20,6 +21,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class HomeActivity extends AppCompatActivity {
     private TextView helloLabel;
     private CardView profileButton;
+    private CardView logOutButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
 
@@ -31,6 +33,7 @@ public class HomeActivity extends AppCompatActivity {
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         db = FirebaseFirestore.getInstance();
         profileButton=findViewById(R.id.myProfileHome);
+        logOutButton=findViewById(R.id.LogoutButton);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -39,6 +42,12 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+            }
+        });
 
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
@@ -60,6 +69,13 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void logOut() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
     }
 
 

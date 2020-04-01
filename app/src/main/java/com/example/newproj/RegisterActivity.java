@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class RegisterActivity extends AppCompatActivity {
-    private TextView regName,regLastName,regAge,regEmail,regPassword,regBackToLogin;
+    private TextView regName,regLastName,regAge,regEmail,regPassword,regBackToLogin,regAdderss;
     private Button regButton;
     private FirebaseFirestore db;
 
@@ -39,6 +39,7 @@ public class RegisterActivity extends AppCompatActivity {
         regPassword=findViewById(R.id.regPassword);
         regButton=findViewById(R.id.reg_btn);
         regBackToLogin=findViewById(R.id.login_label);
+        regAdderss=findViewById(R.id.regAddress);
         db = FirebaseFirestore.getInstance();
 
         //set sing-up button clicked-function
@@ -71,14 +72,18 @@ public class RegisterActivity extends AppCompatActivity {
                 if(task.isSuccessful()){
                     DocumentSnapshot doc = task.getResult();
                     if(!doc.exists()) {
-                        Users usr=new Users(regName.getText().toString(),regLastName.getText().toString(),regAge.getText().toString(),regEmail.getText().toString(),regPassword.getText().toString());
+                        Users usr=new Users(regName.getText().toString(),regLastName.getText().toString(),regAge.getText().toString(),regEmail.getText().toString(),regPassword.getText().toString(),regAdderss.getText().toString());
                         Map<String, Object> user = new HashMap<>();
                         user.put("Name", usr.getName());
                         user.put("LastName", usr.getLastName());
                         user.put("Age", usr.getAge());
                         user.put("Email", usr.getEmail());
                         user.put("Password", usr.getPassword());
-                        user.put("Type", usr.getType());
+                        user.put("UserType", usr.getUserType());
+                        user.put("DogName",usr.getDogName());
+                        user.put("DogType",usr.getDogName());
+                        user.put("Image",usr.getImage());
+                        user.put("Friends",usr.getFriends());
 
                         db.collection("users")
                                 .document(usr.getEmail()).set(user)

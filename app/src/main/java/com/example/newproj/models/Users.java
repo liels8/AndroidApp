@@ -1,14 +1,24 @@
 package com.example.newproj.models;
 
+import com.google.firebase.firestore.auth.User;
+
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
+
 public class Users {
-    private String Id;
     private String Name;
     private String LastName;
     private String Age;
     private String Email;
-    private String Type;
-
+    private String UserType;
+    private String Address;
     private String Password;
+    private String Image;
+    private String DogType;
+    private String DogName;
+
+    private List<String> Friends;
 
     public Users(){}
 
@@ -17,16 +27,21 @@ public class Users {
         this.LastName=usr.LastName;
         this.Age=usr.Age;
         this.Email=usr.Email;
-        this.Type=usr.Type;
+        this.UserType=usr.UserType;
     }
 
-    public Users(String name,String lastName,String age ,String email,String password){
+    public Users(String name,String lastName,String age ,String email,String password,String address){
         this.Name=name;
         this.LastName=lastName;
         this.Age=age;
         this.Email=email;
-        this.Type="user";
+        this.UserType="user";
         this.Password=password;
+        this.Address=address;
+        this.DogName="";
+        this.DogType="";
+        this.Image="";
+        this.Friends=new ArrayList<String>();
     }
 
 
@@ -50,12 +65,8 @@ public class Users {
         return Email;
     }
 
-    public String getType() {
-        return Type;
-    }
-
-    public void setTypeManager(){
-        this.Type="manager";
+    public String getUserType() {
+        return UserType;
     }
 
     public void setName(String name) {
@@ -75,6 +86,42 @@ public class Users {
     }
 
     public void setType(String type) {
-        Type = type;
+        UserType = type;
+    }
+
+    public String getAddress() {
+        return Address;
+    }
+
+    public void setAddress(String address) { Address = address; }
+
+    public String getImage() {
+        return Image;
+    }
+
+    public String getDogType() {
+        return DogType;
+    }
+
+    public String getDogName() {
+        return DogName;
+    }
+    public void setUserType(String userType) {
+        UserType = userType;
+    }
+
+    public void setImage(String image) {
+        Image = image;
+    }
+
+    public void setDogType(String dogType) {
+        DogType = dogType;
+    }
+    public void setDogName(String dogName) {
+        DogName = dogName;
+    }
+
+    public List<String> getFriends() {
+        return Friends;
     }
 }
