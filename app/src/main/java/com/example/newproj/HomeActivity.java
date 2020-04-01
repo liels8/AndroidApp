@@ -13,7 +13,6 @@ import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -21,7 +20,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class HomeActivity extends AppCompatActivity {
     private TextView helloLabel;
     private CardView profileButton;
-    private FirebaseDatabase database;
+    //private FirebaseDatabase database;
     private FirebaseFirestore db;
 
     @Override
@@ -29,7 +28,7 @@ public class HomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
         helloLabel=findViewById(R.id.hello_label);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        //FirebaseDatabase database = FirebaseDatabase.getInstance();
         db = FirebaseFirestore.getInstance();
         profileButton=findViewById(R.id.myProfileHome);
 

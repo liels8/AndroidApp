@@ -14,10 +14,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -28,7 +24,6 @@ import java.util.Map;
 public class RegisterActivity extends AppCompatActivity {
     private TextView regName,regLastName,regAge,regEmail,regPassword,regBackToLogin;
     private Button regButton;
-    private FirebaseAuth mAuth;
     private FirebaseFirestore db;
 
     @Override
@@ -44,7 +39,6 @@ public class RegisterActivity extends AppCompatActivity {
         regPassword=findViewById(R.id.regPassword);
         regButton=findViewById(R.id.reg_btn);
         regBackToLogin=findViewById(R.id.login_label);
-        mAuth = FirebaseAuth.getInstance();
         db = FirebaseFirestore.getInstance();
 
         //set sing-up button clicked-function
