@@ -49,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         registerText=findViewById(R.id.register_label);
         loginButton=findViewById(R.id.login_btn);
         db = FirebaseFirestore.getInstance();
-        LoginUser =new Users();
+        LoginUser = new Users();
         CurrentUser.currentUserEmail=null;
 
 
@@ -102,7 +102,7 @@ public class MainActivity extends AppCompatActivity {
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
             if (LoginUser.getUserType().equals("user"))
-                goToUserscreen();
+                goToHomeScreen();
             else if (LoginUser.getUserType().equals("admin")){
                 Toast.makeText(MainActivity.this,"admin test",Toast.LENGTH_SHORT).show();
             }
@@ -116,7 +116,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //switch to user screen
-    private void goToUserscreen(){
+    private void goToHomeScreen(){
         Intent intent=new Intent(this,HomeActivity.class);
         startActivity(intent);
     }
