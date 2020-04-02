@@ -73,11 +73,11 @@ public class UserScreenActivity extends AppCompatActivity {
 
     }
 
-    private void goToEditProfile(){
-        Intent intent=new Intent(this,EditProfileActivity.class);
+    private void goToEditProfile() {
+        Intent intent = new Intent(this, EditProfileActivity.class);
         startActivity(intent);
+        finish();
     }
-
 
 }
 

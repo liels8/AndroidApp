@@ -44,6 +44,20 @@ public class Users {
         this.Friends=new ArrayList<String>();
     }
 
+    public Users(String name,String lastName,String age ,String email,String password,String address,String dog_name,String dog_type,String image,ArrayList<String> friends){
+        this.Name=name;
+        this.LastName=lastName;
+        this.Age=age;
+        this.Email=email;
+        this.UserType="user";
+        this.Password=password;
+        this.Address=address;
+        this.DogName=dog_name;
+        this.DogType=dog_type;
+        this.Image=image;
+        this.Friends = (ArrayList<String>) friends.clone();
+    }
+
 
     public String getPassword() { return Password; }
 

@@ -36,16 +36,17 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="0.6">
+        android:layout_weight="0.6"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:layout_marginTop="20dp" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:ignore="Suspicious0dp"
         android:orientation="vertical"
-        android:paddingStart="16dp"
-        android:paddingEnd="16dp"
-        android:layout_marginTop="20dp">
+        >
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -256,23 +257,21 @@
         </LinearLayout>
 
 
-           <LinearLayout
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:gravity="right">
-
-               <ImageView
-                   android:id="@+id/editProfile"
-                   android:layout_width="50dp"
-                   android:layout_height="50dp"
-                   android:src="@drawable/edit2"
-                   >
-
-               </ImageView>
-
-           </LinearLayout>
-
-
     </LinearLayout>
     </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="right">
+
+        <ImageView
+            android:id="@+id/editProfile"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:src="@drawable/edit2"
+            >
+
+        </ImageView>
+
+    </LinearLayout>
 </LinearLayout>

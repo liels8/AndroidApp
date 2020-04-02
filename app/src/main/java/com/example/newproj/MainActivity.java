@@ -83,7 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         LoginUser.setEmail(doc.get("Email").toString());
                         LoginUser.setPassword(doc.get("Password").toString());
                         LoginUser.setType(doc.get("UserType").toString());
-                        CheckUserDitails();
+                        CheckUserDetails();
                     }
                     else{
                         Toast.makeText(MainActivity.this,"Email is not exsits\n please try again",Toast.LENGTH_LONG).show();
@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void CheckUserDitails() {
+    private void CheckUserDetails() {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
@@ -106,6 +106,9 @@ public class MainActivity extends AppCompatActivity {
             else if (LoginUser.getUserType().equals("admin")){
                 Toast.makeText(MainActivity.this,"admin test",Toast.LENGTH_SHORT).show();
             }
+        }
+        else{
+            Toast.makeText(MainActivity.this,"Incorrect passowrd\n Try Again",Toast.LENGTH_SHORT).show();
         }
     }
 
