@@ -28,6 +28,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_admin);
+
         newUserButton=findViewById(R.id.addNewUser);
         logOutButton=findViewById(R.id.LogoutButtonAdmin);
         helloLabel=findViewById(R.id.hello_label_admin);
