@@ -104,13 +104,15 @@ public class MainActivity extends AppCompatActivity {
             if (LoginUser.getUserType().equals("user"))
                 goToHomeScreen();
             else if (LoginUser.getUserType().equals("admin")){
-                Toast.makeText(MainActivity.this,"admin test",Toast.LENGTH_SHORT).show();
+                goToHomeAdminScreen();
             }
         }
         else{
             Toast.makeText(MainActivity.this,"Incorrect passowrd\n Try Again",Toast.LENGTH_SHORT).show();
         }
     }
+
+
 
     //switch to RegisterActivity
     private void switchToRegisterActivitiy(){
@@ -121,6 +123,11 @@ public class MainActivity extends AppCompatActivity {
     //switch to user screen
     private void goToHomeScreen(){
         Intent intent=new Intent(this,HomeActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToHomeAdminScreen() {
+        Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
     }
 

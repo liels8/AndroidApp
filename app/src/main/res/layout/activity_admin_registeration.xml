@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
-    tools:context=".EditProfileActivity">
+    tools:context=".AdminRegisterationActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -27,7 +27,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentRight="true"
-                android:text="ערוך פרופיל"
+                android:text="הוסף משתמש חדש"
                 android:textColor="#000000"
                 android:textSize="26dp" />
 
@@ -36,19 +36,19 @@
         <GridLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:rowCount="3"
-            android:columnCount="1"
             android:alignmentMode="alignMargins"
-            android:columnOrderPreserved="false">
+            android:columnCount="1"
+            android:columnOrderPreserved="false"
+            android:rowCount="3">
 
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -58,11 +58,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editFirstName"
+                        android:id="@+id/AddUserFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="שם פרטי"
-                        android:gravity="center"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -74,11 +74,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -88,11 +88,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editLastName"
+                        android:id="@+id/AdduserLastName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="שם משפחה"
-                        android:gravity="center"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -104,11 +104,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -118,11 +118,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editAge"
+                        android:id="@+id/AddUserAge"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="גיל"
-                        android:gravity="center"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -134,11 +134,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -148,11 +148,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editAdress"
+                        android:id="@+id/addUserAddress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:text="כתובת"
-                        android:gravity="center"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -164,11 +164,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -178,11 +178,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editDogName"
+                        android:id="@+id/AddUserEmail"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="שם הכלב"
                         android:gravity="center"
+                        android:text="דואר אלקטרוני"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -194,11 +194,11 @@
             <androidx.cardview.widget.CardView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_columnWeight="1"
                 android:layout_rowWeight="1"
-                app:cardElevation="6dp"
+                android:layout_columnWeight="1"
+                android:layout_margin="12dp"
                 app:cardCornerRadius="12dp"
-                android:layout_margin="12dp">
+                app:cardElevation="6dp">
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -208,11 +208,11 @@
                     android:padding="10dp">
 
                     <EditText
-                        android:id="@+id/editDogType"
+                        android:id="@+id/addPasswordUser"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="סוג הכלב"
                         android:gravity="center"
+                        android:text="סיסמא"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -220,14 +220,15 @@
                 </LinearLayout>
 
             </androidx.cardview.widget.CardView>
+
 
         </GridLayout>
 
         <Button
-            android:id="@+id/updateButton"
+            android:id="@+id/adminAddUser"
             android:layout_marginTop="20dp"
             android:layout_marginBottom="20dp"
-            android:text="עדכן"
+            android:text="הוסף משתמש"
             android:textColor="#000000"
             android:textSize="20sp"
             android:layout_width="205dp"
@@ -238,121 +239,9 @@
             android:shadowDy="0"
             android:shadowRadius="5">
         </Button>
+
     </LinearLayout>
+
+
+
 </ScrollView>
-
-
-
-
-
-
-
-
-
-<!--try
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".EditProfileActivity">
-
-    <TextView
-        android:id="@+id/RegisterView"
-        android:layout_width="214dp"
-        android:layout_height="59dp"
-        android:gravity="center"
-        android:text="@string/edit_profile"
-        android:textSize="24sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.089" />
-
-    <EditText
-        android:id="@+id/dogName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Dog Name"
-        android:inputType="textEmailAddress"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.542" />
-
-    <EditText
-        android:id="@+id/dogType"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="Dog Type"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.65" />
-
-    <Button
-        android:id="@+id/update_button"
-        android:layout_width="152dp"
-        android:layout_height="35dp"
-        android:text="Update"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.837" />
-
-    <EditText
-        android:id="@+id/regName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.234" />
-
-    <EditText
-        android:id="@+id/regLastName"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/last_name"
-        android:inputType="textPersonName"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.329" />
-
-    <EditText
-        android:id="@+id/regAge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/age"
-        android:inputType="number"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.494"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.432" />
-
-
-
-</androidx.constraintlayout.widget.ConstraintLayout>
--->

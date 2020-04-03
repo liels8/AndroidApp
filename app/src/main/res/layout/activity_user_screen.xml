@@ -111,7 +111,7 @@
         app:layout_constraintVertical_bias="0.483" />
 
     <TextView
-        android:id="@+id/profileEmail"
+        android:id="@+id/profileEmail1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TextView"

@@ -24,7 +24,7 @@ import java.util.List;
 
 
 public class UserScreenActivity extends AppCompatActivity {
-    private TextView textName, textDog, textType, textAge, textEmail, textUserName;
+    private TextView textName, textDog, textType, textAge, textEmail, textUserName,textAddress;
     private String name;
     private ImageView editButton;
 
@@ -38,6 +38,7 @@ public class UserScreenActivity extends AppCompatActivity {
         textType = findViewById(R.id.typeName);
         textAge = findViewById(R.id.profileAge);
         textEmail = findViewById(R.id.profileEmail);
+        textAddress=findViewById(R.id.myAddress);
         textUserName = findViewById(R.id.userName);
         editButton = findViewById(R.id.editProfile);
         FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -53,6 +54,7 @@ public class UserScreenActivity extends AppCompatActivity {
                     textAge.setText(doc.get("Age").toString());
                     textEmail.setText(doc.get("Email").toString());
                     textDog.setText(doc.get("DogName").toString());
+                    textAddress.setText(doc.get("Address").toString());
                     textType.setText(doc.get("DogType").toString());
                 }
             }
