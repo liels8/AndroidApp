@@ -23,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private CardView profileButton;
     private CardView logOutButton;
     private CardView parksButton;
+    private CardView friendsButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
 
@@ -36,6 +37,7 @@ public class HomeActivity extends AppCompatActivity {
         profileButton=findViewById(R.id.myProfileHome);
         logOutButton=findViewById(R.id.LogoutButton);
         parksButton = findViewById(R.id.parks_btn);
+        friendsButton = findViewById(R.id.friends_btn);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,6 +57,13 @@ public class HomeActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 goToParks();
+            }
+        });
+
+        friendsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToFriends();
             }
         });
 
@@ -95,6 +104,11 @@ public class HomeActivity extends AppCompatActivity {
 
     private void goToParks(){
         Intent intent=new Intent(this,ParksActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToFriends(){
+        Intent intent=new Intent(this,MyFriendsActivity.class);
         startActivity(intent);
     }
 }
