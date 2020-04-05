@@ -74,30 +74,112 @@ public class EditProfileActivity extends AppCompatActivity {
         update_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Map<String, Object> user = new HashMap<>();
-                user.put("Name", firstNameText.getText().toString());
-                user.put("LastName", lastNameText.getText().toString());
-                user.put("Age", ageText.getText().toString());
-                user.put("Email", usr.getEmail());
-                user.put("Password", usr.getPassword());
-                user.put("UserType", usr.getUserType());
-                user.put("DogName", dogNameText.getText().toString());
-                user.put("DogType", dogTypeText.getText().toString());
-                user.put("Image", usr.getImage());
-                user.put("Friends", usr.getFriends());
-                user.put("Address", addressText.getText().toString());
+                if (updateValidation(firstNameText.getText().toString(), lastNameText.getText().toString(), ageText.getText().toString(), addressText.getText().toString(), dogNameText.getText().toString(), dogTypeText.getText().toString())) {
+                    Map<String, Object> user = new HashMap<>();
+                    user.put("Name", firstNameText.getText().toString());
+                    user.put("LastName", lastNameText.getText().toString());
+                    user.put("Age", ageText.getText().toString());
+                    user.put("Email", usr.getEmail());
+                    user.put("Password", usr.getPassword());
+                    user.put("UserType", usr.getUserType());
+                    user.put("DogName", dogNameText.getText().toString());
+                    user.put("DogType", dogTypeText.getText().toString());
+                    user.put("Image", usr.getImage());
+                    user.put("Friends", usr.getFriends());
+                    user.put("Address", addressText.getText().toString());
 
-                db.collection("users")
-                        .document(usr.getEmail()).set(user)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(EditProfileActivity.this, "User Registered", Toast.LENGTH_SHORT).show();
-                                goBackToUserScreen();
-                            }
-                        });
+                    db.collection("users")
+                            .document(usr.getEmail()).set(user)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(EditProfileActivity.this, "User Registered", Toast.LENGTH_SHORT).show();
+                                    goBackToUserScreen();
+                                }
+                            });
+                }
             }
         });
+    }
+
+    public boolean updateValidation(String name,String lastname,String age,String address,String dogname,String dogtype){
+        String namePattern="[A-Za-z]+";
+        boolean flag = true;
+        //name field validation
+        if (!name.isEmpty()){
+            if(!(name.trim().matches(namePattern))){
+                if(firstNameText!=null)
+                    firstNameText.setError("Name field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(name.length()<2) {
+                if(firstNameText!=null)
+                    firstNameText.setError("Name field must be at least 2 letters!");
+                flag=false;
+            }
+        } else{
+            if(firstNameText!=null)
+                firstNameText.setError("Please enter your name!");
+            flag=false;
+        }
+
+        //last name field validation
+        if (!lastname.isEmpty()){
+            if(!(lastname.trim().matches(namePattern))){
+                if(lastNameText!=null)
+                    lastNameText.setError("Last-Name field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(lastname.length()<2) {
+                if(lastNameText!=null)
+                    lastNameText.setError("Last-Name field must be at least 2 letters!");
+                flag=false;
+            }
+        }
+        else{
+            if(lastNameText!=null)
+                lastNameText.setError("Please enter your last name!");
+            flag=false;
+        }
+
+        //age field validation
+        if (age.isEmpty()){
+            if(ageText!=null)
+                ageText.setError("Please enter your age");
+            flag=false;
+        }
+
+        //dog name field validation
+        if (!dogname.isEmpty()){
+            if(!(dogname.trim().matches(namePattern))){
+                if(dogNameText!=null)
+                    dogNameText.setError("Dog-Name field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(dogname.length()<2) {
+                if(dogNameText!=null)
+                    dogNameText.setError("Dog-Name field must be at least 2 letters!");
+                flag=false;
+            }
+        }
+
+        //dog type field validation
+        if (!dogtype.isEmpty()){
+            if(!(dogtype.trim().matches(namePattern))){
+                if(dogTypeText!=null)
+                    dogTypeText.setError("Dog-Type field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(dogtype.length()<2) {
+                if(dogTypeText!=null)
+                    dogTypeText.setError("Dog-Type field must be at least 2 letters!");
+                flag=false;
+            }
+        }
+
+
+        return flag;
+
     }
 
     private void goBackToUserScreen(){
