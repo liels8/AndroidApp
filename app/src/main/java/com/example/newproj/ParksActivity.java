@@ -31,6 +31,7 @@ public class ParksActivity extends AppCompatActivity {
     private ArrayList<Parks> parksList;
 
     @Override
+    //get the parks from the database
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_parks);
@@ -62,6 +63,7 @@ public class ParksActivity extends AppCompatActivity {
 
     }
 
+    //list of the parks
     private void fillList(){
         CustomAdapter arrayAdapter = new CustomAdapter(this, parksList);
         parks.setAdapter(arrayAdapter);

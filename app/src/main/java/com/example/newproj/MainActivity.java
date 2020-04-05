@@ -97,12 +97,14 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //check user type
     private void CheckUserDetails() {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
             if (LoginUser.getUserType().equals("user"))
                 goToHomeScreen();
+            //check if the user is an admin and go to homescreen admin
             else if (LoginUser.getUserType().equals("admin")){
                 goToHomeAdminScreen();
             }
@@ -126,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //switch to admin screen
     private void goToHomeAdminScreen() {
         Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
