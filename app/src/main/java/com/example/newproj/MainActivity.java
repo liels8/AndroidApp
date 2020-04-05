@@ -104,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
             CurrentUser.currentUserEmail=LoginUser.getEmail();
             if (LoginUser.getUserType().equals("user"))
                 goToHomeScreen();
+            //check if the user is an admin and go to homescreen admin
             else if (LoginUser.getUserType().equals("admin")){
                 goToHomeAdminScreen();
             }
