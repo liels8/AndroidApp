@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //check user type
     private void CheckUserDetails() {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
