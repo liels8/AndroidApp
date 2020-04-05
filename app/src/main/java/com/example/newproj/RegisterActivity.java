@@ -60,7 +60,7 @@ public class RegisterActivity extends AppCompatActivity {
         });
 
     }
-    //sign up users to the authtiction firebase
+    //sign up users to the firebase database
     private void signUp(){
         final String email=regEmail.getText().toString();
         final String password=regPassword.getText().toString();

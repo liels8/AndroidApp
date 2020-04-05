@@ -97,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    //check user type
     private void CheckUserDetails() {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
@@ -126,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //switch to admin screen
     private void goToHomeAdminScreen() {
         Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
