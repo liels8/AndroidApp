@@ -2,9 +2,14 @@ package com.example.newproj;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 
+import android.Manifest;
+import android.content.ContentValues;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -19,14 +24,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class UserScreenActivity extends AppCompatActivity {
+   // private static final int CAMERA_REQUEST_CODE = 100;
+    //private static final int IMAGE_PICK_CAMERA_CODE = 400;
     private TextView textName, textDog, textType, textAge, textEmail, textUserName,textAddress;
     private String name;
-    private ImageView editButton;
+    private ImageView editButton,profilePic;
+    private Uri image_uri;
+    String cameraPermissions[];
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +51,10 @@ public class UserScreenActivity extends AppCompatActivity {
         textAddress=findViewById(R.id.myAddress);
         textUserName = findViewById(R.id.userName);
         editButton = findViewById(R.id.editProfile);
+        profilePic = findViewById(R.id.userImage);
+
+        //cameraPermissions = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE};
+
         FirebaseFirestore db = FirebaseFirestore.getInstance();
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
@@ -72,8 +86,27 @@ public class UserScreenActivity extends AppCompatActivity {
             }
         });
 
+      /*  profilePic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pickFromCamera();
+            }
+        });*/
+
 
     }
+
+   /* private void pickFromCamera() {
+        ActivityCompat.requestPermissions(UserScreenActivity.this,cameraPermissions,CAMERA_REQUEST_CODE);
+        ContentValues values = new ContentValues();
+        values.put(MediaStore.Images.Media.TITLE,"Temp pic");
+        values.put(MediaStore.Images.Media.DESCRIPTION,"Temp Description");
+        image_uri = UserScreenActivity.this.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,values);
+        Intent cameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        cameraIntent.putExtra(MediaStore.EXTRA_OUTPUT,image_uri);
+        startActivityForResult(cameraIntent,IMAGE_PICK_CAMERA_CODE);
+
+    }*/
 
     private void goToEditProfile() {
         Intent intent = new Intent(this, EditProfileActivity.class);
