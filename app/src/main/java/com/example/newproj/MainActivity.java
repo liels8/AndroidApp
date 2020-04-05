@@ -127,6 +127,7 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //switch to admin screen
     private void goToHomeAdminScreen() {
         Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
