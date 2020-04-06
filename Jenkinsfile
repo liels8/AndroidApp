@@ -1,5 +1,8 @@
 pipeline {
     agent any
+        tools {
+        jdk 'jdk8' 
+    }
     stages {
         stage("Checkout") {
             steps {
@@ -9,7 +12,7 @@ pipeline {
         stage("Compile") {
             steps {
                 sh 'chmod 755 ./gradlew'
-                sh "./gradlew compileJava"
+                sh "./gradlew build"
             }
         }
     }
