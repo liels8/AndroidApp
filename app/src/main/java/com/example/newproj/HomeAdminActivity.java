@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
+import com.example.newproj.models.Parks;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -21,6 +22,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 public class HomeAdminActivity extends AppCompatActivity {
     private CardView newUserButton;
     private CardView logOutButton;
+    private CardView ParksButton;
     private TextView helloLabel;
     private FirebaseFirestore db;
 
@@ -31,6 +33,7 @@ public class HomeAdminActivity extends AppCompatActivity {
 
         newUserButton=findViewById(R.id.addNewUser);
         logOutButton=findViewById(R.id.LogoutButtonAdmin);
+        ParksButton = findViewById(R.id.parks_btn);
         helloLabel=findViewById(R.id.hello_label_admin);
         db = FirebaseFirestore.getInstance();
         newUserButton.setOnClickListener(new View.OnClickListener() {
@@ -45,6 +48,13 @@ public class HomeAdminActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 logOut();
+            }
+        });
+
+        ParksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToParks();
             }
         });
 
@@ -66,6 +76,11 @@ public class HomeAdminActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void goToParks() {
+        Intent intent = new Intent(this, Parks.class);
+        startActivity(intent);
     }
 
     private void goToRegiterScreen() {

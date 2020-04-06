@@ -83,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
                         LoginUser.setEmail(doc.get("Email").toString());
                         LoginUser.setPassword(doc.get("Password").toString());
                         LoginUser.setType(doc.get("UserType").toString());
+                        LoginUser.setFriends((List<String>)doc.get("Friends"));
                         CheckUserDetails();
                     }
                     else{
@@ -102,6 +103,7 @@ public class MainActivity extends AppCompatActivity {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
+            CurrentUser.currentUserFriends = LoginUser.getFriends();
             if (LoginUser.getUserType().equals("user"))
                 goToHomeScreen();
             else if (LoginUser.getUserType().equals("admin")){

@@ -46,7 +46,6 @@ public class MyFriendsActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 friend = (Users) parent.getItemAtPosition(position);
                 showFriendProfile();
-                Toast.makeText(MyFriendsActivity.this,friend.getName(),Toast.LENGTH_LONG).show();
             }
         });
 

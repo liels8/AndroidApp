@@ -58,6 +58,9 @@ public class Users {
         this.Friends = (ArrayList<String>) friends.clone();
     }
 
+    public void setFriends(List<String> friends) {
+        Friends = friends;
+    }
 
     public String getPassword() { return Password; }
 

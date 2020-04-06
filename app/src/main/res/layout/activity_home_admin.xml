@@ -144,6 +144,7 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/parks_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_columnWeight="1"
@@ -162,7 +163,7 @@
                     <ImageView
                         android:layout_width="80dp"
                         android:layout_height="80dp"
-                        android:src="@drawable/ic_launcher_background" />
+                        android:src="@drawable/park" />
 
                     <TextView
                         android:layout_width="wrap_content"

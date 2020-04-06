@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -24,6 +23,7 @@ public class HomeActivity extends AppCompatActivity {
     private CardView logOutButton;
     private CardView parksButton;
     private CardView friendsButton;
+    private CardView searchFriendsButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
 
@@ -38,6 +38,7 @@ public class HomeActivity extends AppCompatActivity {
         logOutButton=findViewById(R.id.LogoutButton);
         parksButton = findViewById(R.id.parks_btn);
         friendsButton = findViewById(R.id.friends_btn);
+        searchFriendsButton = findViewById(R.id.search_friends_btn);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +68,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        searchFriendsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSearchFriends();
+            }
+        });
+
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -87,6 +95,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void goToSearchFriends() {
+        Intent intent=new Intent(this, SearchUsersActivity.class);
+        startActivity(intent);
     }
 
     private void logOut() {

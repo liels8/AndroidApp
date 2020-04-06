@@ -47,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (signUpValidation(regName.getText().toString(),regLastName.getText().toString(),regAge.getText().toString(),regEmail.getText().toString(),regPassword.getText().toString())) {
-                    signUp();
+                        signUp();
                 }
            }
         });
