@@ -25,6 +25,10 @@ pipeline {
         // Finish building and packaging the APK 
         sh './gradlew assembleDebug' 
       } 
-    } 
+    }
+     stage('Tests') {
+      //Start all the existing tests in the test package 
+    sh './gradlew --no-daemon --debug :app:connectedDevDebugAndroidTest' 
+  }
   } 
 }
