@@ -1,17 +1,15 @@
 pipeline {
     agent any
     stages {
-        stage('somestage') {
+        stage("Checkout") {
             steps {
-                script {
-                    def version = sh (
-                        script: "./gradlew properties -q | grep \"version:\" | awk '{print \$2}'",
-                        returnStdout: true
-                    ).trim()
-                    sh "echo Building project in version: $version"
-
-                }
+                git url: 'https://github.com/liels9/NewTeam3'
+            }
+        }
+        stage("Compile") {
+            steps {
+                sh 'chmod 755 ./gradlew'
+                sh "./gradlew compileJava"
             }
         }
     }
-}
