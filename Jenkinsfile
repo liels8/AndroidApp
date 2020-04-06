@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                 git 'update-index --chmod=+x gradlew'
+                 sh 'chmod 755 ./gradlew'
                  git url: 'https://github.com/liels9/NewTeam3'
             }
         }
