@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -102,6 +103,7 @@ public class HomeActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //log out function
     private void logOut() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

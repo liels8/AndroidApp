@@ -78,6 +78,7 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     }
 
+    //go to register screen
     private void goToParks() {
         Intent intent = new Intent(this, Parks.class);
         startActivity(intent);
@@ -88,7 +89,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
-
+    //logout funtion
     private void logOut() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);

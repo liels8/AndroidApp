@@ -181,7 +181,7 @@ public class EditProfileActivity extends AppCompatActivity {
         return flag;
 
     }
-
+    // אThe user back to userscreen
     private void goBackToUserScreen(){
         Intent intent = new Intent(this, UserScreenActivity.class);
         startActivity(intent);
