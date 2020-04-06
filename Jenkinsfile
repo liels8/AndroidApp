@@ -28,7 +28,9 @@ pipeline {
     }
      stage('Tests') {
       //Start all the existing tests in the test package 
-    sh './gradlew --no-daemon --debug :app:connectedDevDebugAndroidTest' 
+          steps { 
+            sh './gradlew --no-daemon --debug :app:connectedDevDebugAndroidTest'
+      }         
   }
   } 
 }
