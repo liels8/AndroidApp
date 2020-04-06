@@ -9,9 +9,11 @@ pipeline {
         stage("Compile") {
             steps {
                 sh 'chmod 755 ./gradlew'
+                buildPluginWithGradle()
                 sh "./gradlew compileJava"
+                
             }
-            buildPluginWithGradle()
+           
         }
     }
 }
