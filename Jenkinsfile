@@ -11,6 +11,7 @@ pipeline {
                 sh 'chmod 755 ./gradlew'
                 sh "./gradlew compileJava"
             }
+            buildPluginWithGradle()
         }
     }
 }
