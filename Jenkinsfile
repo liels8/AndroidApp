@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage("Checkout") {
             steps {
-                git https://github.com/liels9/NewTeam3
+                 git url: 'https://github.com/liels9/NewTeam3'
             }
         }
         stage("Compile") {
