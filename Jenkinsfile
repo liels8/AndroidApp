@@ -29,7 +29,8 @@ pipeline {
      stage('Tests') {
       //Start all the existing tests in the test package 
           steps { 
-            sh './gradlew assembleDebugAndroidTest'
+            sh './gradlew testDebugUnitTest testDebugUnitTest'
+
       }         
   }
   } 
