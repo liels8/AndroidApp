@@ -68,6 +68,7 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     }
 
+    //go to register screen
     private void goToRegiterScreen() {
         Intent intent = new Intent(this,AdminRegisterationActivity.class);
         startActivity(intent);
