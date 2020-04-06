@@ -1,12 +1,16 @@
 pipeline {
     agent any
-    tools {
-        gradle "GRADLE_LATEST"
-    }
     stages {
-        stage('Gradle') {
+        stage('somestage') {
             steps {
-                sh 'gradle --version'
+                script {
+                    def version = sh (
+                        script: "./gradlew properties -q | grep \"version:\" | awk '{print \$2}'",
+                        returnStdout: true
+                    ).trim()
+                    sh "echo Building project in version: $version"
+
+                }
             }
         }
     }
