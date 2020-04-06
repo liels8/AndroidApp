@@ -9,7 +9,7 @@ pipeline {
         stage("Compile") {
             steps {
                 sh 'chmod 755 ./gradlew'
-                sh "./gradlew compileJava"
+                sh "./gradlew --debug compileJava"
             }
         }
     }
