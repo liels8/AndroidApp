@@ -1,19 +1,13 @@
 pipeline {
     agent any
+    tools {
+        gradle "GRADLE_LATEST"
+    }
     stages {
-        stage("Checkout") {
+        stage('Gradle') {
             steps {
-                 git url: 'https://github.com/liels9/NewTeam3'
+                sh 'gradle --version'
             }
-        }
-        stage("Compile") {
-            steps {
-                sh 'chmod 755 ./gradlew'
-                buildPluginWithGradle()
-                sh "./gradlew compileJava"
-                
-            }
-           
         }
     }
 }
