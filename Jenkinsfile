@@ -26,5 +26,10 @@ pipeline {
         sh './gradlew assembleDebug' 
       } 
     } 
-  } 
+  }
+  stage('Unit tests'){
+    steps{
+      sh'./gradlew test'
+    }
+  }  
 }
