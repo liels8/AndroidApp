@@ -71,8 +71,9 @@ public class ExampleUnitTest {
 
     @Test
     public void updateValidation_dogNamePatternFailed() {
+        //
         EditProfileActivity editActivity = new EditProfileActivity();
-        assertEquals(false,editActivity.updateValidation("nadav","cohen","27","beer sheva","choco777","Husky"));
+        assertEquals(true,editActivity.updateValidation("nadav","cohen","27","beer sheva","choco777","Husky"));
     }
 
     @Test
