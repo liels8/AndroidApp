@@ -78,12 +78,13 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     }
 
-    //go to register screen
+
     private void goToParks() {
-        Intent intent = new Intent(this, Parks.class);
+        Intent intent = new Intent(this, ParksActivity.class);
         startActivity(intent);
     }
 
+    //go to register screen
     private void goToRegiterScreen() {
         Intent intent = new Intent(this,AdminRegisterationActivity.class);
         startActivity(intent);
