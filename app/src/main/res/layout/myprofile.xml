@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -15,29 +16,14 @@
         android:gravity="center_horizontal"
         android:background="@drawable/background">
 
-        <ImageView
-            android:id="@+id/userImage"
-            android:layout_width="150dp"
-            android:layout_height="150dp"
-            android:src="@drawable/empty_profile"
-            android:layout_marginTop="30dp">
-
-        </ImageView>
-        <!--
         <de.hdodenhof.circleimageview.CircleImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/person"
-            android:layout_marginTop="40dp" />-->
-
-        <TextView
-            android:id="@+id/profileName"
+            android:id="@+id/userImage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:shadowColor="#2CEA17"
-            android:text="נדב כהן"
-            android:textSize="30sp"
-            android:layout_marginTop="10dp"/>
+            >
+
+        </de.hdodenhof.circleimageview.CircleImageView>
+
 
 
     </LinearLayout>
@@ -302,15 +288,15 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="right">
+        android:gravity="left">
 
         <ImageView
             android:id="@+id/editProfile"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:src="@drawable/edit2"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="22dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/edit_new"
+            android:layout_marginLeft="15dp"
+            android:layout_marginBottom="15dp"
             >
 
         </ImageView>

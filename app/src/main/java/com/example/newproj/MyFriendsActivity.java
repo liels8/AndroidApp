@@ -67,6 +67,7 @@ public class MyFriendsActivity extends AppCompatActivity {
                                     Users newUser = new Users();
                                     newUser.setName(doc.get("Name").toString());
                                     newUser.setLastName(doc.get("LastName").toString());
+                                    newUser.setEmail(doc.get("Email").toString());
                                     newUser.setAddress(doc.get("Address").toString());
                                     newUser.setAge(doc.get("Age").toString());
                                     newUser.setDogName(doc.get("DogName").toString());
@@ -96,6 +97,7 @@ public class MyFriendsActivity extends AppCompatActivity {
         Intent intent = new Intent(this,UserProfileActivity.class);
         intent.putExtra("name",friend.getName());
         intent.putExtra("lastName",friend.getLastName());
+        intent.putExtra("email",friend.getEmail());
         intent.putExtra("address",friend.getAddress());
         intent.putExtra("dogName",friend.getDogName());
         intent.putExtra("dogType",friend.getDogType());

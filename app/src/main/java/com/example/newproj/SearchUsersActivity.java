@@ -115,6 +115,7 @@ public class SearchUsersActivity extends AppCompatActivity {
         intent.putExtra("dogType",clickedUser.getDogType());
         intent.putExtra("age",clickedUser.getAge());
         intent.putExtra("image",clickedUser.getImage());
+        intent.putExtra("email",clickedUser.getEmail());
         if(isFriend(clickedUser.getEmail())){
             intent.putExtra("isFriend",true);
         }

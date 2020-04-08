@@ -48,17 +48,16 @@ public class FriendsAdapter extends BaseAdapter {
     public View getView(int i, View view, ViewGroup parent) {
         view = inflter.inflate(R.layout.activity_friends_listview,null);
         TextView name = (TextView)  view.findViewById(R.id.user_name);
-        //TextView dogName = (TextView)  view.findViewById(R.id.dog_name);
-        //TextView dogType = (TextView)  view.findViewById(R.id.dog_type);
         image = (ImageView) view.findViewById(R.id.usrImg);
         name.setText(friends.get(i).getName()+" "+friends.get(i).getLastName());
-        //dogName.setText(friends.get(i).getDogName());
-        //dogType.setText(friends.get(i).getDogType());
-        StorageReference pref = storageRef.child(friends.get(i).getImage());
+        StorageReference pref;
+        if(friends.get(i).getImage().equals("empty_profile.png"))
+            pref = storageRef.child(friends.get(i).getImage());
+        else
+            pref = storageRef.child(friends.get(i).getEmail());
         Glide.with(view.getContext())
                 .load(pref)
                 .into(image);
-        //Picasso.get().load(uri.getPath()).into(image);
         return view;
     }
 }

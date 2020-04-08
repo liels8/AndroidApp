@@ -45,7 +45,11 @@ public class UserProfileActivity extends AppCompatActivity {
             addFriend.setEnabled(true);
         }
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference pref = storageRef.child(getIntent().getExtras().getString("image"));
+        StorageReference pref;
+        if(getIntent().getExtras().getString("image").equals("empty_profile.png"))
+            pref = storageRef.child(getIntent().getExtras().getString("image"));
+        else
+            pref = storageRef.child(getIntent().getExtras().getString("email"));
         Glide.with(this)
                 .load(pref)
                 .into(userImage);
