@@ -8,4 +8,29 @@
     <string name="name">Name</string>
     <string name="last_name">Last Name</string>
     <string name="edit_profile">Edit Profile</string>
+    <string name="dog_prompt">בחר סוג כלב</string>
+
+    <string-array name="dog_arrays">
+        <item>אמסטף</item>
+        <item>בולדוג</item>
+        <item>פיטבול</item>
+        <item>ביגל</item>
+        <item>בוקסר</item>
+        <item>גולדן רטריבר</item>
+        <item>גק ראסל טרייר</item>
+        <item>דני ענק</item>
+        <item>האסקי סיברי</item>
+        <item>כנעני</item>
+        <item>לברדור רטריבר</item>
+        <item>פאג</item>
+        <item>פומרניין</item>
+        <item>פודל</item>
+        <item>פקינז</item>
+        <item>ציוואווה</item>
+        <item>קוקר ספנייל</item>
+        <item>רועה גרמני</item>
+        <item>רועה אוסטרלי</item>
+        <item>רועה בלגי</item>
+        <item>רוטוויילר</item>
+    </string-array>
 </resources>
