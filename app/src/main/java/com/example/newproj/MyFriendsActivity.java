@@ -103,6 +103,7 @@ public class MyFriendsActivity extends AppCompatActivity {
         intent.putExtra("dogType",friend.getDogType());
         intent.putExtra("age",friend.getAge());
         intent.putExtra("image",friend.getImage());
+        intent.putExtra("isFriend",true);
         startActivity(intent);
 
     }

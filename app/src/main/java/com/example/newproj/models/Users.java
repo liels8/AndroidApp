@@ -19,6 +19,7 @@ public class Users {
     private String DogName;
 
     private List<String> Friends;
+    private List<String> Requests;
 
     public Users(){}
 
@@ -76,6 +77,14 @@ public class Users {
 
     public String getAge() {
         return Age;
+    }
+
+    public List<String> getRequests() {
+        return Requests;
+    }
+
+    public void setRequests(List<String> requests) {
+        Requests = requests;
     }
 
     public String getEmail() {

@@ -21,11 +21,34 @@
             android:layout_marginLeft="20dp">
 
 
-            <ImageView
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_alignParentLeft="true"
-                android:src="@drawable/chat"/>
+            <RelativeLayout
+                android:layout_width="75dp"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/notifications"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_alignParentLeft="true"
+                    android:src="@drawable/notification_dog" />
+
+
+                <TextView
+                    android:id="@+id/notifications_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="12"
+                    android:gravity="right"
+                    android:paddingRight="10dp"
+                    android:paddingLeft="10dp"
+                    android:textDirection="rtl"
+                    android:textColor="#FFFFFF"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/notification_bubble">
+
+                </TextView>
+
+            </RelativeLayout>
 
             <TextView
                 android:id="@+id/hello_label"
