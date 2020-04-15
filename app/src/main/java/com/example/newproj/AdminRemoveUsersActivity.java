@@ -131,7 +131,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
                                                                    batch.commit();
                                                                }
                                                            }
-                                                           Toast.makeText(AdminRemoveUsersActivity.this,"User removed",Toast.LENGTH_LONG).show();
+                                                           Toast.makeText(AdminRemoveUsersActivity.this,"משתמש נמחק בהצלחה",Toast.LENGTH_LONG).show();
                                                            Intent intent = new Intent(AdminRemoveUsersActivity.this, AdminRemoveUsersActivity.class);
                                                            startActivity(intent);
                                                            finish();

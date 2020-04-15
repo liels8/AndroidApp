@@ -41,7 +41,7 @@ public class Users {
         this.Address=address;
         this.DogName="";
         this.DogType="";
-        this.Image="";
+        this.Image="empty_profile.png";
         this.Friends=new ArrayList<String>();
         this.Requests=new ArrayList<String>();
     }
