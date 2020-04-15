@@ -26,10 +26,16 @@ pipeline {
         sh './gradlew assembleDebug' 
       } 
     }
-     stage('Tests') {
+     stage('UnitTests') {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew testDebugUnitTest testDebugUnitTest'
+
+      }         
+  }
+         stage('IntgrationTests') {
+          steps { 
+            sh './gradlew integrationTest'
 
       }         
   }
