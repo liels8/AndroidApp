@@ -13,17 +13,26 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".CreateMeetingActivity" android:windowSoftInputMode="stateHidden"></activity>
+        <activity android:name=".AdminRemoveUsersActivity"></activity>
+        <activity
+            android:name=".CreateMeetingActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".FriendsRequests" />
-        <activity android:name=".SearchUsersActivity"  android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".SearchUsersActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".UserProfileActivity" />
         <activity android:name=".ParksActivity" />
-        <activity android:name=".EditProfileActivity"  android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".EditProfileActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".HomeActivity" />
         <activity android:name=".UserScreenActivity" />
         <activity android:name=".RegisterActivity" />
         <activity android:name=".HomeAdminActivity" />
-        <activity android:name=".AdminRegisterationActivity"  android:windowSoftInputMode="stateHidden"/>
+        <activity
+            android:name=".AdminRegisterationActivity"
+            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".MyFriendsActivity" />
         <activity android:name=".MainActivity">
             <intent-filter>

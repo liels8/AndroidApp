@@ -43,6 +43,7 @@ public class Users {
         this.DogType="";
         this.Image="";
         this.Friends=new ArrayList<String>();
+        this.Requests=new ArrayList<String>();
     }
 
     public Users(String name,String lastName,String age ,String email,String password,String address,String dog_name,String dog_type,String image,ArrayList<String> friends){

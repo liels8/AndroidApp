@@ -12,6 +12,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,16 +22,19 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageMetadata;
 import com.google.firebase.storage.StorageReference;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Set;
 
 public class UserProfileActivity extends AppCompatActivity {
     private TextView userName,userAge,userDogName,userDogType,userAddress;
     private ImageView userImage,addFriend;
     StorageReference storageRef;
     private FirebaseFirestore db;
+    StorageReference pref;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +63,6 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
-        StorageReference pref;
         if(getIntent().getExtras().getString("image").equals("empty_profile.png"))
             pref = storageRef.child(getIntent().getExtras().getString("image"));
         else
@@ -66,7 +70,6 @@ public class UserProfileActivity extends AppCompatActivity {
         Glide.with(this)
                 .load(pref)
                 .into(userImage);
-
         addFriend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

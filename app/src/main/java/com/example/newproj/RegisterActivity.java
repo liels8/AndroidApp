@@ -85,6 +85,10 @@ public class RegisterActivity extends AppCompatActivity {
                         user.put("Image",usr.getImage());
                         user.put("Friends",usr.getFriends());
                         user.put("Address",usr.getAddress());
+                        user.put("Requests",usr.getRequests());
+
+
+
 
                         db.collection("users")
                                 .document(usr.getEmail()).set(user)

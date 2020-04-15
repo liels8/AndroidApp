@@ -23,6 +23,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     private CardView newUserButton;
     private CardView logOutButton;
     private CardView ParksButton;
+    private CardView removeUserButton;
     private TextView helloLabel;
     private FirebaseFirestore db;
 
@@ -35,6 +36,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         logOutButton=findViewById(R.id.LogoutButtonAdmin);
         ParksButton = findViewById(R.id.parks_btn);
         helloLabel=findViewById(R.id.hello_label_admin);
+        removeUserButton=findViewById(R.id.deleteUser);
         db = FirebaseFirestore.getInstance();
         newUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -58,6 +60,12 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
 
+        removeUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRemoveUserScreen();
+            }
+        });
 
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
@@ -95,6 +103,12 @@ public class HomeAdminActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("EXIT", true);
+        startActivity(intent);
+    }
+
+    //go to RemoveUsersScreen
+    private void goToRemoveUserScreen() {
+        Intent intent = new Intent(this,AdminRemoveUsersActivity.class);
         startActivity(intent);
     }
 
