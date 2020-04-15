@@ -33,11 +33,5 @@ pipeline {
 
       }         
   }
-         stage('IntgrationTests') {
-          steps { 
-            sh './gradlew integrationTest'
-
-      }         
-  }
   } 
 }
