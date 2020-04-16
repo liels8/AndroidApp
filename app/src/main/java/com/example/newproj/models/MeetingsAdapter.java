@@ -14,10 +14,14 @@ import com.bumptech.glide.Glide;
 import com.example.newproj.R;
 import com.example.newproj.UserScreenActivity;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.squareup.picasso.Picasso;
@@ -28,17 +32,21 @@ public class MeetingsAdapter extends BaseAdapter {
     Context context;
     LayoutInflater inflter;
     ArrayList<Meeting> meetings;
+    ArrayList<Users> usersList;
     StorageReference storageRef;
     ImageView Parkimage;
     ImageView usrimage;
     FirebaseFirestore db;
+    View view;
 
-    public MeetingsAdapter(Context applicationContext, ArrayList<Meeting> meetingsList) {
+    public MeetingsAdapter(Context applicationContext, final ArrayList<Meeting> meetingsList,ArrayList<Users> usersList) {
         this.context = context;
         this.meetings = meetingsList;
+        this.usersList = usersList;
         inflter = (LayoutInflater.from(applicationContext));
         storageRef = FirebaseStorage.getInstance().getReference();
         db = FirebaseFirestore.getInstance();
+
     }
 
     @Override
@@ -57,7 +65,8 @@ public class MeetingsAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup parent) {
+    public View getView(int i, View temp_view, ViewGroup parent) {
+        view = temp_view;
         view = inflter.inflate(R.layout.activity_meetings_listview,null);
         TextView date = (TextView)  view.findViewById(R.id.meeting_date);
         TextView location = (TextView)  view.findViewById(R.id.meeting_park);
@@ -72,29 +81,20 @@ public class MeetingsAdapter extends BaseAdapter {
         hour.setText(meetings.get(i).getHour());
         count.setText(Integer.toString(meetings.get(i).getParticipants().size()));
         type.setText(meetings.get(i).getDogType());
-        DocumentReference user = db.collection("users").document(meetings.get(i).getOwner());
-        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task< DocumentSnapshot > task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    creator.setText(doc.get("Name").toString() + " " + doc.get("LastName").toString());
-                }
-            }
-        });
-
         StorageReference pref;
-        //park image
-        pref = storageRef.child(meetings.get(i).getParkImage());
-        Glide.with(view.getContext())
-                .load(pref)
-                .into(Parkimage);
-        //user image
-        pref = storageRef.child(meetings.get(i).getUserImage());
+        creator.setText(usersList.get(i).getName() + " " + usersList.get(i).getLastName());
+        pref = storageRef.child(usersList.get(i).getImage());
         Glide.with(view.getContext())
                 .load(pref)
                 .into(usrimage);
 
+        pref = storageRef.child(meetings.get(i).getParkImage());
+        Glide.with(view.getContext())
+                .load(pref)
+                .into(Parkimage);
+
+
         return view;
     }
+
 }

@@ -28,6 +28,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private ArrayList<Meeting> meetingsList;
     private ArrayList<Users> usersList;
+    private Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +38,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         meetingsListView = findViewById(R.id.meetings_listview);
         meetingsCount = findViewById(R.id.meetings_count);
         meetingsList = new ArrayList<Meeting>();
+        usersList = new ArrayList<Users>();
 
         db = FirebaseFirestore.getInstance();
 
@@ -70,7 +72,28 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
     }
 
     private void fillList(){
-        MeetingsAdapter arrayAdapter = new MeetingsAdapter(this, meetingsList);
-        meetingsListView.setAdapter(arrayAdapter);
+        CollectionReference allUsers = db.collection("users");
+        allUsers.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                if(task.isSuccessful()){
+                    for(QueryDocumentSnapshot doc : task.getResult()){
+                        for(Meeting meeting : meetingsList){
+                            if(doc.get("Email").toString().equals(meeting.getOwner())){
+                                user = new Users();
+                                user.setName(doc.get("Name").toString());
+                                user.setLastName(doc.get("LastName").toString());
+                                user.setEmail(doc.get("Email").toString());
+                                user.setImage(doc.get("Image").toString());
+                                usersList.add(user);
+                            }
+                        }
+                    }
+                    MeetingsAdapter arrayAdapter = new MeetingsAdapter(UpcomingMeetingsActivity.this, meetingsList,usersList);
+                    meetingsListView.setAdapter(arrayAdapter);
+                }
+            }
+        });
+
     }
 }
