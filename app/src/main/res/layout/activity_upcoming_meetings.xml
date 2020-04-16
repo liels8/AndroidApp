@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:background="@drawable/background"
-    tools:context=".MyFriendsActivity">
+    tools:context=".UpcomingMeetingsActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -15,7 +15,7 @@
         android:gravity="right">
 
         <TextView
-            android:id="@+id/friends_count"
+            android:id="@+id/meetings_count"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="(0)"
@@ -30,7 +30,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="חברים"
+            android:text="הפגישות הקרובות שלי"
             android:textSize="26dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="15dp"
@@ -41,9 +41,9 @@
     </LinearLayout>
 
     <ListView
-        android:id="@+id/friends_listview"
+        android:id="@+id/meetings_listview"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-         />
+        />
 
 </LinearLayout>

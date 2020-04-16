@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
@@ -26,6 +27,7 @@ import java.util.ArrayList;
 
 public class MyFriendsActivity extends AppCompatActivity {
     private ListView friends;
+    private TextView friendsCount;
     private FirebaseFirestore db;
     private ArrayList<String> friendsList;
     private ArrayList<Users> usersList;
@@ -37,6 +39,7 @@ public class MyFriendsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_my_friends);
 
         friends = findViewById(R.id.friends_listview);
+        friendsCount = findViewById(R.id.friends_count);
         db = FirebaseFirestore.getInstance();
         friendsList = new ArrayList<String>();
         usersList = new ArrayList<Users>();
@@ -57,6 +60,8 @@ public class MyFriendsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
                     friendsList = (ArrayList<String>) doc.get("Friends");
+                    int count = friendsList.size();
+                    friendsCount.setText("(" + Integer.toString(count) + ")");
                     for(String friend : friendsList){
                         DocumentReference frnd = db.collection("users").document(friend);
                         frnd.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {

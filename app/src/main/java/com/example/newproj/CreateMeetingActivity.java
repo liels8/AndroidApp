@@ -11,6 +11,7 @@ import android.content.Context;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -24,11 +25,14 @@ import com.example.newproj.models.CustomAdapter;
 import com.example.newproj.models.CustomAdapterMeeting;
 import com.example.newproj.models.Meeting;
 import com.example.newproj.models.Parks;
+import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
@@ -52,6 +56,7 @@ public class CreateMeetingActivity extends AppCompatActivity  {
     private TimePickerDialog.OnTimeSetListener time;
     private FirebaseFirestore db;
     private ArrayList<Parks> parksList;
+    private String usrImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +71,17 @@ public class CreateMeetingActivity extends AppCompatActivity  {
         myCalendar = Calendar.getInstance();
         db = FirebaseFirestore.getInstance();
         parksList = new ArrayList<Parks>();
+
+        DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task< DocumentSnapshot > task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    usrImage = doc.get("Image").toString();
+                }
+            }
+        });
 
         date= new DatePickerDialog.OnDateSetListener() {
             @Override
@@ -113,10 +129,12 @@ public class CreateMeetingActivity extends AppCompatActivity  {
             }
         });
 
+
         mbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Meeting meeting=new Meeting(((Parks)mLoc.getSelectedItem()).getName().toString(), mDate.getText().toString(), mHour.getText().toString(), mDogType.getSelectedItem().toString(), mDisc.getText().toString(), CurrentUser.currentUserEmail);
+
+                Meeting meeting=new Meeting(((Parks)mLoc.getSelectedItem()).getName().toString(), mDate.getText().toString(), mHour.getText().toString(), mDogType.getSelectedItem().toString(), mDisc.getText().toString(), CurrentUser.currentUserEmail,((Parks)mLoc.getSelectedItem()).getImage().toString(),usrImage);
                 Map<String, Object> mt = new HashMap<>();
                 mt.put("Location", meeting.getLocation());
                 mt.put("Date", meeting.getDate());
@@ -124,6 +142,9 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                 mt.put("DogType", meeting.getDogType());
                 mt.put("Discription", meeting.getDiscription());
                 mt.put("Owner", meeting.getOwner());
+                mt.put("Participants", meeting.getParticipants());
+                mt.put("ParkImage",meeting.getParkImage());
+                mt.put("UserImage",meeting.getUserImage());
 
                 db.collection("meetings").document().set(mt)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -136,8 +157,8 @@ public class CreateMeetingActivity extends AppCompatActivity  {
             }
         });
 
-        CollectionReference user = db.collection("parks");
-        user.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+        CollectionReference parks = db.collection("parks");
+        parks.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
             public void onComplete(@NonNull Task< QuerySnapshot > task) {
                 if (task.isSuccessful()) {

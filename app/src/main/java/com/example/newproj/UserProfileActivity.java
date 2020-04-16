@@ -63,10 +63,7 @@ public class UserProfileActivity extends AppCompatActivity {
         }
         db = FirebaseFirestore.getInstance();
         storageRef = FirebaseStorage.getInstance().getReference();
-        if(getIntent().getExtras().getString("image").equals("empty_profile.png"))
-            pref = storageRef.child(getIntent().getExtras().getString("image"));
-        else
-            pref = storageRef.child(getIntent().getExtras().getString("email"));
+        pref = storageRef.child(getIntent().getExtras().getString("image"));
         Glide.with(this)
                 .load(pref)
                 .into(userImage);

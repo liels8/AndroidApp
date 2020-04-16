@@ -27,6 +27,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.signature.MediaStoreSignature;
+import com.bumptech.glide.signature.ObjectKey;
 import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -61,6 +64,7 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
     String storagePermissions[];
     ProgressDialog pd;
     StorageReference storageRefrence;
+    String imagePath,oldPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,17 +102,12 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                     textDog.setText(doc.get("DogName").toString());
                     textAddress.setText(doc.get("Address").toString());
                     textType.setText(doc.get("DogType").toString());
+                    oldPath = doc.get("Image").toString();
                     StorageReference storageRef;
-                    if(doc.get("Image").toString().equals("empty_profile.png")) {
-                        storageRef = storageRefrence.child("empty_profile.png");
-                    }
-                    else
-                        storageRef = storageRefrence.child(CurrentUser.currentUserEmail);
-                    //Glide.with(UserScreenActivity.this)
-                    //        .load(storageRef)
-                    //        .into(profilePic);
-                    Picasso.get().load((doc.get("Image").toString())).into(profilePic);
-
+                    storageRef = storageRefrence.child(doc.get("Image").toString());
+                    Glide.with(UserScreenActivity.this)
+                           .load(storageRef)
+                          .into(profilePic);
                 }
             }
         })
@@ -244,23 +243,32 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
 
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+    protected void onActivityResult(final int requestCode, int resultCode, @Nullable final Intent data) {
         if(resultCode == RESULT_OK){
-            if(requestCode == IMAGE_PICK_GALLERY_CODE){
-                image_uri = data.getData();
-                uploadProfilePhoto(image_uri);
-            }
-            if(requestCode == IMAGE_PICK_CAMERA_CODE){
-                Toast.makeText(UserScreenActivity.this,"need to upload now...",Toast.LENGTH_SHORT).show();
-                uploadProfilePhoto(image_uri);
-            }
+            StorageReference delete = storageRefrence.child(oldPath);
+            delete.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                @Override
+                public void onComplete(@NonNull Task<Void> task) {
+                    if(requestCode == IMAGE_PICK_GALLERY_CODE){
+                        image_uri = data.getData();
+                        uploadProfilePhoto(image_uri);
+
+                    }
+                    if(requestCode == IMAGE_PICK_CAMERA_CODE){
+                        Toast.makeText(UserScreenActivity.this,"need to upload now...",Toast.LENGTH_SHORT).show();
+                        uploadProfilePhoto(image_uri);
+                    }
+                }
+            });
+
         }
         super.onActivityResult(requestCode, resultCode, data);
     }
 
     private void uploadProfilePhoto(Uri uri) {
         pd.show();
-        final StorageReference storageRef = storageRefrence.child(CurrentUser.currentUserEmail);
+        imagePath = uri.getPath();
+        final StorageReference storageRef = storageRefrence.child(CurrentUser.currentUserEmail+"/"+imagePath);
         storageRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
@@ -269,20 +277,19 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                 final Uri downloadUri = uriTask.getResult();
                 if(uriTask.isSuccessful()){
                     HashMap<String,Object> results = new HashMap<>();
-                    results.put("Image",downloadUri.toString());
+                    results.put("Image",CurrentUser.currentUserEmail+"/"+imagePath);
                     FirebaseFirestore db = FirebaseFirestore.getInstance();
                     db.collection("users").document(CurrentUser.currentUserEmail).update(results).addOnSuccessListener(new OnSuccessListener<Void>() {
                         @Override
                         public void onSuccess(Void aVoid) {
                             pd.dismiss();
                             Toast.makeText(UserScreenActivity.this,"Image Updated",Toast.LENGTH_SHORT);
-                            /*Picasso.get().load(downloadUri).into(profilePic);
-                            if(profilePic.getRotation() == 0)
-                                profilePic.setRotation(90);*/
                             Glide.with(UserScreenActivity.this)
                                     .load(storageRef)
                                     .into(profilePic);
-
+                            Glide.with(UserScreenActivity.this)
+                                    .load(storageRef)
+                                    .into(profilePic);
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {

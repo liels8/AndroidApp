@@ -78,7 +78,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 user = (Users) parent.getItemAtPosition(position);
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(AdminRemoveUsersActivity.this);
-                builder.setMessage("האם אתה בטוח שאת רוצה למחוק את המשתמש"+user.getName()+" "+user.getLastName()+"?").setTitle("מחיקה");
+                builder.setMessage("האם אתה בטוח שאתה רוצה למחוק את המשתמש"+user.getName()+" "+user.getLastName()+"?").setTitle("מחיקה");
                 builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

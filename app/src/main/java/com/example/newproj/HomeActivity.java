@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.example.newproj.models.CurrentUser;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -29,6 +30,7 @@ public class HomeActivity extends AppCompatActivity {
     private CardView friendsButton;
     private CardView searchFriendsButton;
     private CardView createNewMeeting;
+    private CardView myMeetings;
     private ImageView notificationButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
@@ -48,6 +50,7 @@ public class HomeActivity extends AppCompatActivity {
         friendsButton = findViewById(R.id.friends_btn);
         searchFriendsButton = findViewById(R.id.search_friends_btn);
         createNewMeeting=findViewById(R.id.newMeeting);
+        myMeetings = findViewById(R.id.my_meetings);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -98,6 +101,14 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        myMeetings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMyMeetings();
+            }
+        });
+
+        Glide.get(this).clearMemory();
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -125,6 +136,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void goToMyMeetings() {
+        Intent intent=new Intent(this, UpcomingMeetingsActivity.class);
+        startActivity(intent);
     }
 
     @Override

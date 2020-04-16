@@ -1,5 +1,10 @@
 package com.example.newproj.models;
 
+import com.example.newproj.UserScreenActivity;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Meeting {
 
 
@@ -9,14 +14,21 @@ public class Meeting {
     private String DogType;
     private String Discription;
     private String Owner;
+    private List<String> Participants;
+    private String ParkImage,UserImage;
 
-    public Meeting(String location, String date, String hour, String dogType, String discription, String owner) {
+    public Meeting(){}
+
+    public Meeting(String location, String date, String hour, String dogType, String discription, String owner,String parkImage,String userImage) {
         Location = location;
         Date = date;
         Hour = hour;
         DogType = dogType;
         Discription = discription;
         Owner = owner;
+        Participants = new ArrayList<String>();
+        ParkImage = parkImage;
+        UserImage = userImage;
     }
 
     public void setLocation(String location) {
@@ -67,5 +79,27 @@ public class Meeting {
         Owner = owner;
     }
 
+    public List<String> getParticipants() {
+        return Participants;
+    }
 
+    public String getParkImage() {
+        return ParkImage;
+    }
+
+    public void setParkImage(String parkImage) {
+        ParkImage = parkImage;
+    }
+
+    public String getUserImage() {
+        return UserImage;
+    }
+
+    public void setUserImage(String userImage) {
+        UserImage = userImage;
+    }
+
+    public void setParticipants(List<String> participants) {
+        Participants = participants;
+    }
 }

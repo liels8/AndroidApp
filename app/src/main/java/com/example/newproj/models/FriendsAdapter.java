@@ -51,10 +51,7 @@ public class FriendsAdapter extends BaseAdapter {
         image = (ImageView) view.findViewById(R.id.usrImg);
         name.setText(friends.get(i).getName()+" "+friends.get(i).getLastName());
         StorageReference pref;
-        if(friends.get(i).getImage().equals("empty_profile.png"))
-            pref = storageRef.child(friends.get(i).getImage());
-        else
-            pref = storageRef.child(friends.get(i).getEmail());
+        pref = storageRef.child(friends.get(i).getImage());
         Glide.with(view.getContext())
                 .load(pref)
                 .into(image);

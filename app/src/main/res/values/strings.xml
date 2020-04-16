@@ -11,6 +11,7 @@
     <string name="dog_prompt">בחר סוג כלב</string>
 
     <string-array name="dog_arrays">
+        <item>הכל</item>
         <item>אמסטף</item>
         <item>בולדוג</item>
         <item>פיטבול</item>
@@ -32,5 +33,8 @@
         <item>רועה אוסטרלי</item>
         <item>רועה בלגי</item>
         <item>רוטוויילר</item>
+        <item>שיצו</item>
+        <item>שפיץ</item>
+        <item>שר פיי</item>
     </string-array>
 </resources>
