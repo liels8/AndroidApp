@@ -73,29 +73,44 @@ public class MainActivity extends AppCompatActivity {
 
     //sign in method
     private void SignIn() {
-        user = db.collection("users").document(emailText.getText().toString());
-        user.get().addOnCompleteListener(new OnCompleteListener < DocumentSnapshot > () {
-            @Override
-            public void onComplete(@NonNull Task < DocumentSnapshot > task) {
-                if (task.isSuccessful()) {
-                    DocumentSnapshot doc = task.getResult();
-                    if(doc.exists()) {
-                        LoginUser.setEmail(doc.get("Email").toString());
-                        LoginUser.setPassword(doc.get("Password").toString());
-                        LoginUser.setType(doc.get("UserType").toString());
-                        LoginUser.setFriends((List<String>)doc.get("Friends"));
-                        CheckUserDetails();
-                    }
-                    else{
-                        Toast.makeText(MainActivity.this,"Email is not exsits\n please try again",Toast.LENGTH_LONG).show();
+        if(existInput(emailText.getText().toString(),passwordText.getText().toString())){
+            user = db.collection("users").document(emailText.getText().toString());
+            user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+                @Override
+                public void onComplete(@NonNull Task<DocumentSnapshot> task) {
+                    if (task.isSuccessful()) {
+                        DocumentSnapshot doc = task.getResult();
+                        if (doc.exists()) {
+                            LoginUser.setEmail(doc.get("Email").toString());
+                            LoginUser.setPassword(doc.get("Password").toString());
+                            LoginUser.setType(doc.get("UserType").toString());
+                            LoginUser.setFriends((List<String>) doc.get("Friends"));
+                            CheckUserDetails();
+                        } else {
+                            Toast.makeText(MainActivity.this, "Email is not exsits\n please try again", Toast.LENGTH_LONG).show();
+                        }
+                    } else {
+                        Toast.makeText(MainActivity.this, task.getException().toString(), Toast.LENGTH_SHORT).show();
                     }
                 }
-                else {
-                    Toast.makeText(MainActivity.this,task.getException().toString(),Toast.LENGTH_SHORT).show();
-                }
-            }
 
-        });
+            });
+        }
+    }
+
+    public boolean existInput(String email, String password) {
+        boolean result = true;
+        if(email.isEmpty()){
+            result = false;
+            if(emailText!=null)
+                emailText.setError("שדה חובה");
+        }
+        if(password.isEmpty()){
+            result = false;
+            if(passwordText!=null)
+                passwordText.setError("שדה חובה");
+        }
+        return result;
     }
 
     //check user type
@@ -135,5 +150,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
     }
+
 
 }

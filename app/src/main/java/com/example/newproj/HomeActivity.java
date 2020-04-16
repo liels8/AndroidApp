@@ -110,6 +110,11 @@ public class HomeActivity extends AppCompatActivity {
 
         Glide.get(this).clearMemory();
 
+        //for unit test
+        if(CurrentUser.currentUserEmail==null)
+            CurrentUser.currentUserEmail="admin1@gmail.com";
+        //
+
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
             @Override
@@ -186,11 +191,12 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     //log out function
-    private void logOut() {
+    public void logOut() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("EXIT", true);
         startActivity(intent);
+        finish();
     }
 
 

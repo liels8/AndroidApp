@@ -125,9 +125,9 @@ public class SearchUsersActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean isFriend(String email) {
+    public boolean isFriend(String email) {
         for(String friend_email : CurrentUser.currentUserFriends){
-            if(friend_email.equals(clickedUser.getEmail())){
+            if(friend_email.equals(email)){
                 return true;
             }
         }

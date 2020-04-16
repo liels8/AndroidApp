@@ -1,6 +1,20 @@
 package com.example.newproj;
 
+import androidx.annotation.NonNull;
+
+import com.example.newproj.models.CurrentUser;
+import com.example.newproj.models.Parks;
+import com.example.newproj.models.Users;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
+
 import org.junit.Test;
+
+import java.util.ArrayList;
 
 import static org.junit.Assert.*;
 
@@ -10,6 +24,8 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+    ArrayList<Parks> parksList;
+    //Registeration
     @Test
     public void signUpValidation_nameLengthFaild() {
         RegisterActivity regActivity = new RegisterActivity();
@@ -45,6 +61,7 @@ public class ExampleUnitTest {
         assertEquals(true,regActivity.signUpValidation("nadav","cohen","27","nadavc@gmail.com","123456"));
     }
 
+    //Edit profile
     @Test
     public void updateValidation_correct() {
         EditProfileActivity editActivity = new EditProfileActivity();
@@ -79,5 +96,44 @@ public class ExampleUnitTest {
     public void updateValidation_dogTypeLengthFailed() {
         EditProfileActivity editActivity = new EditProfileActivity();
         assertEquals(false,editActivity.updateValidation("nadav","cohen","27","beer sheva","dog","A"));
+    }
+
+    //login
+    @Test
+    public void loginValidation_emptyEmail() {
+        MainActivity main = new MainActivity();
+        assertEquals(false,main.existInput("","123456"));
+    }
+    @Test
+    public void loginValidation_emptyPassword() {
+        MainActivity main = new MainActivity();
+        assertEquals(false,main.existInput("nadav@gmail.com",""));
+    }
+
+    //search friends
+    @Test
+    public void isFriends_Pass(){
+        SearchUsersActivity search = new SearchUsersActivity();
+        CurrentUser.currentUserFriends = new ArrayList<String>();
+        CurrentUser.currentUserFriends.add("liel@gmail.com");
+        CurrentUser.currentUserFriends.add("or@gmail.com");
+        assertEquals(true,search.isFriend("liel@gmail.com"));
+    }
+
+    @Test
+    public void isFriendsValidation(){
+        SearchUsersActivity search = new SearchUsersActivity();
+        CurrentUser.currentUserFriends = new ArrayList<String>();
+        CurrentUser.currentUserFriends.add("liel@gmail.com");
+        CurrentUser.currentUserFriends.add("or@gmail.com");
+        assertEquals(false,search.isFriend("aviram@gmail.com"));
+    }
+    //logout
+    @Test
+    public void logoutTest(){
+        HomeActivity home = new HomeActivity();
+        MainActivity main = new MainActivity();
+        home.logOut();
+        assertEquals(true,main.getIntent().getExtras().getBoolean("EXIT"));
     }
 }
