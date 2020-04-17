@@ -6,6 +6,12 @@ android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
 
+
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+
     defaultConfig {
         applicationId "com.example.newproj"
         minSdkVersion 14
