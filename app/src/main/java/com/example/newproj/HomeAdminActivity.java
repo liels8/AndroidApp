@@ -86,7 +86,7 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     }
 
-
+    //open Parks Activity
     private void goToParks() {
         Intent intent = new Intent(this, ParksActivity.class);
         startActivity(intent);
@@ -112,4 +112,92 @@ public class HomeAdminActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+
 }
+
+/*
+*
+* @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_home_admin);
+
+        newUserButton=findViewById(R.id.addNewUser);
+        logOutButton=findViewById(R.id.LogoutButtonAdmin);
+        ParksButton = findViewById(R.id.parks_btn);
+        helloLabel=findViewById(R.id.hello_label_admin);
+        removeUserButton=findViewById(R.id.deleteUser);
+        db = FirebaseFirestore.getInstance();
+        newUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRegiterScreen();
+
+            }
+        });
+
+        logOutButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                logOut();
+            }
+        });
+
+        ParksButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToParks();
+            }
+        });
+
+        removeUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToRemoveUserScreen();
+            }
+        });
+
+
+        DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
+        user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
+            @Override
+            public void onComplete(@NonNull Task< DocumentSnapshot > task) {
+                if (task.isSuccessful()) {
+                    DocumentSnapshot doc = task.getResult();
+                    helloLabel.setText("שלום"+" "+doc.get("Name").toString());
+                }
+            }
+        })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                    }
+                });
+
+    }
+
+    //open Parks Activity
+    private void goToParks() {
+        Intent intent = new Intent(this, ParksActivity.class);
+        startActivity(intent);
+    }
+
+    //go to register screen
+    private void goToRegiterScreen() {
+        Intent intent = new Intent(this,AdminRegisterationActivity.class);
+        startActivity(intent);
+
+    }
+    //logout funtion
+    private void logOut() {
+        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.putExtra("EXIT", true);
+        startActivity(intent);
+    }
+
+    //go to RemoveUsersScreen
+    private void goToRemoveUserScreen() {
+        Intent intent = new Intent(this,AdminRemoveUsersActivity.class);
+        startActivity(intent);
+    }*/
