@@ -136,4 +136,5 @@ public class ExampleUnitTest {
         home.logOut();
         assertEquals(true,main.getIntent().getExtras().getBoolean("EXIT"));
     }
+    //
 }
