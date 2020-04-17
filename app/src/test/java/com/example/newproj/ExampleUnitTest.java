@@ -128,14 +128,5 @@ public class ExampleUnitTest {
         CurrentUser.currentUserFriends.add("or@gmail.com");
         assertEquals(false,search.isFriend("aviram@gmail.com"));
     }
-    //logout
-    @Test
-    public void logoutTest(){
-        HomeActivity home = new HomeActivity();
-        MainActivity main = new MainActivity();
-        home.logOut();
-        assertEquals(true,main.getIntent().getExtras().getBoolean("EXIT"));
-    }
-    //
-    //
+
 }
