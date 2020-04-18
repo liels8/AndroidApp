@@ -18,10 +18,10 @@
             android:name=".CreateMeetingActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".AdminRemoveUsersActivity"></activity>
-        <activity
-            android:name=".CreateMeetingActivity"
-            android:windowSoftInputMode="stateHidden" />
         <activity android:name=".FriendsRequests" />
+        <activity android:name=".AdminToUserProfileActivity"></activity>
+        <activity android:name=".AdminEditUserProfileActivity"></activity>
+        <activity android:name=".FindMeetingsActivity"></activity>
         <activity
             android:name=".SearchUsersActivity"
             android:windowSoftInputMode="stateHidden" />
