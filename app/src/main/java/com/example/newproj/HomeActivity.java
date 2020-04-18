@@ -31,6 +31,7 @@ public class HomeActivity extends AppCompatActivity {
     private CardView searchFriendsButton;
     private CardView createNewMeeting;
     private CardView myMeetings;
+    private CardView searchMeetings;
     private ImageView notificationButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
@@ -51,6 +52,7 @@ public class HomeActivity extends AppCompatActivity {
         searchFriendsButton = findViewById(R.id.search_friends_btn);
         createNewMeeting=findViewById(R.id.newMeeting);
         myMeetings = findViewById(R.id.my_meetings);
+        searchMeetings = findViewById(R.id.meeting_search);
 
         profileButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +110,13 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        searchMeetings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSearchMeetings();
+            }
+        });
+
         Glide.get(this).clearMemory();
 
         //for unit test
@@ -141,6 +150,11 @@ public class HomeActivity extends AppCompatActivity {
 
 
 
+    }
+
+    private void goToSearchMeetings() {
+        Intent intent=new Intent(this, FindMeetingsActivity.class);
+        startActivity(intent);
     }
 
     private void goToMyMeetings() {

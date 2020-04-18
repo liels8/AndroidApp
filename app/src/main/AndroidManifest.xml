@@ -13,11 +13,12 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".UpcomingMeetingsActivity"></activity>
+        <activity android:name=".FindMeetingsActivity"></activity>
+        <activity android:name=".UpcomingMeetingsActivity" />
         <activity
             android:name=".CreateMeetingActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".AdminRemoveUsersActivity"></activity>
+        <activity android:name=".AdminRemoveUsersActivity" />
         <activity
             android:name=".CreateMeetingActivity"
             android:windowSoftInputMode="stateHidden" />
