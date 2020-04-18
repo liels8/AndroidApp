@@ -27,7 +27,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     private TextView helloLabel;
     private FirebaseFirestore db;
 
-    //
+    //initialize
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
