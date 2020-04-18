@@ -28,10 +28,12 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+//Test that preform a login senario with a user
 public class MainActivityTest {
 
     @Rule
     public ActivityTestRule<MainActivity> mActivityTestRule = new ActivityTestRule<>(MainActivity.class);
+    public MainActivity mainActivity;
 
     @Test
     public void mainActivityTest() {

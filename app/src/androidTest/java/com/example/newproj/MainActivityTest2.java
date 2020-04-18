@@ -26,6 +26,8 @@ import static org.hamcrest.Matchers.allOf;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
+
+//Test to Login Screen that checks the register button
 public class MainActivityTest2 {
 
     @Rule
