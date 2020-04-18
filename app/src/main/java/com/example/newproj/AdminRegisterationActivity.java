@@ -43,6 +43,7 @@ public class AdminRegisterationActivity extends AppCompatActivity {
         regButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(ValidText(regName.getText().toString(),regLastName.getText().toString(),regAge.getText().toString(),regEmail.getText().toString(),regPassword.getText().toString()))
                     signUp();
                 }
 
@@ -71,13 +72,14 @@ public class AdminRegisterationActivity extends AppCompatActivity {
                         user.put("Image",usr.getImage());
                         user.put("Friends",usr.getFriends());
                         user.put("Address",usr.getAddress());
+                        user.put("Requests",usr.getRequests());
 
                         db.collection("users")
                                 .document(usr.getEmail()).set(user)
                                 .addOnSuccessListener(new OnSuccessListener<Void>() {
                                     @Override
                                     public void onSuccess(Void aVoid) {
-                                        Toast.makeText(AdminRegisterationActivity.this, "User Registered", Toast.LENGTH_SHORT).show();
+                                        Toast.makeText(AdminRegisterationActivity.this, "משתמש נוצר בהצלחה", Toast.LENGTH_SHORT).show();
                                         finish();
                                     }
                                 });
@@ -88,6 +90,92 @@ public class AdminRegisterationActivity extends AppCompatActivity {
                 }
             }
         });
+    }
+
+    private boolean ValidText(String name, String lastname, String age, String email, String password){
+        String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
+        String namePattern="[a-zA-Z\u0590-\u05fe]+";
+        String passwordPattern="[A-Za-z0-9]";
+        boolean flag=true;
+
+        //name field validation
+        if (!name.isEmpty()){
+            if(!(name.trim().matches(namePattern))){
+                if(regName!=null)
+                    regName.setError("Name field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(name.length()<2) {
+                if(regName!=null)
+                    regName.setError("Name field must be at least 2 letters!");
+                flag=false;
+            }
+        } else{
+            if(regName!=null)
+                regName.setError("Please enter your name!");
+            flag=false;
+        }
+
+        //last name field validation
+        if (!lastname.isEmpty()){
+            if(!(lastname.trim().matches(namePattern))){
+                if(regLastName!=null)
+                    regLastName.setError("Last-Name field letters Must A-Z or a-z!");
+                flag=false;
+            }
+            if(lastname.length()<2) {
+                if(regLastName!=null)
+                    regLastName.setError("Last-Name field must be at least 2 letters!");
+                flag=false;
+            }
+        }
+        else{
+            if(regLastName!=null)
+                regLastName.setError("Please enter your last name!");
+            flag=false;
+        }
+
+        //age field validation
+        if (age.isEmpty()){
+            if(regAge!=null)
+                regAge.setError("Please enter your age");
+            flag=false;
+        }
+
+        //email field validation
+        if (!email.isEmpty()){
+            if(!email.trim().matches(emailPattern)){
+                if(regEmail!=null)
+                    regEmail.setError("Please enter a valid email");
+                flag=false;
+            }
+        }
+        else {
+            if(regEmail!=null)
+                regEmail.setError("Please enter your email");
+            flag=false;
+        }
+
+        //password field validation
+        if (!password.isEmpty()){
+            if (password.trim().matches(passwordPattern)){
+                if(regPassword!=null)
+                    regPassword.setError("Passwrod must contain lower or upper or number letters");
+                flag=false;
+            }
+            if (password.length()<5){
+                if(regPassword!=null)
+                    regPassword.setError("Password length must be at least 6");
+                flag=false;
+            }
+        }
+        else{
+            if(regPassword!=null)
+                regPassword.setError("Please enter password");
+            flag=false;
+        }
+
+        return flag;
     }
 
 

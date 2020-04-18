@@ -103,7 +103,7 @@ public class EditProfileActivity extends AppCompatActivity {
     }
 
     public boolean updateValidation(String name,String lastname,String age,String address,String dogname,String dogtype){
-        String namePattern="[A-Za-z]+";
+        String namePattern="[a-zA-Z\u0590-\u05fe]+";
         boolean flag = true;
         //name field validation
         if (!name.isEmpty()){

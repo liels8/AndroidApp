@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
@@ -36,6 +37,7 @@ import java.util.Map;
 
 public class AdminRemoveUsersActivity extends AppCompatActivity {
     private ListView users;
+    private TextView userCount,userLabel;
     private FirebaseFirestore db;
     private ArrayList<Users> usersList;
     private Users user;
@@ -45,6 +47,9 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends);
         users = findViewById(R.id.friends_listview);
+        userCount=findViewById(R.id.friends_count);
+        userLabel=findViewById(R.id.friends_label);
+        userLabel.setText("משתמשים");
         db = FirebaseFirestore.getInstance();
         usersList = new ArrayList<Users>();
 
@@ -67,8 +72,9 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
                             user.setEmail(doc.get("Email").toString());
                             usersList.add(user);
                         }
-                        showResults(usersList);
                     }
+                    showResults(usersList);
+                    userCount.setText(""+usersList.size());
                 }
             }
         });
@@ -77,6 +83,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 user = (Users) parent.getItemAtPosition(position);
+                /*
                 android.app.AlertDialog.Builder builder = new AlertDialog.Builder(AdminRemoveUsersActivity.this);
                 builder.setMessage("האם אתה בטוח שאתה רוצה למחוק את המשתמש"+user.getName()+" "+user.getLastName()+"?").setTitle("מחיקה");
                 builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
@@ -93,6 +100,18 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
                 });
                 AlertDialog dialog = builder.create();
                 dialog.show();
+                */
+                Intent intent = new Intent(AdminRemoveUsersActivity.this,AdminToUserProfileActivity.class);
+                intent.putExtra("name",user.getName());
+                intent.putExtra("lastName",user.getLastName());
+                intent.putExtra("address",user.getAddress());
+                intent.putExtra("dogName",user.getDogName());
+                intent.putExtra("dogType",user.getDogType());
+                intent.putExtra("age",user.getAge());
+                intent.putExtra("image",user.getImage());
+                intent.putExtra("email",user.getEmail());
+                startActivity(intent);
+                finish();
             }
         });
 

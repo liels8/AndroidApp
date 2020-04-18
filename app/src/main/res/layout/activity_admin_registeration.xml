@@ -62,7 +62,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="שם פרטי"
+                        android:hint="שם פרטי"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -92,7 +92,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="שם משפחה"
+                        android:hint="שם משפחה"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -122,7 +122,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="גיל"
+                        android:hint="גיל"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -152,7 +152,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="כתובת"
+                        android:hint="כתובת"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -182,7 +182,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="דואר אלקטרוני"
+                        android:hint="דואר אלקטרוני"
                         android:textDirection="ltr">
 
                     </EditText>
@@ -212,7 +212,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center"
-                        android:text="סיסמא"
+                        android:hint="סיסמא"
                         android:textDirection="ltr">
 
                     </EditText>

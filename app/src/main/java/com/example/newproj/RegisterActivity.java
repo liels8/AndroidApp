@@ -113,7 +113,7 @@ public class RegisterActivity extends AppCompatActivity {
 
         boolean flag=true;
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
-        String namePattern="[A-Za-z]+";
+        String namePattern="[a-zA-Z\u0590-\u05fe]+";
         String passwordPattern="[A-Za-z0-9]";
 
         //name field validation
