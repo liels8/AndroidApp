@@ -11,7 +11,7 @@ pipeline {
   stages { 
     stage ('Prepare'){ 
       steps { 
-        sh 'chmod +rx ./gradlew' 
+        sh 'chmod a+rx ./gradlew' 
       } 
     } 
     stage('Compile') { 
