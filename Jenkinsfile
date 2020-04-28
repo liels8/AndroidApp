@@ -11,13 +11,13 @@ pipeline {
   stages { 
     stage ('Prepare'){ 
       steps { 
-        sh 'chmod +xrw gradlew' 
+        sh 'chmod +xrw ./gradlew' 
       } 
     } 
     stage('Compile') { 
       steps { 
         // Compile the app and its dependencies 
-        sh './gradlew compileDebugSources' 
+        sh -c './gradlew compileDebugSources' 
       } 
     } 
     stage('Build APK') { 
