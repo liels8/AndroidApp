@@ -15,7 +15,7 @@ android {
         testLogging {
             exceptionFormat "full"
             events "started", "skipped", "passed", "failed"
-            showStandardStreams true
+            showStandardStreams=true
         }
     }
 
