@@ -13,7 +13,8 @@
         android:layout_height="150dp"
         android:gravity="bottom"
         android:layout_gravity="right"
-        android:background="@drawable/park_background">
+        android:background=""
+        >
 
         <TextView
             android:layout_width="match_parent"
