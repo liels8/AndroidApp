@@ -11,7 +11,7 @@ pipeline {
   stages { 
     stage ('Prepare'){ 
       steps { 
-        CLASSPATH=$APP_HOME/gradle/wrapper/gradle-wrapper.jar
+        CLASSPATH=gradle/wrapper/gradle-wrapper.jar
         sh 'chmod +x ./gradlew' 
       } 
     } 
