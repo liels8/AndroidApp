@@ -16,9 +16,8 @@ pipeline {
     } 
     stage('Compile') { 
       steps { 
-        sh 'chmod +xrw ./gradlew' 
         // Compile the app and its dependencies 
-        sh './gradlew compileDebugSources' 
+        sh './gradle/wrapper/gradlew compileDebugSources' 
       } 
     } 
     stage('Build APK') { 
