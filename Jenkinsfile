@@ -11,14 +11,13 @@ pipeline {
   stages { 
     stage ('Prepare'){ 
       steps { 
-        CLASSPATH=gradle/wrapper/gradle-wrapper.jar
         sh 'chmod +x ./gradlew' 
       } 
     } 
     stage('Compile') { 
       steps { 
         // Compile the app and its dependencies 
-        sh  './gradlew compileDebugSources' 
+        sh -c  './gradlew compileDebugSources' 
       } 
     } 
     stage('Build APK') { 
