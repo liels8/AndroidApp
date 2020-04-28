@@ -33,12 +33,12 @@ pipeline {
             sh './gradlew test --rerun-tasks'
       }         
     }
-    post {
+  }
+      post {
     always {
        mail to: 'lielsananes8@gmail.com',
           subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
           body: "${env.BUILD_URL} has result ${currentBuild.result}"
     }
   }
-  } 
 }
