@@ -2,6 +2,14 @@ apply plugin: 'com.android.application'
 apply plugin: 'com.google.gms.google-services'
 
 
+tasks.withType(Test) {
+    testLogging {
+        exceptionFormat "full"
+        events "started", "skipped", "passed", "failed"
+        showStandardStreams true
+    }
+}
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"
@@ -11,13 +19,7 @@ android {
         unitTests.returnDefaultValues = true
     }
 
-    tasks.withType(Test) {
-        testLogging {
-            exceptionFormat "full"
-            events "started", "skipped", "passed", "failed"
-            showStandardStreams=true
-        }
-    }
+
 
 
     defaultConfig {
