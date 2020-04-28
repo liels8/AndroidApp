@@ -64,6 +64,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for(QueryDocumentSnapshot doc : task.getResult()){
                         Meeting meeting = new Meeting();
+                        meeting.setID(doc.get("ID").toString());
                         meeting.setDate(doc.get("Date").toString());
                         meeting.setLocation(doc.get("Location").toString());
                         meeting.setHour(doc.get("Hour").toString());

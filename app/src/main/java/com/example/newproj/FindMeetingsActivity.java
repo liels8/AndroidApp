@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -13,6 +14,7 @@ import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.Spinner;
 
+import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.Meeting;
 import com.example.newproj.models.MeetingsAdapter;
 import com.example.newproj.models.Parks;
@@ -39,6 +41,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
     private ArrayList<Meeting> result;
     private ArrayList<Users> usersList;
     private Users user;
+    private Meeting clickedMeeting;
     private FirebaseFirestore db;
     private Calendar myCalendar;
     private DatePickerDialog.OnDateSetListener date;
@@ -86,6 +89,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
                 if (task.isSuccessful()) {
                     for(QueryDocumentSnapshot doc : task.getResult()){
                         Meeting meeting = new Meeting();
+                        meeting.setID(doc.get("ID").toString());
                         meeting.setDate(doc.get("Date").toString());
                         meeting.setLocation(doc.get("Location").toString());
                         meeting.setHour(doc.get("Hour").toString());
@@ -155,6 +159,53 @@ public class FindMeetingsActivity extends AppCompatActivity {
             }
         });
 
+        meetingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                clickedMeeting = (Meeting) parent.getItemAtPosition(position);
+                showMeetingDetails();
+            }
+        });
+
+    }
+
+    private void showMeetingDetails() {
+        Intent intent = new Intent(this,MeetingDetailsActivity.class);
+        intent.putExtra("id",clickedMeeting.getID());
+        intent.putExtra("owner",clickedMeeting.getOwner());
+        intent.putExtra("location",clickedMeeting.getLocation());
+        intent.putExtra("date",clickedMeeting.getDate());
+        intent.putExtra("hour",clickedMeeting.getHour());
+        intent.putExtra("dogType",clickedMeeting.getDogType());
+        intent.putExtra("description",clickedMeeting.getDiscription());
+        intent.putExtra("image",clickedMeeting.getParkImage());
+        intent.putExtra("participants",(ArrayList<String>)clickedMeeting.getParticipants());
+        if(isMember()){
+            intent.putExtra("isMember",true);
+        }
+        else{
+            intent.putExtra("isMember",false);
+        }
+        if(isOwner()){
+            intent.putExtra("isOwner",true);
+        }
+        else{
+            intent.putExtra("isOwner",false);
+        }
+
+        startActivity(intent);
+    }
+
+    private boolean isOwner() {
+        if(clickedMeeting.getOwner().equals(CurrentUser.currentUserEmail))
+            return true;
+        return false;
+    }
+
+    private boolean isMember(){
+        if(clickedMeeting.getParticipants().indexOf(CurrentUser.currentUserEmail) == -1)
+            return false;
+        return true;
     }
 
     private void fillList(final ArrayList<Meeting> meetings_list) {
@@ -164,8 +215,8 @@ public class FindMeetingsActivity extends AppCompatActivity {
                 @Override
                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                     if(task.isSuccessful()){
-                        for(QueryDocumentSnapshot doc : task.getResult()){
-                            for(Meeting meeting : meetings_list){
+                        for(Meeting meeting : meetings_list){
+                            for(QueryDocumentSnapshot doc : task.getResult()){
                                 if(doc.get("Email").toString().equals(meeting.getOwner())){
                                     user = new Users();
                                     user.setName(doc.get("Name").toString());

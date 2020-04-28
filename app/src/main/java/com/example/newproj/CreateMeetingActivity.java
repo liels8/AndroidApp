@@ -142,11 +142,14 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                 mt.put("DogType", meeting.getDogType());
                 mt.put("Discription", meeting.getDiscription());
                 mt.put("Owner", meeting.getOwner());
-                mt.put("Participants", meeting.getParticipants());
                 mt.put("ParkImage",meeting.getParkImage());
                 mt.put("UserImage",meeting.getUserImage());
-
-                db.collection("meetings").document().set(mt)
+                ArrayList<String> participants = new ArrayList<String>();
+                participants.add(CurrentUser.currentUserEmail);
+                mt.put("Participants", participants);
+                String id = db.collection("meetings").document().getId();
+                mt.put("ID", id);
+                db.collection("meetings").document(id).set(mt)
                         .addOnSuccessListener(new OnSuccessListener<Void>() {
                             @Override
                             public void onSuccess(Void aVoid) {
@@ -179,11 +182,6 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                     public void onFailure(@NonNull Exception e) {
                     }
                 });
-
-
-
-
-
 
     }
 

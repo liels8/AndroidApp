@@ -87,6 +87,7 @@ public class EditProfileActivity extends AppCompatActivity {
                     user.put("Image", usr.getImage());
                     user.put("Friends", usr.getFriends());
                     user.put("Address", addressText.getText().toString());
+                    user.put("Requests",usr.getRequests());
 
                     db.collection("users")
                             .document(usr.getEmail()).set(user)

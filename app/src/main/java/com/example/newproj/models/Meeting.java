@@ -16,6 +16,7 @@ public class Meeting {
     private String Owner;
     private List<String> Participants;
     private String ParkImage,UserImage;
+    private String ID;
 
     public Meeting(){}
 
@@ -41,6 +42,14 @@ public class Meeting {
 
     public void setHour(String hour) {
         Hour = hour;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public void setDogType(String dogType) {
