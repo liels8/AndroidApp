@@ -87,7 +87,7 @@ public class HomeAdminActivity extends AppCompatActivity {
 
     }
 
-    //open Parks Activity
+    //Open Parks Activity
     private void goToParks() {
         Intent intent = new Intent(this, ParksActivity.class);
         startActivity(intent);
