@@ -35,7 +35,7 @@ public class HomeActivity extends AppCompatActivity {
     private ImageView notificationButton;
     //private FirebaseDatabase database;
     private FirebaseFirestore db;
-
+    //
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
