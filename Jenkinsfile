@@ -11,13 +11,13 @@ pipeline {
   stages { 
     stage ('Prepare'){ 
       steps { 
-        sh 'pwd'
-        sh 'ls'
         sh 'chmod +x ./gradlew' 
       } 
     } 
     stage('Compile') { 
       steps { 
+        sh 'pwd'
+        sh 'ls'
         // Compile the app and its dependencies 
         sh 'gradlew compileDebugSources' 
       } 
