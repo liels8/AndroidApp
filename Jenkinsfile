@@ -12,6 +12,7 @@ pipeline {
     stage ('Prepare'){ 
       steps { 
         sh 'pwd'
+        sh 'ls'
         sh 'chmod +x ./gradlew' 
       } 
     } 
