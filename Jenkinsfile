@@ -17,7 +17,7 @@ pipeline {
     stage('Compile') { 
       steps { 
         // Compile the app and its dependencies 
-        sh -c './gradlew compileDebugSources' 
+        sh './gradlew compileDebugSources' 
       } 
     } 
     stage('Build APK') { 
@@ -29,7 +29,7 @@ pipeline {
      stage('UnitTests') {
       //Start all the existing tests in the test package 
           steps { 
-            sh './gradlew test'
+            sh './gradlew testDebugUnitTest UnitTest'
 
       }         
   }
