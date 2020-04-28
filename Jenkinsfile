@@ -29,7 +29,7 @@ pipeline {
      stage('UnitTests') {
       //Start all the existing tests in the test package 
           steps { 
-            sh './gradlew testDebug'
+            sh './gradlew test'
 
       }         
   }
