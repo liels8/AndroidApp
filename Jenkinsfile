@@ -12,7 +12,7 @@ pipeline {
     stage ('Prepare'){ 
       steps { 
         sh 'chmod +x ./gradlew'
-        adb shell monkey -p your.com.example.newproj -v 500
+        sh 'adb shell monkey -p your.com.example.newproj -v 500'
       } 
     } 
     stage('Compile') { 
