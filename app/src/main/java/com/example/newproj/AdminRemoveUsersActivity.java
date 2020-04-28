@@ -70,6 +70,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
                             user.setDogType(doc.get("DogType").toString());
                             user.setDogName(doc.get("DogName").toString());
                             user.setEmail(doc.get("Email").toString());
+                            user.setPassword(doc.get("Password").toString());
                             usersList.add(user);
                         }
                     }
@@ -83,24 +84,6 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 user = (Users) parent.getItemAtPosition(position);
-                /*
-                android.app.AlertDialog.Builder builder = new AlertDialog.Builder(AdminRemoveUsersActivity.this);
-                builder.setMessage("האם אתה בטוח שאתה רוצה למחוק את המשתמש"+user.getName()+" "+user.getLastName()+"?").setTitle("מחיקה");
-                builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        removeUser();
-                    }
-                });
-                builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        return;
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
-                */
                 Intent intent = new Intent(AdminRemoveUsersActivity.this,AdminToUserProfileActivity.class);
                 intent.putExtra("name",user.getName());
                 intent.putExtra("lastName",user.getLastName());
@@ -110,6 +93,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
                 intent.putExtra("age",user.getAge());
                 intent.putExtra("image",user.getImage());
                 intent.putExtra("email",user.getEmail());
+                intent.putExtra("password",user.getPassword());
                 startActivity(intent);
                 finish();
             }
@@ -117,7 +101,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
 
 
     }
-
+/*
     private void removeUser() {
         db.collection("users").document(user.getEmail()).delete();
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -164,7 +148,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
         });
 
     }
-
+*/
 
     private void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);

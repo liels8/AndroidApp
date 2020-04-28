@@ -116,7 +116,6 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                     public void onFailure(@NonNull Exception e) {
                     }
                 });
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

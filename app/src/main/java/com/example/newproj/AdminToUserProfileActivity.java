@@ -63,13 +63,18 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
                 .load(pref)
                 .into(userImage);
 
+        userImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                removePicture();
+            }
+        });
+
         editProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                goToEditScreen();
 
-                 */
+                goToEditScreen();
             }
         });
 
@@ -96,6 +101,45 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
         });
     }
 
+    private void removePicture() {
+        android.app.AlertDialog.Builder builder = new AlertDialog.Builder(AdminToUserProfileActivity.this);
+        builder.setMessage("האם אתה בטוח שאתה רוצה למחוק את התמונה של המשתמש").setTitle("מחיקת תמונה");
+        builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                deletePicture();
+
+            }
+        });
+        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                return;
+            }
+        });
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void deletePicture() {
+        StorageReference storageReference=FirebaseStorage.getInstance().getReference();
+        StorageReference delete = storageReference.child(getIntent().getExtras().getString("image"));
+        delete.delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+            @Override
+            public void onComplete(@NonNull Task<Void> task) {
+                WriteBatch batch = db.batch();
+                DocumentReference sfRef= db.collection("users").document(getIntent().getExtras().getString("email"));
+                batch.update(sfRef, "Image","empty_profile.png");
+                batch.commit();
+                Toast.makeText(AdminToUserProfileActivity.this,"תמונה נמחקה בהצלחה",Toast.LENGTH_LONG).show();
+                pref = storageRef.child("empty_profile.png");
+                Glide.with(AdminToUserProfileActivity.this)
+                        .load(pref)
+                        .into(userImage);
+            }
+        });
+    }
+
     private void goToEditScreen() {
         Intent intent = new Intent(AdminToUserProfileActivity.this,AdminEditUserProfileActivity.class);
         intent.putExtra("name",getIntent().getExtras().getString("name"));
@@ -106,6 +150,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
         intent.putExtra("age",getIntent().getExtras().getString("age"));
         intent.putExtra("email",getIntent().getExtras().getString("email"));
         intent.putExtra("image",getIntent().getExtras().getString("image"));
+        intent.putExtra("password",getIntent().getExtras().getString("password"));
         startActivity(intent);
         finish();
     }
