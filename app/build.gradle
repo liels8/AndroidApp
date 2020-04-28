@@ -11,6 +11,14 @@ android {
         unitTests.returnDefaultValues = true
     }
 
+    tasks.withType(Test) {
+        testLogging {
+            exceptionFormat "full"
+            events "started", "skipped", "passed", "failed"
+            showStandardStreams true
+        }
+    }
+
 
     defaultConfig {
         applicationId "com.example.newproj"
