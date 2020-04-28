@@ -31,6 +31,7 @@ pipeline {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew test --rerun-tasks'
+            sh './gradlew connectedAndroidTest'
 
       }         
   }
