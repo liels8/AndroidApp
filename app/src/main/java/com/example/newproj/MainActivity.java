@@ -79,6 +79,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
 
+
+
         registerText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -111,7 +113,7 @@ public class MainActivity extends AppCompatActivity {
                             LoginUser.setPassword(doc.get("Password").toString());
                             LoginUser.setType(doc.get("UserType").toString());
                             LoginUser.setFriends((List<String>) doc.get("Friends"));
-                            LoginUser.setDogType(doc.get("DogType").toString());
+                            LoginUser.setDogType((String)doc.get("DogType"));
 
 
                             editor.putString("Email", doc.get("Email").toString());
@@ -124,8 +126,9 @@ public class MainActivity extends AppCompatActivity {
                             if(LoginUser.getDogType()!=null)
                                 editor.putString("DogType", doc.get("DogType").toString());
                             editor.commit();
-
                             CheckUserDetails();
+
+
                         } else {
                             Toast.makeText(MainActivity.this, "Email is not exsits\n please try again", Toast.LENGTH_LONG).show();
                         }
