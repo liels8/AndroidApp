@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
-import com.example.newproj.models.Parks;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
@@ -103,14 +102,21 @@ public class HomeAdminActivity extends AppCompatActivity {
     private void logOut() {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        SharedPreferences sharedpreferences;
+        SharedPreferences.Editor editor;
+        sharedpreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor=sharedpreferences.edit();
+        editor.clear();
+        editor.commit();
         intent.putExtra("EXIT", true);
         startActivity(intent);
     }
 
     //go to RemoveUsersScreen
     private void goToRemoveUserScreen() {
-        Intent intent = new Intent(this,AdminRemoveUsersActivity.class);
+        Intent intent = new Intent(this, AdminAllUsers.class);
         startActivity(intent);
+
     }
 
 

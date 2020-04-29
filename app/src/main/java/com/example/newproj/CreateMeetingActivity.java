@@ -186,7 +186,7 @@ public class CreateMeetingActivity extends AppCompatActivity  {
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         mDate.setText(sdf.format(myCalendar.getTime()));
     }

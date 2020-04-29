@@ -60,7 +60,7 @@
                         android:id="@+id/editFirstName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="שם פרטי"
+                        android:hint="שם פרטי"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -90,7 +90,7 @@
                         android:id="@+id/editLastName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="שם משפחה"
+                        android:hint="שם משפחה"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -120,7 +120,7 @@
                         android:id="@+id/editAge"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="גיל"
+                        android:hint="גיל"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -150,7 +150,7 @@
                         android:id="@+id/editAdress"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="כתובת"
+                        android:hint="כתובת"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -180,7 +180,7 @@
                         android:id="@+id/editDogName"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="שם הכלב"
+                        android:hint="שם הכלב"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -210,7 +210,7 @@
                         android:id="@+id/editDogType"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="סוג הכלב"
+                        android:hint="סוג הכלב"
                         android:gravity="center"
                         android:textDirection="ltr">
 
@@ -240,7 +240,7 @@
                         android:id="@+id/editPassword"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:text="סיסמא"
+                        android:hint="סיסמא"
                         android:gravity="center"
                         android:textDirection="ltr">
 

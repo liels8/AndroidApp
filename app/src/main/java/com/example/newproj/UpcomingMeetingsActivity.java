@@ -3,8 +3,10 @@ package com.example.newproj;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -16,16 +18,19 @@ import com.example.newproj.models.CustomAdapter;
 import com.example.newproj.models.Meeting;
 import com.example.newproj.models.MeetingsAdapter;
 import com.example.newproj.models.Parks;
+import com.example.newproj.models.SortByDate;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class UpcomingMeetingsActivity extends AppCompatActivity {
     private ListView meetingsListView;
@@ -38,6 +43,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
     private RadioButton allMeetingsOption,iCreatedOption;
     private Button showButton;
     private RadioGroup options;
+    private Meeting clickedMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +82,10 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                         meeting.setUserImage(doc.get("UserImage").toString());
                         meetingsList.add(meeting);
                     }
+                    result.clear();
                     showAllMeetings();
+                    Collections.sort(result, new SortByDate());
+                    fillList(result);
                 }
             }
         })
@@ -89,13 +98,26 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                result.clear();
+
                 if(options.getCheckedRadioButtonId()==iCreatedOption.getId()){
+                    result.clear();
                     showMeetingICreated();
+                    Collections.sort(result, new SortByDate());
+                    fillList(result);
                 }
                 else{
+                    result.clear();
                     showAllMeetings();
+                    Collections.sort(result, new SortByDate());
+                    fillList(result);
                 }
+            }
+        });
+        meetingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                clickedMeeting = (Meeting) parent.getItemAtPosition(position);
+                showMeetingDetails();
             }
         });
     }
@@ -104,10 +126,12 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         showMeetingICreated();
         for(Meeting meeting : meetingsList){
             if(iParticipateInMeeting(meeting)){
-                result.add(meeting);
+                if(!meeting.getOwner().equals(CurrentUser.currentUserEmail.toString()))
+                    result.add(meeting);
             }
         }
-        fillList(result);
+        //Collections.sort(result, new SortByDate());
+       // fillList(result);
     }
 
     private void showMeetingICreated() {
@@ -116,7 +140,8 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 result.add(meeting);
             }
         }
-        fillList(result);
+        //Collections.sort(result, new SortByDate());
+        //fillList(result);
     }
 
     private boolean iParticipateInMeeting(Meeting meeting){
@@ -134,8 +159,8 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
             @Override
             public void onComplete(@NonNull Task<QuerySnapshot> task) {
                 if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot doc : task.getResult()){
-                        for(Meeting meeting : meetings_list){
+                    for(Meeting meeting : meetings_list){
+                        for(QueryDocumentSnapshot doc : task.getResult()){
                                     if(doc.get("Email").toString().equals(meeting.getOwner())){
                                         user = new Users();
                                         user.setName(doc.get("Name").toString());
@@ -153,4 +178,44 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         });
 
     }
+    private void showMeetingDetails() {
+        Intent intent = new Intent(this,MeetingDetailsActivity.class);
+        intent.putExtra("id",clickedMeeting.getID());
+        intent.putExtra("owner",clickedMeeting.getOwner());
+        intent.putExtra("location",clickedMeeting.getLocation());
+        intent.putExtra("date",clickedMeeting.getDate());
+        intent.putExtra("hour",clickedMeeting.getHour());
+        intent.putExtra("dogType",clickedMeeting.getDogType());
+        intent.putExtra("description",clickedMeeting.getDiscription());
+        intent.putExtra("image",clickedMeeting.getParkImage());
+        intent.putExtra("participants",(ArrayList<String>)clickedMeeting.getParticipants());
+        intent.putExtra("activityscreen","UpcomingMeetingActivity");
+        if(isMember()){
+            intent.putExtra("isMember",true);
+        }
+        else{
+            intent.putExtra("isMember",false);
+        }
+        if(isOwner()){
+            intent.putExtra("isOwner",true);
+        }
+        else{
+            intent.putExtra("isOwner",false);
+        }
+        finish();
+        startActivity(intent);
+    }
+
+    private boolean isOwner() {
+        if(clickedMeeting.getOwner().equals(CurrentUser.currentUserEmail))
+            return true;
+        return false;
+    }
+
+    private boolean isMember(){
+        if(clickedMeeting.getParticipants().indexOf(CurrentUser.currentUserEmail) == -1)
+            return false;
+        return true;
+    }
+
 }

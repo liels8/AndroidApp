@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -117,6 +118,9 @@ public class HomeActivity extends AppCompatActivity {
             }
         });
 
+        helloLabel.setText("");
+        notificationsCount.setVisibility(View.INVISIBLE);
+
         Glide.get(this).clearMemory();
 
         //for unit test
@@ -209,6 +213,12 @@ public class HomeActivity extends AppCompatActivity {
         Intent intent = new Intent(getApplicationContext(), MainActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra("EXIT", true);
+        SharedPreferences sharedpreferences;
+        SharedPreferences.Editor editor;
+        sharedpreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor=sharedpreferences.edit();
+        editor.clear();
+        editor.commit();
         startActivity(intent);
         finish();
     }

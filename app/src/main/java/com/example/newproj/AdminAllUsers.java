@@ -3,39 +3,26 @@ package com.example.newproj;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.FriendsAdapter;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
-import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-import com.google.firebase.firestore.SetOptions;
-import com.google.firebase.firestore.WriteBatch;
-import com.google.firebase.firestore.auth.User;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
-public class AdminRemoveUsersActivity extends AppCompatActivity {
+public class AdminAllUsers extends AppCompatActivity {
     private ListView users;
     private TextView userCount,userLabel;
     private FirebaseFirestore db;
@@ -84,7 +71,7 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 user = (Users) parent.getItemAtPosition(position);
-                Intent intent = new Intent(AdminRemoveUsersActivity.this,AdminToUserProfileActivity.class);
+                Intent intent = new Intent(AdminAllUsers.this,AdminToUserProfileActivity.class);
                 intent.putExtra("name",user.getName());
                 intent.putExtra("lastName",user.getLastName());
                 intent.putExtra("address",user.getAddress());
@@ -101,54 +88,6 @@ public class AdminRemoveUsersActivity extends AppCompatActivity {
 
 
     }
-/*
-    private void removeUser() {
-        db.collection("users").document(user.getEmail()).delete();
-        db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-            @Override
-            public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                if(task.isSuccessful()){
-                    for(QueryDocumentSnapshot doc : task.getResult()) {
-                        if (!(doc.get("UserType").toString().equals("admin") || doc.get("Email").toString().equals(CurrentUser.currentUserEmail))) {
-                            Users user1 = new Users();
-                            user1.setEmail(doc.get("Email").toString());
-                            user1.setFriends((List<String>)(doc.get("Friends")));
-                            user1.getFriends().remove(user.getEmail());
-
-                            WriteBatch batch = db.batch();
-                            DocumentReference sfRef= db.collection("users").document(user1.getEmail());
-                            batch.update(sfRef, "Friends", user1.getFriends());
-                            batch.commit();
-                        }
-                    }
-                    db.collectionGroup("meetings").get()
-                            .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                                                       @Override
-                                                       public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                                                           for (QueryDocumentSnapshot doc : task.getResult()) {
-                                                               if(doc.get("Owner").toString().equals(user.getEmail())) {
-                                                                   WriteBatch batch = db.batch();
-                                                                   String key=doc.getId();
-                                                                   DocumentReference laRef = db.collection("meetings").document(doc.getId());
-                                                                   batch.delete(laRef);
-                                                                   batch.commit();
-                                                               }
-                                                           }
-                                                           Toast.makeText(AdminRemoveUsersActivity.this,"משתמש נמחק בהצלחה",Toast.LENGTH_LONG).show();
-                                                           Intent intent = new Intent(AdminRemoveUsersActivity.this, AdminRemoveUsersActivity.class);
-                                                           startActivity(intent);
-                                                           finish();
-                                                       }
-
-                                                   });
-
-
-                }
-            }
-        });
-
-    }
-*/
 
     private void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);

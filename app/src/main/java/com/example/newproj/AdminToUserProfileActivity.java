@@ -25,6 +25,7 @@ import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AdminToUserProfileActivity extends AppCompatActivity {
@@ -32,7 +33,8 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
     private ImageView userImage,editProfile,deleteUser;
     private StorageReference storageRef;
     private FirebaseFirestore db;
-    StorageReference pref;
+    private StorageReference pref;
+    private ArrayList<String> participantsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +49,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
         userImage=findViewById(R.id.userImage);
         editProfile=findViewById(R.id.editProfile);
         deleteUser=findViewById(R.id.deleteUser);
+        participantsList=new ArrayList<String>();
 
         userName.setText(getIntent().getExtras().getString("name") + " " + getIntent().getExtras().getString("lastName"));
         userAge.setText(getIntent().getExtras().getString("age"));
@@ -136,8 +139,24 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
                 Glide.with(AdminToUserProfileActivity.this)
                         .load(pref)
                         .into(userImage);
+                LoadProfileScreen();
             }
         });
+    }
+
+    private void LoadProfileScreen(){
+        Intent intent = new Intent(AdminToUserProfileActivity.this, AdminToUserProfileActivity.class);
+        intent.putExtra("name",getIntent().getExtras().getString("name"));
+        intent.putExtra("lastName",getIntent().getExtras().getString("lastName"));
+        intent.putExtra("address",getIntent().getExtras().getString("address"));
+        intent.putExtra("dogName",getIntent().getExtras().getString("dogName"));
+        intent.putExtra("dogType",getIntent().getExtras().getString("dogType"));
+        intent.putExtra("age",getIntent().getExtras().getString("age"));
+        intent.putExtra("email",getIntent().getExtras().getString("email"));
+        intent.putExtra("image","empty_profile.png");
+        intent.putExtra("password",getIntent().getExtras().getString("password"));
+        startActivity(intent);
+        finish();
     }
 
     private void goToEditScreen() {
@@ -157,7 +176,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        Intent intent = new Intent(AdminToUserProfileActivity.this, AdminRemoveUsersActivity.class);
+        Intent intent = new Intent(AdminToUserProfileActivity.this, AdminAllUsers.class);
         startActivity(intent);
         finish();
     }
@@ -186,6 +205,16 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
                                 @Override
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
+                                        participantsList = (ArrayList<String>) doc.get("Participants");
+                                        if (participantsList.contains(getIntent().getExtras().getString("email"))){
+                                            participantsList.remove(getIntent().getExtras().getString("email"));
+                                            WriteBatch batch = db.batch();
+                                            String key=doc.getId();
+                                            DocumentReference laRef = db.collection("meetings").document(doc.getId());
+                                            batch.update(laRef,"Participants",participantsList);
+                                            batch.commit();
+                                        }
+
                                         if(doc.get("Owner").toString().equals(getIntent().getExtras().getString("email"))) {
                                             WriteBatch batch = db.batch();
                                             String key=doc.getId();
@@ -200,7 +229,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
                                         @Override
                                         public void onComplete(@NonNull Task<Void> task) {
                                             Toast.makeText(AdminToUserProfileActivity.this,"משתמש נמחק בהצלחה",Toast.LENGTH_LONG).show();
-                                            Intent intent = new Intent(AdminToUserProfileActivity.this, AdminRemoveUsersActivity.class);
+                                            Intent intent = new Intent(AdminToUserProfileActivity.this, AdminAllUsers.class);
                                             startActivity(intent);
                                             finish();
                                         }

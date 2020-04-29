@@ -108,6 +108,7 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                     Glide.with(UserScreenActivity.this)
                            .load(storageRef)
                           .into(profilePic);
+
                 }
             }
         })
@@ -286,9 +287,9 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                             Glide.with(UserScreenActivity.this)
                                     .load(storageRef)
                                     .into(profilePic);
-                            Glide.with(UserScreenActivity.this)
-                                    .load(storageRef)
-                                    .into(profilePic);
+                            Intent intent = new Intent(UserScreenActivity.this, UserScreenActivity.class);
+                            startActivity(intent);
+                            finish();
                         }
                     })
                             .addOnFailureListener(new OnFailureListener() {

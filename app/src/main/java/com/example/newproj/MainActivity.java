@@ -4,6 +4,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
@@ -27,7 +28,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
@@ -38,6 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private DocumentReference user;
     private Users LoginUser;
+    private SharedPreferences sharedpreferences;
+    private static final String PREF_NAME = "PreName";
+    private int PRIVATE_MODE = 0;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,25 @@ public class MainActivity extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         LoginUser = new Users();
         CurrentUser.currentUserEmail=null;
+        sharedpreferences = getApplicationContext().getSharedPreferences("MyPref", 0);
+        editor=sharedpreferences.edit();
+
+        if(sharedpreferences.getString("Email", null)!=null){
+            LoginUser.setEmail(sharedpreferences.getString("Email", null));
+            LoginUser.setPassword(sharedpreferences.getString("Password", null));
+            LoginUser.setType(sharedpreferences.getString("UserType", null));
+            if(sharedpreferences.getStringSet("Friends", null)!=null) {
+                List<String> Friends = new ArrayList<String>();
+                Friends.addAll(sharedpreferences.getStringSet("Friends", null));
+                LoginUser.setFriends(Friends);
+            }
+            String type=sharedpreferences.getString("DogType", null);
+            if(sharedpreferences.getString("DogType", null)!=null)
+               CurrentUser.dogType=(sharedpreferences.getString("DogType", null));
+            passwordText.setText(LoginUser.getPassword());
+            CheckUserDetails();
+
+        }
 
 
         registerText.setOnClickListener(new View.OnClickListener() {
@@ -85,6 +111,20 @@ public class MainActivity extends AppCompatActivity {
                             LoginUser.setPassword(doc.get("Password").toString());
                             LoginUser.setType(doc.get("UserType").toString());
                             LoginUser.setFriends((List<String>) doc.get("Friends"));
+                            LoginUser.setDogType(doc.get("DogType").toString());
+
+
+                            editor.putString("Email", doc.get("Email").toString());
+                            editor.putString("Password", doc.get("Password").toString());
+                            editor.putString("UserType", doc.get("UserType").toString());
+                            if(LoginUser.getFriends()!=null) {
+                                Set<String> hSet = new HashSet<String>(LoginUser.getFriends());
+                                editor.putStringSet("Friends", (hSet));
+                            }
+                            if(LoginUser.getDogType()!=null)
+                                editor.putString("DogType", doc.get("DogType").toString());
+                            editor.commit();
+
                             CheckUserDetails();
                         } else {
                             Toast.makeText(MainActivity.this, "Email is not exsits\n please try again", Toast.LENGTH_LONG).show();
@@ -143,12 +183,14 @@ public class MainActivity extends AppCompatActivity {
     private void goToHomeScreen(){
         Intent intent=new Intent(this,HomeActivity.class);
         startActivity(intent);
+        finish();
     }
 
     //switch to admin screen
     private void goToHomeAdminScreen() {
         Intent intent=new Intent(this,HomeAdminActivity.class);
         startActivity(intent);
+        finish();
     }
 
 

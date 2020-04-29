@@ -18,6 +18,7 @@ import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.Meeting;
 import com.example.newproj.models.MeetingsAdapter;
 import com.example.newproj.models.Parks;
+import com.example.newproj.models.SortByDate;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -29,6 +30,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Locale;
 
 public class FindMeetingsActivity extends AppCompatActivity {
@@ -101,6 +103,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
                         meeting.setUserImage(doc.get("UserImage").toString());
                         meetingsList.add(meeting);
                     }
+                    Collections.sort(meetingsList, new SortByDate());
                     fillList(meetingsList);
                 }
             }
@@ -155,6 +158,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
                     if(park_flag && date_flag && dog_flag)
                         result.add(meeting);
                 }
+                Collections.sort(result, new SortByDate());
                 fillList(result);
             }
         });
@@ -180,6 +184,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
         intent.putExtra("description",clickedMeeting.getDiscription());
         intent.putExtra("image",clickedMeeting.getParkImage());
         intent.putExtra("participants",(ArrayList<String>)clickedMeeting.getParticipants());
+        intent.putExtra("activityscreen","FindMeetingActivity");
         if(isMember()){
             intent.putExtra("isMember",true);
         }
@@ -192,7 +197,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
         else{
             intent.putExtra("isOwner",false);
         }
-
+        finish();
         startActivity(intent);
     }
 

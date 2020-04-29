@@ -46,7 +46,7 @@ public class Users {
         this.Requests=new ArrayList<String>();
     }
 
-    public Users(String name,String lastName,String age ,String email,String password,String address,String dog_name,String dog_type,String image,ArrayList<String> friends){
+    public Users(String name,String lastName,String age ,String email,String password,String address,String dog_name,String dog_type,String image,ArrayList<String> friends,ArrayList<String> requests){
         this.Name=name;
         this.LastName=lastName;
         this.Age=age;
@@ -58,6 +58,7 @@ public class Users {
         this.DogType=dog_type;
         this.Image=image;
         this.Friends = (ArrayList<String>) friends.clone();
+        this.Requests=(ArrayList<String>) requests.clone();
     }
 
     public void setFriends(List<String> friends) {

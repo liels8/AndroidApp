@@ -43,6 +43,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
     private ImageView parkImage;
     StorageReference storageRef;
     private boolean isMember,isOwner;
+    private String dogType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,8 +147,8 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         if(isMember){
             joinMeetingButton.setText("בטל הצטרפות");
         }
-
-        if(isOwner){
+        dogType=getIntent().getExtras().getString("dogType").toString();
+        if(isOwner||((!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל")))){
             joinMeetingButton.setEnabled(false);
         }
 
@@ -271,5 +272,16 @@ public class MeetingDetailsActivity extends AppCompatActivity {
     private void fillList(){
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, usersList);
         participantsListView.setAdapter(arrayAdapter);
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent=null;
+        if (getIntent().getExtras().getString("activityscreen").toString().equals("UpcomingMeetingActivity"))
+            intent = new Intent(MeetingDetailsActivity.this, UpcomingMeetingsActivity.class);
+        else if(getIntent().getExtras().getString("activityscreen").toString().equals("FindMeetingActivity"))
+            intent = new Intent(MeetingDetailsActivity.this, FindMeetingsActivity.class);
+        finish();
+        startActivity(intent);
     }
 }

@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.Users;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -131,6 +132,7 @@ public class AdminEditUserProfileActivity extends AppCompatActivity {
         batch.update(user, "DogType", dogTypeText.getText().toString());
         batch.update(user, "Password", passwordText.getText().toString());
         batch.commit();
+        CurrentUser.dogType=dogTypeText.getText().toString();
         Toast.makeText(this,"פרטי משתמש עודכנו בהצלחה",Toast.LENGTH_SHORT).show();
         goToProfile();
     }

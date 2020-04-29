@@ -60,8 +60,9 @@ public class EditProfileActivity extends AppCompatActivity {
                     dogTypeText.setText(doc.get("DogType").toString());
                     addressText.setText(doc.get("Address").toString());
                     ArrayList<String> friends = (ArrayList<String>) doc.get("Friends");
+                    ArrayList<String> requests = (ArrayList<String>) doc.get("Requests");
                     usr = new Users(firstNameText.getText().toString(),lastNameText.getText().toString(),ageText.getText().toString(),doc.get("Email").toString(),doc.get("Password").toString()
-                            ,addressText.getText().toString(),dogNameText.getText().toString(),dogTypeText.getText().toString(),doc.get("Image").toString(),friends);
+                            ,addressText.getText().toString(),dogNameText.getText().toString(),dogTypeText.getText().toString(),doc.get("Image").toString(),friends,requests);
                 }
             }
         })
@@ -94,7 +95,8 @@ public class EditProfileActivity extends AppCompatActivity {
                             .addOnSuccessListener(new OnSuccessListener<Void>() {
                                 @Override
                                 public void onSuccess(Void aVoid) {
-                                    Toast.makeText(EditProfileActivity.this, "User Registered", Toast.LENGTH_SHORT).show();
+                                    Toast.makeText(EditProfileActivity.this, "הפרטים עודכנו בהצלחה", Toast.LENGTH_SHORT).show();
+                                    CurrentUser.dogType=dogTypeText.getText().toString();
                                     goBackToUserScreen();
                                 }
                             });
