@@ -27,10 +27,14 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 import java.util.Locale;
 
 public class FindMeetingsActivity extends AppCompatActivity {
@@ -104,6 +108,11 @@ public class FindMeetingsActivity extends AppCompatActivity {
                         meetingsList.add(meeting);
                     }
                     Collections.sort(meetingsList, new SortByDate());
+                    try {
+                       meetingsList = getReleventMeetings(meetingsList);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     fillList(meetingsList);
                 }
             }
@@ -159,6 +168,11 @@ public class FindMeetingsActivity extends AppCompatActivity {
                         result.add(meeting);
                 }
                 Collections.sort(result, new SortByDate());
+                try {
+                   result = getReleventMeetings(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 fillList(result);
             }
         });
@@ -171,6 +185,20 @@ public class FindMeetingsActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private ArrayList<Meeting> getReleventMeetings(ArrayList<Meeting> list) throws ParseException {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String now = df.format(new Date());
+        Date today = new SimpleDateFormat("dd/MM/yyyy").parse(now);
+        ArrayList<Meeting> relevant = new ArrayList<Meeting>();
+        for(Meeting meeting : list){
+            Date meetingDate = new SimpleDateFormat("dd/MM/yyyy").parse(meeting.getDate().toString());
+            if(!meetingDate.before(today)){
+               relevant.add(meeting);
+            }
+        }
+        return relevant;
     }
 
     private void showMeetingDetails() {
@@ -254,7 +282,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
     }
 
     private void updateLabel() {
-        String myFormat = "dd/MM/yy"; //In which you need put here
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
         if(dateOptions.size()<3)
             dateOptions.add(2,sdf.format(myCalendar.getTime()));

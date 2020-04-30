@@ -20,8 +20,6 @@ android {
     }
 
 
-
-
     defaultConfig {
         applicationId "com.example.newproj"
         minSdkVersion 14

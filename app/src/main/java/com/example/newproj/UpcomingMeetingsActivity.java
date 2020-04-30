@@ -29,8 +29,12 @@ import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 
 public class UpcomingMeetingsActivity extends AppCompatActivity {
     private ListView meetingsListView;
@@ -40,7 +44,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
     private ArrayList<Meeting> result;
     private ArrayList<Users> usersList;
     private Users user;
-    private RadioButton allMeetingsOption,iCreatedOption;
+    private RadioButton allMeetingsOption,iCreatedOption,meetingsHistory;
     private Button showButton;
     private RadioGroup options;
     private Meeting clickedMeeting;
@@ -54,6 +58,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         meetingsCount = findViewById(R.id.meetings_count);
         allMeetingsOption = findViewById(R.id.all_meetings);
         iCreatedOption = findViewById(R.id.meetings_i_created);
+        meetingsHistory = findViewById(R.id.meetings_history);
         //showButton = findViewById(R.id.show_meetings);
         options = findViewById(R.id.meeting_options);
 
@@ -85,6 +90,11 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                     result.clear();
                     showAllMeetings();
                     Collections.sort(result, new SortByDate());
+                    try {
+                        result = getReleventMeetings(meetingsList);
+                    } catch (ParseException e) {
+                        e.printStackTrace();
+                    }
                     fillList(result);
                 }
             }
@@ -102,6 +112,11 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 result.clear();
                 showMeetingICreated();
                 Collections.sort(result, new SortByDate());
+                try {
+                    result = getReleventMeetings(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 fillList(result);
             }
         });
@@ -111,6 +126,26 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 result.clear();
                 showAllMeetings();
                 Collections.sort(result, new SortByDate());
+                try {
+                    result = getReleventMeetings(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+                fillList(result);
+            }
+        });
+
+        meetingsHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                result.clear();
+                showAllMeetings();
+                Collections.sort(result, new SortByDate());
+                try {
+                    result = getHistoryMeetings(result);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
                 fillList(result);
             }
         });
@@ -142,6 +177,34 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 showMeetingDetails();
             }
         });
+    }
+
+    private ArrayList<Meeting> getReleventMeetings(ArrayList<Meeting> list) throws ParseException {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String now = df.format(new Date());
+        Date today = new SimpleDateFormat("dd/MM/yyyy").parse(now);
+        ArrayList<Meeting> relevant = new ArrayList<Meeting>();
+        for(Meeting meeting : list){
+            Date meetingDate = new SimpleDateFormat("dd/MM/yyyy").parse(meeting.getDate().toString());
+            if(!meetingDate.before(today)){
+                relevant.add(meeting);
+            }
+        }
+        return relevant;
+    }
+
+    private ArrayList<Meeting> getHistoryMeetings(ArrayList<Meeting> list) throws ParseException {
+        DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+        String now = df.format(new Date());
+        Date today = new SimpleDateFormat("dd/MM/yyyy").parse(now);
+        ArrayList<Meeting> relevant = new ArrayList<Meeting>();
+        for(Meeting meeting : list){
+            Date meetingDate = new SimpleDateFormat("dd/MM/yyyy").parse(meeting.getDate().toString());
+            if(meetingDate.before(today)){
+                relevant.add(meeting);
+            }
+        }
+        return relevant;
     }
 
     private void showAllMeetings() {

@@ -60,6 +60,15 @@
                 android:layout_marginTop="10dp"
                 android:gravity="right">
 
+                  <RadioButton
+                      android:id="@+id/meetings_history"
+                      android:layout_width="wrap_content"
+                      android:layout_height="wrap_content"
+                      android:layout_marginRight="20dp"
+                      android:buttonTint="#000000"
+                      android:text="היסטוריה">
+                  </RadioButton>
+
                 <RadioButton
                     android:id="@+id/meetings_i_created"
                     android:layout_width="wrap_content"

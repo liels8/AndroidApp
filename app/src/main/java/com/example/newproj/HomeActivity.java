@@ -205,6 +205,7 @@ public class HomeActivity extends AppCompatActivity {
 
     private void goToSearchFriends() {
         Intent intent=new Intent(this, SearchUsersActivity.class);
+        intent.putExtra("userType","user");
         startActivity(intent);
     }
 

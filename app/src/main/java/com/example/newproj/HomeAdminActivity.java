@@ -23,6 +23,8 @@ public class HomeAdminActivity extends AppCompatActivity {
     private CardView logOutButton;
     private CardView ParksButton;
     private CardView removeUserButton;
+    private CardView searchUsers;
+    private CardView profile;
     private TextView helloLabel;
     private FirebaseFirestore db;
 
@@ -37,6 +39,8 @@ public class HomeAdminActivity extends AppCompatActivity {
         ParksButton = findViewById(R.id.parks_btn);
         helloLabel=findViewById(R.id.hello_label_admin);
         removeUserButton=findViewById(R.id.deleteUser);
+        searchUsers = findViewById(R.id.search_users);
+        profile = findViewById(R.id.admin_profile);
         db = FirebaseFirestore.getInstance();
         newUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +71,20 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
 
+        searchUsers.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToSearchUsers();
+            }
+        });
+
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToProfile();
+            }
+        });
+
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -84,6 +102,17 @@ public class HomeAdminActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void goToProfile() {
+        Intent intent = new Intent(this, AdminProfileActivity.class);
+        startActivity(intent);
+    }
+
+    private void goToSearchUsers() {
+        Intent intent = new Intent(this, SearchUsersActivity.class);
+        intent.putExtra("userType","admin");
+        startActivity(intent);
     }
 
     //Open Parks Activity

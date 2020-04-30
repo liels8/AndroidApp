@@ -13,18 +13,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".MeetingDetailsActivity"></activity>
+        <activity android:name=".AdminProfileActivity"></activity>
+        <activity android:name=".MeetingDetailsActivity" />
         <activity android:name=".FindMeetingsActivity" />
         <activity android:name=".UpcomingMeetingsActivity" />
         <activity
             android:name=".CreateMeetingActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".AdminAllUsers" />
-
         <activity android:name=".FriendsRequests" />
-        <activity android:name=".AdminToUserProfileActivity"></activity>
-        <activity android:name=".AdminEditUserProfileActivity"></activity>
-
+        <activity android:name=".AdminToUserProfileActivity" />
+        <activity android:name=".AdminEditUserProfileActivity" />
         <activity
             android:name=".SearchUsersActivity"
             android:windowSoftInputMode="stateHidden" />
