@@ -54,7 +54,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         meetingsCount = findViewById(R.id.meetings_count);
         allMeetingsOption = findViewById(R.id.all_meetings);
         iCreatedOption = findViewById(R.id.meetings_i_created);
-        showButton = findViewById(R.id.show_meetings);
+        //showButton = findViewById(R.id.show_meetings);
         options = findViewById(R.id.meeting_options);
 
         meetingsList = new ArrayList<Meeting>();
@@ -95,6 +95,26 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                     }
                 });
 
+
+        iCreatedOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                result.clear();
+                showMeetingICreated();
+                Collections.sort(result, new SortByDate());
+                fillList(result);
+            }
+        });
+        allMeetingsOption.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                result.clear();
+                showAllMeetings();
+                Collections.sort(result, new SortByDate());
+                fillList(result);
+            }
+        });
+        /*
         showButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -113,6 +133,8 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 }
             }
         });
+
+         */
         meetingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
