@@ -17,6 +17,7 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
@@ -89,7 +90,7 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                 myCalendar.set(Calendar.YEAR, year);
                 myCalendar.set(Calendar.MONTH, month);
                 myCalendar.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-                updateLabel();
+                mDate.setText(updateLabel(myCalendar));
             }
         };
 
@@ -101,10 +102,12 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                 String min=""+minute,hour=""+hourOfDay;
 
                 if(minute<10){
-                    min="0"+min;
+                    //min="0"+min;
+                    min=getFixTimeForamt(min);
                 }
                 if(hourOfDay<10){
-                    hour="0"+hour;
+                    //hour="0"+hour;
+                    hour=getFixTimeForamt(hour);
                 }
                 mHour.setText( "" + hour + ":" + min);
 
@@ -191,8 +194,17 @@ public class CreateMeetingActivity extends AppCompatActivity  {
         mDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+    public String updateLabel(Calendar myCalendar) {
+        String myFormat = "dd/MM/yyyy"; //In which you need put here
+        SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
+        return sdf.format(myCalendar.getTime());
+    }
+
     private void fillList(){
         CustomAdapterMeeting arrayAdapter = new CustomAdapterMeeting(this, parksList);
         mLoc.setAdapter(arrayAdapter);
+    }
+    public String getFixTimeForamt(String time){
+        return "0"+time;
     }
 }

@@ -53,7 +53,7 @@ public class UserProfileActivity extends AppCompatActivity {
         userDogName.setText(getIntent().getExtras().getString("dogName"));
         userDogType.setText(getIntent().getExtras().getString("dogType"));
         userAddress.setText(getIntent().getExtras().getString("address"));
-        if(getIntent().getExtras().getBoolean("isFriend")){
+        if(isFriend(getIntent().getExtras().getBoolean("isFriend"))){
             addFriend.setVisibility(View.INVISIBLE);
             addFriend.setEnabled(false);
         }
@@ -81,7 +81,8 @@ public class UserProfileActivity extends AppCompatActivity {
                                 if (task.isSuccessful()){
                                     DocumentSnapshot doc = task.getResult();
                                     ArrayList<String> requestList = (ArrayList<String>) doc.get("Requests");
-                                    requestList.add(CurrentUser.currentUserEmail);
+                                    if(!isRequested(requestList))
+                                        requestList.add(CurrentUser.currentUserEmail);
                                     HashMap<String,Object> requests = new HashMap<>();
                                     requests.put("Requests",requestList);
                                     db.collection("users").document(getIntent().getExtras().getString("email")).update(requests).addOnSuccessListener(new OnSuccessListener<Void>() {
@@ -105,5 +106,14 @@ public class UserProfileActivity extends AppCompatActivity {
                 dialog.show();
             }
         });
+    }
+
+    public boolean isRequested(ArrayList<String> requestList) {
+        boolean bool=requestList.contains(CurrentUser.currentUserEmail);
+        return bool;
+    }
+
+    public boolean isFriend(boolean Friend){
+        return Friend;
     }
 }

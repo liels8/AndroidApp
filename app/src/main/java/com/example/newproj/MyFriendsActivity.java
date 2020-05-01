@@ -69,7 +69,13 @@ public class MyFriendsActivity extends AppCompatActivity {
                             public void onComplete(@NonNull Task<DocumentSnapshot> task) {
                                 if (task.isSuccessful()) {
                                     DocumentSnapshot doc = task.getResult();
-                                    Users newUser = new Users();
+                                    Users newUser;
+                                    newUser=setUserFields(doc.get("Name").toString(),doc.get("LastName").toString(),
+                                                  doc.get("Email").toString(),doc.get("Address").toString(),
+                                                  doc.get("Age").toString(),doc.get("DogName").toString(),
+                                                  doc.get("DogType").toString(),doc.get("Image").toString());
+                                    usersList.add(newUser);
+                                    /*
                                     newUser.setName(doc.get("Name").toString());
                                     newUser.setLastName(doc.get("LastName").toString());
                                     newUser.setEmail(doc.get("Email").toString());
@@ -79,6 +85,7 @@ public class MyFriendsActivity extends AppCompatActivity {
                                     newUser.setDogType(doc.get("DogType").toString());
                                     newUser.setImage(doc.get("Image").toString());
                                     usersList.add(newUser);
+                                     */
                                     fillList();
                                 }
                             }
@@ -93,6 +100,19 @@ public class MyFriendsActivity extends AppCompatActivity {
 
     }
 
+    public Users setUserFields(String name,String lastname,String email,String address,String age,String dogname,String dogtype,String image) {
+        Users newUser = new Users();
+        newUser.setName(name);
+        newUser.setLastName(lastname);
+        newUser.setEmail(email);
+        newUser.setAddress(address);
+        newUser.setAge(age);
+        newUser.setDogName(dogname);
+        newUser.setDogType(dogtype);
+        newUser.setImage(image);
+        return newUser;
+    }
+
     private void fillList(){
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, usersList);
         friends.setAdapter(arrayAdapter);
@@ -100,6 +120,8 @@ public class MyFriendsActivity extends AppCompatActivity {
 
     private void showFriendProfile(){
         Intent intent = new Intent(this,UserProfileActivity.class);
+        putIntent(intent,friend);
+        /*
         intent.putExtra("name",friend.getName());
         intent.putExtra("lastName",friend.getLastName());
         intent.putExtra("email",friend.getEmail());
@@ -109,8 +131,22 @@ public class MyFriendsActivity extends AppCompatActivity {
         intent.putExtra("age",friend.getAge());
         intent.putExtra("image",friend.getImage());
         intent.putExtra("isFriend",true);
+
+         */
         startActivity(intent);
 
+    }
+
+    public void putIntent(Intent intent, Users friend) {
+        intent.putExtra("name",friend.getName());
+        intent.putExtra("lastName",friend.getLastName());
+        intent.putExtra("email",friend.getEmail());
+        intent.putExtra("address",friend.getAddress());
+        intent.putExtra("dogName",friend.getDogName());
+        intent.putExtra("dogType",friend.getDogType());
+        intent.putExtra("age",friend.getAge());
+        intent.putExtra("image",friend.getImage());
+        intent.putExtra("isFriend",true);
     }
 
 }

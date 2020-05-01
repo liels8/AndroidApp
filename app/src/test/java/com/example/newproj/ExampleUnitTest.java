@@ -1,5 +1,9 @@
 package com.example.newproj;
 
+import android.app.Activity;
+import android.content.Intent;
+import android.widget.EditText;
+
 import androidx.annotation.NonNull;
 
 import com.example.newproj.models.CurrentUser;
@@ -15,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 import org.junit.Test;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import static org.junit.Assert.*;
 
@@ -25,7 +30,8 @@ import static org.junit.Assert.*;
  */
 public class ExampleUnitTest {
     ArrayList<Parks> parksList;
-    //Registeration
+
+    //Registeration-Tests
     @Test
     public void signUpValidation_nameLengthFaild() {
         RegisterActivity regActivity = new RegisterActivity();
@@ -61,7 +67,7 @@ public class ExampleUnitTest {
         assertEquals(true,regActivity.signUpValidation("nadav","cohen","27","nadavc@gmail.com","123456"));
     }
 
-    //Edit profile
+    //Edit-profile-Tests
     @Test
     public void updateValidation_correct() {
         EditProfileActivity editActivity = new EditProfileActivity();
@@ -98,7 +104,7 @@ public class ExampleUnitTest {
         assertEquals(false,editActivity.updateValidation("nadav","cohen","27","beer sheva","dog","A"));
     }
 
-    //login
+    //login-Tests
     @Test
     public void loginValidation_emptyEmail() {
         MainActivity main = new MainActivity();
@@ -110,7 +116,7 @@ public class ExampleUnitTest {
         assertEquals(false,main.existInput("nadav@gmail.com",""));
     }
 
-    //search friends
+    //search-friends-Tests
     @Test
     public void isFriends_Pass(){
         SearchUsersActivity search = new SearchUsersActivity();
@@ -128,5 +134,99 @@ public class ExampleUnitTest {
         CurrentUser.currentUserFriends.add("or@gmail.com");
         assertEquals(false,search.isFriend("aviram@gmail.com"));
     }
+
+    //CreateMeetingTests
+    @Test
+    public void getTimeForamt_pass(){
+        String time="9";
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        time=createMeeting.getFixTimeForamt(time);
+        assertEquals("09",time);
+    }
+    @Test
+    public void getTimeFormat_fail(){
+        String time="9";
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        time=createMeeting.getFixTimeForamt(time);
+        assertNotEquals("9",time);
+    }
+
+    @Test
+    public void setDateTime_pass(){
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, 2020);
+        myCalendar.set(Calendar.MONTH, 11);
+        myCalendar.set(Calendar.DAY_OF_MONTH, 1);
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        String date=createMeeting.updateLabel(myCalendar);
+        assertEquals("01/12/2020",date);
+    }
+
+    @Test
+    public void setDateTime_fail(){
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, 2020);
+        myCalendar.set(Calendar.MONTH, 10);
+        myCalendar.set(Calendar.DAY_OF_MONTH, 2);
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        String date=createMeeting.updateLabel(myCalendar);
+        assertNotEquals("01/12/2020",date);
+    }
+
+    //AddFriends Tests
+    @Test
+    public void isFriend_arefriends(){
+        boolean isfriend=true;
+        UserProfileActivity profileActivity=new UserProfileActivity();
+        boolean result=profileActivity.isFriend(isfriend);
+        assertEquals(true,result);
+    }
+
+    @Test
+    public void isFriend_notfriend(){
+        boolean isfriend=false;
+        UserProfileActivity profileActivity=new UserProfileActivity();
+        boolean result=profileActivity.isFriend(isfriend);
+        assertEquals(false,result);
+    }
+
+    @Test
+    public void isRequested_inRequset(){
+        ArrayList<String> requestList=new ArrayList<String>();
+        requestList.add("aviram@gmail.com");
+        CurrentUser.currentUserEmail="aviram@gmail.com";
+        UserProfileActivity userProfile=new UserProfileActivity();
+        boolean isInArray = userProfile.isRequested(requestList);
+        assertEquals(true,isInArray);
+    }
+    @Test
+    public void isRequested_notinrequst(){
+        ArrayList<String> requestList=new ArrayList<String>();
+        requestList.add("aviram@gmail.com");
+        CurrentUser.currentUserEmail="or@gmail.com";
+        UserProfileActivity userProfile=new UserProfileActivity();
+        boolean isInArray = userProfile.isRequested(requestList);
+        assertNotEquals(true,isInArray);
+    }
+
+    //myFriends Tests
+    @Test
+    public void fill_friend_Ditails_Test(){
+        MyFriendsActivity myFriends=new MyFriendsActivity();
+        Users newUser=myFriends.setUserFields("avi","kuku","avi@gmail.com","beer sheva","24","bolt","white-wolf","avi@gmail.com/img");
+        assertEquals("avi",newUser.getName());
+        assertEquals("kuku",newUser.getLastName());
+        assertEquals("avi@gmail.com",newUser.getEmail());
+        assertEquals("beer sheva",newUser.getAddress());
+        assertEquals("24",newUser.getAge());
+        assertEquals("bolt",newUser.getDogName());
+        assertEquals("white-wolf",newUser.getDogType());
+        assertEquals("avi@gmail.com/img",newUser.getImage());
+}
+
+
+
+
+
 
 }
