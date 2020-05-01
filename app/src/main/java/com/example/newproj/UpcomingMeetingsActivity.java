@@ -91,7 +91,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                     showAllMeetings();
                     Collections.sort(result, new SortByDate());
                     try {
-                        result = getReleventMeetings(meetingsList);
+                        result = getReleventMeetings(result);
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
