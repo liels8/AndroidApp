@@ -194,6 +194,7 @@ public class CreateMeetingActivity extends AppCompatActivity  {
         mDate.setText(sdf.format(myCalendar.getTime()));
     }
 
+    //update the label for the chosen date
     public String updateLabel(Calendar myCalendar) {
         String myFormat = "dd/MM/yyyy"; //In which you need put here
         SimpleDateFormat sdf = new SimpleDateFormat(myFormat, Locale.getDefault());
