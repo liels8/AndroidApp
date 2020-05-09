@@ -270,12 +270,5 @@ public class ExampleUnitTest {
         assertEquals(false,adminEdit.editValidation("nadav","cohen","","123456"));
     }
 
-    //Admin show all users
-    @Test
-    public void getNumberOfUsers_Pass(){
-        AdminAllUsers users = new AdminAllUsers();
-        int count = users.getNumOfUsers();
-        //assertEquals();
-    }
 
 }
