@@ -7,6 +7,7 @@ import android.widget.EditText;
 import androidx.annotation.NonNull;
 
 import com.example.newproj.models.CurrentUser;
+import com.example.newproj.models.Meeting;
 import com.example.newproj.models.Parks;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -222,11 +223,59 @@ public class ExampleUnitTest {
         assertEquals("bolt",newUser.getDogName());
         assertEquals("white-wolf",newUser.getDogType());
         assertEquals("avi@gmail.com/img",newUser.getImage());
-}
+    }
 
+    //future meetings i created
+    @Test
+    public void iAmOwner_owner(){
+        Meeting meeting = new Meeting("פארק ה", "04/05/2020", "18:00", "הכל", "", "nadav@gmail.com", "park_e.png","nadav@gmail.com/img");
+        CurrentUser.currentUserEmail = "nadav@gmail.com";
+        UpcomingMeetingsActivity upComing = new UpcomingMeetingsActivity();
+        boolean result = upComing.iAmOwnerOfMeeting(meeting.getOwner(),CurrentUser.currentUserEmail);
+        assertEquals(true,result);
+    }
 
+    @Test
+    public void iAmOwner_notOwner(){
+        Meeting meeting = new Meeting("פארק ה", "04/05/2020", "18:00", "הכל", "", "liel@gmail.com", "park_e.png","nadav@gmail.com/img");
+        CurrentUser.currentUserEmail = "nadav@gmail.com";
+        UpcomingMeetingsActivity upComing = new UpcomingMeetingsActivity();
+        boolean result = upComing.iAmOwnerOfMeeting(meeting.getOwner(),CurrentUser.currentUserEmail);
+        assertNotEquals(true,result);
+    }
 
+    //Admin - add new users
+    @Test
+    public void adminSignUp_emailPatternFailed() {
+        AdminRegisterationActivity adminReg = new AdminRegisterationActivity();
+        assertEquals(false,adminReg.ValidText("nadav","cohen","27","nadavc#gmail.com","123456"));
+    }
 
+    @Test
+    public void adminSignUp_passwordLengthFailed() {
+        AdminRegisterationActivity adminReg = new AdminRegisterationActivity();
+        assertEquals(false,adminReg.ValidText("nadav","cohen","27","nadavc@gmail.com","123"));
+    }
 
+    //Admin - edit registered user profile
+    @Test
+    public void adminEditUser_firstNamePatternFailed() {
+        AdminEditUserProfileActivity adminEdit = new AdminEditUserProfileActivity();
+        assertEquals(false,adminEdit.editValidation("na3av","cohen","27","123456"));
+    }
+
+    @Test
+    public void adminEditUser_ageEmptyFailed() {
+        AdminEditUserProfileActivity adminEdit = new AdminEditUserProfileActivity();
+        assertEquals(false,adminEdit.editValidation("nadav","cohen","","123456"));
+    }
+
+    //Admin show all users
+    @Test
+    public void getNumberOfUsers_Pass(){
+        AdminAllUsers users = new AdminAllUsers();
+        int count = users.getNumOfUsers();
+        //assertEquals();
+    }
 
 }

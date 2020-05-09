@@ -108,6 +108,7 @@ public class UserProfileActivity extends AppCompatActivity {
         });
     }
 
+    //check if email is already exist in user's request list
     public boolean isRequested(ArrayList<String> requestList) {
         boolean bool=requestList.contains(CurrentUser.currentUserEmail);
         return bool;

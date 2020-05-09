@@ -92,7 +92,7 @@ public class AdminRegisterationActivity extends AppCompatActivity {
         });
     }
 
-    private boolean ValidText(String name, String lastname, String age, String email, String password){
+    public boolean ValidText(String name, String lastname, String age, String email, String password){
         String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+.[a-z]+";
         String namePattern="[a-zA-Z\u0590-\u05fe]+";
         String passwordPattern="[A-Za-z0-9]";

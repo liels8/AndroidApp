@@ -221,12 +221,17 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
 
     private void showMeetingICreated() {
         for(Meeting meeting : meetingsList){
-            if(meeting.getOwner().equals(CurrentUser.currentUserEmail)){
+            if(iAmOwnerOfMeeting(meeting.getOwner(),CurrentUser.currentUserEmail)){
                 result.add(meeting);
             }
         }
-        //Collections.sort(result, new SortByDate());
-        //fillList(result);
+    }
+
+    public boolean iAmOwnerOfMeeting(String meetingOwner,String myName){
+        if(meetingOwner.equals(myName)){
+            return true;
+        }
+        return false;
     }
 
     private boolean iParticipateInMeeting(Meeting meeting){

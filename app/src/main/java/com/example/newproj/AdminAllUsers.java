@@ -89,6 +89,10 @@ public class AdminAllUsers extends AppCompatActivity {
 
     }
 
+    public int getNumOfUsers(){
+        return Integer.valueOf(userCount.getText().toString());
+    }
+
     private void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);
         users.setAdapter(arrayAdapter);
