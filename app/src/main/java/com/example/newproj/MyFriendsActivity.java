@@ -118,6 +118,7 @@ public class MyFriendsActivity extends AppCompatActivity {
         friends.setAdapter(arrayAdapter);
     }
 
+    //open friend profile
     private void showFriendProfile(){
         Intent intent = new Intent(this,UserProfileActivity.class);
         putIntent(intent,friend);
