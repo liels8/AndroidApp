@@ -1,3 +1,4 @@
+def emailTestReport = ""
 pipeline { 
   agent { 
     docker { 
@@ -32,11 +33,9 @@ pipeline {
           steps { 
             sh './gradlew test --rerun-tasks'
       }
-       def emailTestReport = ""
         post {
                     always {
                         junit 'tests.xml'
-
                         script {
                             AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
                             if (testResultAction != null) {
