@@ -16,7 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-
+//edit user ditails
 public class AdminEditUserProfileActivity extends AppCompatActivity {
     private EditText firstNameText,lastNameText,addressText,dogNameText,dogTypeText,ageText,passwordText;
     private Button update_btn;
