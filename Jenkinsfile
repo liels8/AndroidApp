@@ -32,7 +32,6 @@ pipeline {
           steps { 
             sh './gradlew test --rerun-tasks'
       }
-  
   }
       post {
     always {
@@ -41,4 +40,5 @@ pipeline {
          body: "${env.BUILD_URL} has result ${currentBuild.result}"
     }
   }
+}
 }
