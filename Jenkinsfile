@@ -38,16 +38,7 @@ pipeline {
     always {
        mail to: 'lielsananes8@gmail.com',
           subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
-         body: "${env.BUILD_URL} has result ${currentBuild.result} Changes:
-
-Total Amount of Tests:
-${TEST_COUNTS, var}
-
-Total = $TEST_COUNTS
-Failed = ${TEST_COUNTS,var="fail"}
-
-Total = $TEST_COUNTS
-Passed = ${TEST_COUNTS,var="pass"}"
+         body: "${env.BUILD_URL} has result ${currentBuild.result}}"
     }
   }
 }
