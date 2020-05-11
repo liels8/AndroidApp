@@ -32,27 +32,7 @@ pipeline {
           steps { 
             sh './gradlew test --rerun-tasks'
       }
-        def  emailTestReport=""
-            post {
-                    always {
-                        junit 'tests.xml'
-
-                        script {
-                            AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
-                            if (testResultAction != null) {
-                                def totalNumberOfTests = testResultAction.totalCount
-                                def failedNumberOfTests = testResultAction.failCount
-                                def failedDiff = testResultAction.failureDiffString
-                                def skippedNumberOfTests = testResultAction.skipCount
-                                def passedNumberOfTests = totalNumberOfTests - failedNumberOfTests - skippedNumberOfTests
-                                emailTestReport = "Tests Report:\n Passed: ${passedNumberOfTests}; Failed: ${failedNumberOfTests} ${failedDiff}; Skipped: ${skippedNumberOfTests}  out of ${totalNumberOfTests} "
-                            }
-                        }
-
-                        mail to: 'lielsananes8@email.com',
-                        subject: "Tests are finished: ${currentBuild.fullDisplayName}",
-                        body: "Tests are finished  ${env.BUILD_URL}\n  Test Report: ${emailTestReport} "
-                    }
+  
   }
       post {
     always {
