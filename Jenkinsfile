@@ -1,4 +1,3 @@
-def emailTestReport = ""
 pipeline { 
   agent { 
     docker { 
@@ -32,10 +31,11 @@ pipeline {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew test --rerun-tasks'
-      }
-        post {
+            def  emailTestReport=""
+            post {
                     always {
                         junit 'tests.xml'
+
                         script {
                             AbstractTestResultAction testResultAction =  currentBuild.rawBuild.getAction(AbstractTestResultAction.class)
                             if (testResultAction != null) {
@@ -48,12 +48,11 @@ pipeline {
                             }
                         }
 
-                        mail to: 'lielsananes8@gmail.com',
+                        mail to: 'lielsananes8@email.com',
                         subject: "Tests are finished: ${currentBuild.fullDisplayName}",
                         body: "Tests are finished  ${env.BUILD_URL}\n  Test Report: ${emailTestReport} "
                     }
-
-    }
+      }
   }
       post {
     always {
