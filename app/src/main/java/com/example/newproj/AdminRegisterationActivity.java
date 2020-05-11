@@ -19,7 +19,7 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
-
+//create new user
 public class AdminRegisterationActivity extends AppCompatActivity {
     private TextView regName,regLastName,regAge,regEmail,regPassword,regBackToLogin,regAdderss;
     private Button regButton;
