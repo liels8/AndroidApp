@@ -31,7 +31,8 @@ pipeline {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew test --rerun-tasks'
-            def  emailTestReport=""
+      }
+        def  emailTestReport=""
             post {
                     always {
                         junit 'tests.xml'
@@ -52,7 +53,6 @@ pipeline {
                         subject: "Tests are finished: ${currentBuild.fullDisplayName}",
                         body: "Tests are finished  ${env.BUILD_URL}\n  Test Report: ${emailTestReport} "
                     }
-      }
   }
       post {
     always {
