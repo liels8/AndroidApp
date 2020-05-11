@@ -33,6 +33,12 @@ pipeline {
             sh './gradlew test --rerun-tasks'
       }         
     }
+    stage('UITests') {
+      //Start all the existing tests in the test package 
+          steps { 
+            sh './adb devices'
+      }         
+    }
   }
       post {
     always {
