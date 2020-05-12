@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private DocumentReference user;
     private Users LoginUser;
+    public boolean loginLoged;
     private SharedPreferences sharedpreferences;
     private static final String PREF_NAME = "PreName";
     private int PRIVATE_MODE = 0;
@@ -158,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //check user type
-    private void CheckUserDetails() {
+    public void CheckUserDetails() {
         String password=passwordText.getText().toString();
         if(LoginUser.getPassword().equals(password)){
             CurrentUser.currentUserEmail=LoginUser.getEmail();
@@ -173,6 +174,7 @@ public class MainActivity extends AppCompatActivity {
         else{
             Toast.makeText(MainActivity.this,"Incorrect passowrd\n Try Again",Toast.LENGTH_SHORT).show();
         }
+
     }
 
 
@@ -185,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
 
     //switch to user screen
     private void goToHomeScreen(){
+        loginLoged=true;
         Intent intent=new Intent(this,HomeActivity.class);
         startActivity(intent);
         finish();
@@ -198,4 +201,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    public void setLoginUser(Users loginUser) {
+        LoginUser = loginUser;
+    }
 }
