@@ -17,8 +17,15 @@ android {
 
     testOptions {
         unitTests.returnDefaultValues = true
+        unitTests {
+            includeAndroidResources = true
+        }
+        unitTests.all {
+            systemProperty 'robolectric.enabledSdks', '21'
+        }
     }
 
+    sourceSets { main { java.srcDirs = ['src/main/java'] } }
 
     defaultConfig {
         applicationId "com.example.newproj"
@@ -64,6 +71,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test:rules:1.2.0'
+    testImplementation 'org.testng:testng:6.9.6'
+    testImplementation 'org.robolectric:robolectric:4.3'
 
 
 }
