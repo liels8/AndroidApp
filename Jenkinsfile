@@ -33,12 +33,6 @@ pipeline {
             sh './gradlew test --rerun-tasks'
                 }         
     }
-   stage('IntegrTests') {
-      //Start all the existing tests in the test package 
-          steps { 
-            sh './gradlew connectedAndroidTest'
-                }         
-    }
   }
   post {
           always {
