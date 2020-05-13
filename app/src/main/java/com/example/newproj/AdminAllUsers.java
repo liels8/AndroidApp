@@ -91,6 +91,10 @@ public class AdminAllUsers extends AppCompatActivity {
 
     }
 
+    public boolean isAdmin(String type){
+        return type.equals("admin");
+    }
+
     public void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);
         users.setAdapter(arrayAdapter);

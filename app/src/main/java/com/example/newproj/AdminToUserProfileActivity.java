@@ -34,7 +34,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
     private StorageReference storageRef;
     private FirebaseFirestore db;
     private StorageReference pref;
-    private ArrayList<String> participantsList;
+    public ArrayList<String> participantsList;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -181,6 +181,10 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
         finish();
     }
 
+    public boolean isParticipate(String email){
+        return participantsList.contains(email);
+    }
+
     private void removeUser() {
         db.collection("users").document(getIntent().getExtras().getString("email")).delete();
         db.collection("users").get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -206,7 +210,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
                                 public void onComplete(@NonNull Task<QuerySnapshot> task) {
                                     for (QueryDocumentSnapshot doc : task.getResult()) {
                                         participantsList = (ArrayList<String>) doc.get("Participants");
-                                        if (participantsList.contains(getIntent().getExtras().getString("email"))){
+                                        if (isParticipate(getIntent().getExtras().getString("email"))){
                                             participantsList.remove(getIntent().getExtras().getString("email"));
                                             WriteBatch batch = db.batch();
                                             String key=doc.getId();

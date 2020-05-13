@@ -270,5 +270,33 @@ public class ExampleUnitTest {
         assertEquals(false,adminEdit.editValidation("nadav","cohen","","123456"));
     }
 
+    @Test
+    public void adminRemoveUser_isParticipate(){
+        AdminToUserProfileActivity activity = new AdminToUserProfileActivity();
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("nadav@gmail.com");
+        activity.participantsList = list;
+        assertEquals(activity.isParticipate("nadav@gmail.com"),true);
+    }
+    @Test
+    public void adminRemoveUser_isNotParticipate(){
+        AdminToUserProfileActivity activity = new AdminToUserProfileActivity();
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("nadav@gmail.com");
+        activity.participantsList = list;
+        assertEquals(activity.isParticipate("liel@gmail.com"),false);
+    }
+
+    @Test
+    public void adminAllUsers_isAdmin(){
+        AdminAllUsers activity = new AdminAllUsers();
+        assertEquals(activity.isAdmin("admin"),true);
+    }
+
+    @Test
+    public void adminAllUsers_isNotAdmin(){
+        AdminAllUsers activity = new AdminAllUsers();
+        assertEquals(activity.isAdmin("user"),false);
+    }
 
 }

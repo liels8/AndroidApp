@@ -19,7 +19,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 //edit user ditails
 public class AdminEditUserProfileActivity extends AppCompatActivity {
-    private EditText firstNameText,lastNameText,addressText,dogNameText,dogTypeText,ageText,passwordText;
+    public EditText firstNameText,lastNameText,addressText,dogNameText,dogTypeText,ageText,passwordText;
     private Button update_btn;
     private FirebaseFirestore db;
     private DocumentReference user;
@@ -141,6 +141,12 @@ public class AdminEditUserProfileActivity extends AppCompatActivity {
 
     private void goToProfile() {
         Intent intent = new Intent(AdminEditUserProfileActivity.this,AdminToUserProfileActivity.class);
+        putextras(intent);
+        finish();
+        startActivity(intent);
+    }
+
+    public void putextras(Intent intent) {
         intent.putExtra("name",firstNameText.getText().toString());
         intent.putExtra("lastName",lastNameText.getText().toString());
         intent.putExtra("address",addressText.getText().toString());
@@ -150,18 +156,21 @@ public class AdminEditUserProfileActivity extends AppCompatActivity {
         intent.putExtra("email",getIntent().getExtras().getString("email"));
         intent.putExtra("image",getIntent().getExtras().getString("image"));
         intent.putExtra("password",passwordText.getText().toString());
-        finish();
-        startActivity(intent);
     }
 
     public void setTextsToButtons() {
-        firstNameText.setText(getIntent().getExtras().getString("name").toString());
-        lastNameText.setText(getIntent().getExtras().getString("lastName").toString());
-        ageText.setText(getIntent().getExtras().getString("age").toString());
-        addressText.setText(getIntent().getExtras().getString("address").toString());
-        dogNameText.setText(getIntent().getExtras().getString("dogName").toString());
-        dogTypeText.setText(getIntent().getExtras().getString("dogType").toString());
-        passwordText.setText(getIntent().getExtras().getString("password").toString());
+        try {
+            firstNameText.setText(getIntent().getExtras().getString("name").toString());
+            lastNameText.setText(getIntent().getExtras().getString("lastName").toString());
+            ageText.setText(getIntent().getExtras().getString("age").toString());
+            addressText.setText(getIntent().getExtras().getString("address").toString());
+            dogNameText.setText(getIntent().getExtras().getString("dogName").toString());
+            dogTypeText.setText(getIntent().getExtras().getString("dogType").toString());
+            passwordText.setText(getIntent().getExtras().getString("password").toString());
+        }
+        catch(Exception e){
+
+        }
     }
 
     public void initButtons(){
