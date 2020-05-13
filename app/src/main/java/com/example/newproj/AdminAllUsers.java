@@ -15,6 +15,7 @@ import com.example.newproj.models.FriendsAdapter;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -23,16 +24,17 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class AdminAllUsers extends AppCompatActivity {
-    private ListView users;
+    public ListView users;
     private TextView userCount,userLabel;
     private FirebaseFirestore db;
-    private ArrayList<Users> usersList;
-    private Users user;
+    public ArrayList<Users> usersList;
+    public Users user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends);
+        FirebaseApp.initializeApp(this);
         users = findViewById(R.id.friends_listview);
         userCount=findViewById(R.id.friends_count);
         userLabel=findViewById(R.id.friends_label);
@@ -89,7 +91,7 @@ public class AdminAllUsers extends AppCompatActivity {
 
     }
 
-    private void showResults(ArrayList<Users> list) {
+    public void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);
         users.setAdapter(arrayAdapter);
     }

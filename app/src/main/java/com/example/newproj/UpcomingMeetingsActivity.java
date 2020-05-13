@@ -23,6 +23,7 @@ import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.Query;
@@ -37,7 +38,7 @@ import java.util.Collections;
 import java.util.Date;
 
 public class UpcomingMeetingsActivity extends AppCompatActivity {
-    private ListView meetingsListView;
+    public ListView meetingsListView;
     private TextView meetingsCount;
     private FirebaseFirestore db;
     private ArrayList<Meeting> meetingsList;
@@ -47,13 +48,14 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
     private RadioButton allMeetingsOption,iCreatedOption,meetingsHistory;
     private Button showButton;
     private RadioGroup options;
-    private Meeting clickedMeeting;
+    public Intent intent;
+    public Meeting clickedMeeting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upcoming_meetings);
-
+        FirebaseApp.initializeApp(this);
         meetingsListView = findViewById(R.id.meetings_listview);
         meetingsCount = findViewById(R.id.meetings_count);
         allMeetingsOption = findViewById(R.id.all_meetings);
@@ -261,15 +263,24 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                             }
                         }
                     }
-                    MeetingsAdapter arrayAdapter = new MeetingsAdapter(UpcomingMeetingsActivity.this, meetings_list,usersList);
-                    meetingsListView.setAdapter(arrayAdapter);
+                   fillList_adapter(meetings_list);
                 }
             }
         });
 
     }
+
+    public void fillList_adapter(ArrayList<Meeting> meetings_list) {
+        MeetingsAdapter arrayAdapter = new MeetingsAdapter(UpcomingMeetingsActivity.this, meetings_list,usersList);
+        meetingsListView.setAdapter(arrayAdapter);
+    }
+
     private void showMeetingDetails() {
-        Intent intent = new Intent(this,MeetingDetailsActivity.class);
+        intent = new Intent(this,MeetingDetailsActivity.class);
+        putextras(intent);
+    }
+
+    public void putextras(Intent intent) {
         intent.putExtra("id",clickedMeeting.getID());
         intent.putExtra("owner",clickedMeeting.getOwner());
         intent.putExtra("location",clickedMeeting.getLocation());
@@ -308,4 +319,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         return true;
     }
 
+    public void setUsersList(ArrayList<Users> usersList) {
+        this.usersList = usersList;
+    }
 }

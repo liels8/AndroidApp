@@ -18,6 +18,7 @@ import com.example.newproj.models.Parks;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -26,23 +27,28 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 
 public class MyFriendsActivity extends AppCompatActivity {
-    private ListView friends;
+    public ListView friends;
     private TextView friendsCount;
     private FirebaseFirestore db;
     private ArrayList<String> friendsList;
     private ArrayList<Users> usersList;
-    private Users friend;
+    FriendsAdapter arrayAdapter;
+
+
+    public Users friend;
+    public Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_my_friends);
-
+        FirebaseApp.initializeApp(this);
         friends = findViewById(R.id.friends_listview);
         friendsCount = findViewById(R.id.friends_count);
         db = FirebaseFirestore.getInstance();
         friendsList = new ArrayList<String>();
         usersList = new ArrayList<Users>();
+
 
         friends.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -100,6 +106,10 @@ public class MyFriendsActivity extends AppCompatActivity {
 
     }
 
+    public void setFriend(Users friend) {
+        this.friend = friend;
+    }
+
     public Users setUserFields(String name,String lastname,String email,String address,String age,String dogname,String dogtype,String image) {
         Users newUser = new Users();
         newUser.setName(name);
@@ -113,14 +123,14 @@ public class MyFriendsActivity extends AppCompatActivity {
         return newUser;
     }
 
-    private void fillList(){
-        FriendsAdapter arrayAdapter = new FriendsAdapter(this, usersList);
+    public void fillList(){
+        arrayAdapter = new FriendsAdapter(this, usersList);
         friends.setAdapter(arrayAdapter);
     }
 
     //open friend profile
-    private void showFriendProfile(){
-        Intent intent = new Intent(this,UserProfileActivity.class);
+    public void showFriendProfile(){
+        intent = new Intent(this,UserProfileActivity.class);
         putIntent(intent,friend);
         /*
         intent.putExtra("name",friend.getName());
@@ -150,4 +160,7 @@ public class MyFriendsActivity extends AppCompatActivity {
         intent.putExtra("isFriend",true);
     }
 
+    public void setUsersList(ArrayList<Users> usersList) {
+        this.usersList = usersList;
+    }
 }

@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.Users;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.WriteBatch;
@@ -30,6 +31,7 @@ public class AdminEditUserProfileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin_edit_user_profile);
+        FirebaseApp.initializeApp(this);
         initButtons();
         setTextsToButtons();
         db = FirebaseFirestore.getInstance();

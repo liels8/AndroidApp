@@ -18,6 +18,7 @@ import com.example.newproj.models.FriendsAdapter;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -40,6 +41,7 @@ public class SearchUsersActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_users);
+        FirebaseApp.initializeApp(this);
 
         users = findViewById(R.id.users_listview);
         searchButton = findViewById(R.id.search_btn);
@@ -146,7 +148,7 @@ public class SearchUsersActivity extends AppCompatActivity {
         showResults(results);
     }
 
-    private void serachByUserName(String searchValue) {
+    public void serachByUserName(String searchValue) {
         for(Users usr : usersList){
             String full_name = usr.getName() + " " + usr.getLastName();
             if(searchValue.equals(full_name) || searchValue.equals(usr.getName()) || searchValue.equals(usr.getLastName())){
@@ -159,5 +161,13 @@ public class SearchUsersActivity extends AppCompatActivity {
     private void showResults(ArrayList<Users> list) {
         FriendsAdapter arrayAdapter = new FriendsAdapter(this, list);
         users.setAdapter(arrayAdapter);
+    }
+
+    public void setUsersList(ArrayList<Users> usersList) {
+        this.usersList = usersList;
+    }
+
+    public ArrayList<Users> getResults() {
+        return results;
     }
 }
