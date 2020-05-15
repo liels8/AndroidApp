@@ -42,7 +42,7 @@ public class AdminAllUsers extends AppCompatActivity {
         db = FirebaseFirestore.getInstance();
         usersList = new ArrayList<Users>();
 
-
+        //get all users from database - except admins
         CollectionReference allUsers = db.collection("users");
         allUsers.get().addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
             @Override
