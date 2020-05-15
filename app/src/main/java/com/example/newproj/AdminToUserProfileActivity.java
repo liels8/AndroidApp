@@ -124,6 +124,7 @@ public class AdminToUserProfileActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    //delete the user's picture from database
     private void deletePicture() {
         StorageReference storageReference=FirebaseStorage.getInstance().getReference();
         StorageReference delete = storageReference.child(getIntent().getExtras().getString("image"));
