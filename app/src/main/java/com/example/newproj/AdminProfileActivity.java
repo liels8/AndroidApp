@@ -3,7 +3,10 @@ package com.example.newproj;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +20,8 @@ import com.google.firebase.storage.StorageReference;
 
 public class AdminProfileActivity extends AppCompatActivity {
     private TextView fullName,email,password;
+    private ImageView editButton;
+    private String first,last;
     FirebaseFirestore db;
 
     @Override
@@ -27,6 +32,7 @@ public class AdminProfileActivity extends AppCompatActivity {
         fullName = findViewById(R.id.adminName);
         email = findViewById(R.id.profileAdminEmail);
         password = findViewById(R.id.profilePassword);
+        editButton = findViewById(R.id.editProfileAdmin);
 
         db = FirebaseFirestore.getInstance();
 
@@ -36,12 +42,29 @@ public class AdminProfileActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task< DocumentSnapshot > task) {
                 if (task.isSuccessful()) {
                     DocumentSnapshot doc = task.getResult();
-                    fullName.setText(doc.get("Name").toString() + " " + doc.get("LastName").toString());
+                    first = doc.get("Name").toString();
+                    last = doc.get("LastName").toString();
+                    fullName.setText(first + " " + last);
                     email.setText(doc.get("Email").toString());
                     password.setText(doc.get("Password").toString());
-                    StorageReference storageRef;
                 }
             }
         });
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToEditProfile();
+            }
+        });
+    }
+
+    private void goToEditProfile() {
+        Intent intent = new Intent(this,AdminEditProfileActivity.class);
+        intent.putExtra("firstName",first);
+        intent.putExtra("lastName",last);
+        intent.putExtra("password",password.getText().toString());
+        finish();
+        startActivity(intent);
     }
 }

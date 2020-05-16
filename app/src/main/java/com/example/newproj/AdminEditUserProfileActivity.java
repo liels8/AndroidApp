@@ -23,7 +23,6 @@ public class AdminEditUserProfileActivity extends AppCompatActivity {
     private Button update_btn;
     private FirebaseFirestore db;
     private DocumentReference user;
-    private Users usr;
     private StorageReference storageRef;
 
 

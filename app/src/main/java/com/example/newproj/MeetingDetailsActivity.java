@@ -1,9 +1,12 @@
 package com.example.newproj;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -11,6 +14,7 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -19,6 +23,7 @@ import com.example.newproj.models.CurrentUser;
 import com.example.newproj.models.FriendsAdapter;
 import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
@@ -44,6 +49,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
     StorageReference storageRef;
     private boolean isMember,isOwner;
     private String dogType;
+    private ProgressDialog pd;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,6 +70,8 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         usersList = new ArrayList<Users>();
         participants = new ArrayList<String>();
 
+        pd = new ProgressDialog(this);
+        pd.setMessage("מוחק פגישה...");
         //get owner details
         DocumentReference user = db.collection("users").document(getIntent().getExtras().getString("owner"));
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -148,13 +156,20 @@ public class MeetingDetailsActivity extends AppCompatActivity {
             joinMeetingButton.setText("בטל הצטרפות");
         }
         dogType=getIntent().getExtras().getString("dogType").toString();
-        if(isOwner||((!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל")))){
+        if(isOwner){
+            joinMeetingButton.setText("ערוך פגישה");
+        }
+        else if(getIntent().getExtras().getString("activityscreen").equals("AdminMeetingsActivity")||(!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל"))){
             joinMeetingButton.setEnabled(false);
         }
 
         joinMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(isOwner){
+                    openDialog();
+                    return;
+                }
                 HashMap<String,Object> updatedList = new HashMap<>();
                 if(isMember){
                     participants.remove(CurrentUser.currentUserEmail);
@@ -219,6 +234,62 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         });
     }
 
+    private void openDialog() {
+        String options[] = {"ערוך נתונים","מחק פגישה"};
+        AlertDialog.Builder builder = new AlertDialog.Builder(MeetingDetailsActivity.this);
+        builder.setTitle("עריכת פגישה");
+        builder.setItems(options, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if(which==0) {
+                    openEditMeeting();
+                }
+                else if(which==1){
+                    deleteMeeting();
+                }
+            }
+        });
+        builder.create().show();
+    }
+
+    private void deleteMeeting() {
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(MeetingDetailsActivity.this);
+        builder.setMessage("האם אתה בטוח שברצונך למחוק פגישה זו?").setTitle("מחיקת פגישה");
+        builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                pd.show();
+                db.collection("meetings").document(getIntent().getExtras().getString("id")).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        pd.dismiss();
+                        Toast.makeText(MeetingDetailsActivity.this,"הפגישה נמחקה",Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+
+            }
+        });
+        builder.setNegativeButton("ביטול", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                // User cancelled the dialog
+            }
+        });
+        android.app.AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    private void openEditMeeting() {
+        Intent intent = new Intent(this,CreateMeetingActivity.class);
+        intent.putExtra("Target","edit");
+        intent.putExtra("id",getIntent().getExtras().getString("id"));
+        intent.putExtra("location",getIntent().getExtras().getString("location"));
+        intent.putExtra("date",getIntent().getExtras().getString("date"));
+        intent.putExtra("hour",getIntent().getExtras().getString("hour"));
+        intent.putExtra("description",getIntent().getExtras().getString("desc"));
+        intent.putExtra("type",getIntent().getExtras().getString("dogType"));
+        startActivity(intent);
+    }
+
     private void goToMyProfile(){
         Intent intent=new Intent(this,UserScreenActivity.class);
         startActivity(intent);
@@ -281,6 +352,8 @@ public class MeetingDetailsActivity extends AppCompatActivity {
             intent = new Intent(MeetingDetailsActivity.this, UpcomingMeetingsActivity.class);
         else if(getIntent().getExtras().getString("activityscreen").toString().equals("FindMeetingActivity"))
             intent = new Intent(MeetingDetailsActivity.this, FindMeetingsActivity.class);
+        else
+            intent = new Intent(MeetingDetailsActivity.this,AdminMeetingsActivity.class);
         finish();
         startActivity(intent);
     }

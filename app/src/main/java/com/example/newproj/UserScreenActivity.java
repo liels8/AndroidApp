@@ -283,7 +283,7 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                         @Override
                         public void onSuccess(Void aVoid) {
                             pd.dismiss();
-                            Toast.makeText(UserScreenActivity.this,"Image Updated",Toast.LENGTH_SHORT);
+                            Toast.makeText(UserScreenActivity.this,"Image Updated",Toast.LENGTH_SHORT).show();
                             Glide.with(UserScreenActivity.this)
                                     .load(storageRef)
                                     .into(profilePic);
@@ -296,7 +296,7 @@ public class UserScreenActivity extends AppCompatActivity implements ActivityCom
                                 @Override
                                 public void onFailure(@NonNull Exception e) {
                                     pd.dismiss();
-                                    Toast.makeText(UserScreenActivity.this,"Error Updating...",Toast.LENGTH_SHORT);
+                                    Toast.makeText(UserScreenActivity.this,"Error Updating...",Toast.LENGTH_SHORT).show();
                                 }
                             });
                 }

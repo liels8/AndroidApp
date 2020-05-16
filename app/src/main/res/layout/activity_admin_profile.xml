@@ -167,7 +167,7 @@
         android:gravity="left">
 
         <ImageView
-            android:id="@+id/editProfile"
+            android:id="@+id/editProfileAdmin"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:src="@drawable/edit_new"

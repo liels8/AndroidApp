@@ -25,6 +25,7 @@ public class HomeAdminActivity extends AppCompatActivity {
     private CardView removeUserButton;
     private CardView searchUsers;
     private CardView profile;
+    private CardView meetings;
     private TextView helloLabel;
     private FirebaseFirestore db;
 
@@ -41,6 +42,7 @@ public class HomeAdminActivity extends AppCompatActivity {
         removeUserButton=findViewById(R.id.deleteUser);
         searchUsers = findViewById(R.id.search_users);
         profile = findViewById(R.id.admin_profile);
+        meetings = findViewById(R.id.admin_meetings);
         db = FirebaseFirestore.getInstance();
         newUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,6 +87,13 @@ public class HomeAdminActivity extends AppCompatActivity {
             }
         });
 
+        meetings.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                goToMeetings();
+            }
+        });
+
 
         DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
         user.get().addOnCompleteListener(new OnCompleteListener<DocumentSnapshot>() {
@@ -102,6 +111,11 @@ public class HomeAdminActivity extends AppCompatActivity {
                     }
                 });
 
+    }
+
+    private void goToMeetings() {
+        Intent intent = new Intent(this, AdminMeetingsActivity.class);
+        startActivity(intent);
     }
 
     private void goToProfile() {

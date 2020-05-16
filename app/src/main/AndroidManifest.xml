@@ -13,7 +13,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/AppTheme">
-        <activity android:name=".AdminProfileActivity"></activity>
+        <activity android:name=".AdminMeetingsActivity"></activity>
+        <activity android:name=".AdminEditProfileActivity" />
+        <activity android:name=".AdminProfileActivity" />
         <activity android:name=".MeetingDetailsActivity" />
         <activity android:name=".FindMeetingsActivity" />
         <activity android:name=".UpcomingMeetingsActivity" />

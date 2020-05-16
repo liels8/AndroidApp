@@ -37,6 +37,7 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.WriteBatch;
 
 import java.sql.Time;
 import java.text.SimpleDateFormat;
@@ -49,6 +50,7 @@ import java.util.TimeZone;
 
 public class CreateMeetingActivity extends AppCompatActivity  {
     private EditText mDate,mHour,mDisc;
+    private TextView headLine;
     private Spinner mLoc,mDogType;
     private Button mbutton;
     private DatePickerDialog picker;
@@ -69,6 +71,7 @@ public class CreateMeetingActivity extends AppCompatActivity  {
         mDogType=findViewById(R.id.editMeetingType);
         mDisc=findViewById(R.id.editMeetingDisc);
         mbutton=findViewById(R.id.CreateMeeting);
+        headLine = findViewById(R.id.header);
         myCalendar = Calendar.getInstance();
         db = FirebaseFirestore.getInstance();
         parksList = new ArrayList<Parks>();
@@ -136,30 +139,48 @@ public class CreateMeetingActivity extends AppCompatActivity  {
         mbutton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                Meeting meeting=new Meeting(((Parks)mLoc.getSelectedItem()).getName().toString(), mDate.getText().toString(), mHour.getText().toString(), mDogType.getSelectedItem().toString(), mDisc.getText().toString(), CurrentUser.currentUserEmail,((Parks)mLoc.getSelectedItem()).getImage().toString(),usrImage);
-                Map<String, Object> mt = new HashMap<>();
-                mt.put("Location", meeting.getLocation());
-                mt.put("Date", meeting.getDate());
-                mt.put("Hour", meeting.getHour());
-                mt.put("DogType", meeting.getDogType());
-                mt.put("Discription", meeting.getDiscription());
-                mt.put("Owner", meeting.getOwner());
-                mt.put("ParkImage",meeting.getParkImage());
-                mt.put("UserImage",meeting.getUserImage());
-                ArrayList<String> participants = new ArrayList<String>();
-                participants.add(CurrentUser.currentUserEmail);
-                mt.put("Participants", participants);
-                String id = db.collection("meetings").document().getId();
-                mt.put("ID", id);
-                db.collection("meetings").document(id).set(mt)
-                        .addOnSuccessListener(new OnSuccessListener<Void>() {
-                            @Override
-                            public void onSuccess(Void aVoid) {
-                                Toast.makeText(CreateMeetingActivity.this, "הפגישה נוצרה בהצלחה", Toast.LENGTH_SHORT).show();
-                                finish();
-                            }
-                        });
+                if(getIntent().getExtras().getString("Target").equals("create")) {
+                    Meeting meeting = new Meeting(((Parks) mLoc.getSelectedItem()).getName().toString(), mDate.getText().toString(), mHour.getText().toString(), mDogType.getSelectedItem().toString(), mDisc.getText().toString(), CurrentUser.currentUserEmail, ((Parks) mLoc.getSelectedItem()).getImage().toString(), usrImage);
+                    Map<String, Object> mt = new HashMap<>();
+                    mt.put("Location", meeting.getLocation());
+                    mt.put("Date", meeting.getDate());
+                    mt.put("Hour", meeting.getHour());
+                    mt.put("DogType", meeting.getDogType());
+                    mt.put("Discription", meeting.getDiscription());
+                    mt.put("Owner", meeting.getOwner());
+                    mt.put("ParkImage", meeting.getParkImage());
+                    mt.put("UserImage", meeting.getUserImage());
+                    ArrayList<String> participants = new ArrayList<String>();
+                    participants.add(CurrentUser.currentUserEmail);
+                    mt.put("Participants", participants);
+                    String id = db.collection("meetings").document().getId();
+                    mt.put("ID", id);
+                    db.collection("meetings").document(id).set(mt)
+                            .addOnSuccessListener(new OnSuccessListener<Void>() {
+                                @Override
+                                public void onSuccess(Void aVoid) {
+                                    Toast.makeText(CreateMeetingActivity.this, "הפגישה נוצרה בהצלחה", Toast.LENGTH_SHORT).show();
+                                    finish();
+                                }
+                            });
+                }
+                else{
+                    WriteBatch batch = db.batch();
+                    DocumentReference meeting=db.collection("meetings").document(getIntent().getExtras().getString("id"));
+                    batch.update(meeting, "Location", ((Parks)mLoc.getSelectedItem()).getName());
+                    batch.update(meeting, "Date", mDate.getText().toString());
+                    batch.update(meeting, "Hour", mHour.getText().toString());
+                    batch.update(meeting, "DogType", getIntent().getExtras().getString("type"));
+                    batch.update(meeting, "Discription", mDisc.getText().toString());
+                    batch.update(meeting, "ParkImage", ((Parks) mLoc.getSelectedItem()).getImage());
+                    batch.commit().addOnSuccessListener(new OnSuccessListener<Void>() {
+                        @Override
+                        public void onSuccess(Void aVoid) {
+                            Toast.makeText(CreateMeetingActivity.this, "הפגישה עודכנה בהצלחה", Toast.LENGTH_SHORT).show();
+                            finish();
+                        }
+                    });
+                }
             }
         });
 
@@ -177,6 +198,12 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                         parksList.add(park);
                     }
                     fillList();
+                    int i = 0;
+                    for(Parks park : parksList){
+                        if(park.getName().equals(getIntent().getExtras().getString("location")))
+                            mLoc.setSelection(i);
+                        i++;
+                    }
                 }
             }
         })
@@ -186,6 +213,24 @@ public class CreateMeetingActivity extends AppCompatActivity  {
                     }
                 });
 
+        if(getIntent().getExtras().getString("Target").equals("edit")){
+            setDetails();
+        }
+    }
+
+    private void setDetails() {
+        mDate.setText(getIntent().getExtras().getString("date"));
+        mHour.setText(getIntent().getExtras().getString("hour"));
+        mDisc.setText(getIntent().getExtras().getString("desc"));
+        mDogType.setEnabled(false);
+        for(int i=0; i<mDogType.getCount(); i++){
+            if(mDogType.getItemAtPosition(i).equals(getIntent().getExtras().getString("type"))){
+                mDogType.setSelection(i);
+                break;
+            }
+        }
+        headLine.setText("ערוך מפגש");
+        mbutton.setText("ערוך מפגש");
     }
 
     private void updateLabel() {

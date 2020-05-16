@@ -241,6 +241,7 @@ public class HomeActivity extends AppCompatActivity {
     }
     private void goToCreateNewMeeting(){
         Intent intent=new Intent(this,CreateMeetingActivity.class);
+        intent.putExtra("Target","create");
         startActivity(intent);
     }
 }

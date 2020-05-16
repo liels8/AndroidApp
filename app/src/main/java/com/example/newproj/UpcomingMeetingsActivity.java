@@ -61,7 +61,6 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
         allMeetingsOption = findViewById(R.id.all_meetings);
         iCreatedOption = findViewById(R.id.meetings_i_created);
         meetingsHistory = findViewById(R.id.meetings_history);
-        //showButton = findViewById(R.id.show_meetings);
         options = findViewById(R.id.meeting_options);
 
         meetingsList = new ArrayList<Meeting>();
@@ -94,6 +93,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                     Collections.sort(result, new SortByDate());
                     try {
                         result = getReleventMeetings(result);
+                        meetingsCount.setText("(" + Integer.toString(result.size()) + ")");
                     } catch (ParseException e) {
                         e.printStackTrace();
                     }
@@ -116,12 +116,14 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 Collections.sort(result, new SortByDate());
                 try {
                     result = getReleventMeetings(result);
+                    meetingsCount.setText("(" + Integer.toString(result.size()) + ")");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 fillList(result);
             }
         });
+
         allMeetingsOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -130,6 +132,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 Collections.sort(result, new SortByDate());
                 try {
                     result = getReleventMeetings(result);
+                    meetingsCount.setText("(" + Integer.toString(result.size()) + ")");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
@@ -137,6 +140,7 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
             }
         });
 
+        //get meeting history
         meetingsHistory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -145,33 +149,14 @@ public class UpcomingMeetingsActivity extends AppCompatActivity {
                 Collections.sort(result, new SortByDate());
                 try {
                     result = getHistoryMeetings(result);
+                    meetingsCount.setText("(" + Integer.toString(result.size()) + ")");
                 } catch (ParseException e) {
                     e.printStackTrace();
                 }
                 fillList(result);
             }
         });
-        /*
-        showButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-                if(options.getCheckedRadioButtonId()==iCreatedOption.getId()){
-                    result.clear();
-                    showMeetingICreated();
-                    Collections.sort(result, new SortByDate());
-                    fillList(result);
-                }
-                else{
-                    result.clear();
-                    showAllMeetings();
-                    Collections.sort(result, new SortByDate());
-                    fillList(result);
-                }
-            }
-        });
-
-         */
         meetingsListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
