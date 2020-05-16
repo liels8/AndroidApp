@@ -118,6 +118,7 @@ public class SearchUsersActivity extends AppCompatActivity {
         intent.putExtra("age",clickedUser.getAge());
         intent.putExtra("image",clickedUser.getImage());
         intent.putExtra("email",clickedUser.getEmail());
+        //check if the user is admin
         if(getIntent().getExtras().getString("userType").equals("admin")){
             intent.putExtra("isFriend",true);
         }
