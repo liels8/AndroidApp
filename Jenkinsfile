@@ -27,7 +27,7 @@ pipeline {
         sh './gradlew assembleDebug' 
           } 
     }
-     stage('UnitTests') {
+     stage('Tests') {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew test --rerun-tasks'
@@ -35,8 +35,8 @@ pipeline {
     }
   }
   post {
-          always {
-             mail to: 'lielsananes8@gmail.com',
+          failure {
+             mail to: 'team3sce@gmail.com',
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
                 body: "${env.BUILD_URL} has result ${currentBuild.result} and ${BUILD_URL}/consoleText"
           }
