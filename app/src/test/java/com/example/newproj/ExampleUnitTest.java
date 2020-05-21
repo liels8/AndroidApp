@@ -19,6 +19,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import org.junit.Test;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -299,4 +300,215 @@ public class ExampleUnitTest {
         assertEquals(activity.isAdmin("user"),false);
     }
 
+    //UdateMeetingTests
+    @Test
+    public void getTimeForamt_update_pass(){
+        String time="7";
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        time=createMeeting.getFixTimeForamt(time);
+        assertEquals("07",time);
+    }
+    @Test
+    public void getTimeFormat_update_fail(){
+        String time="7";
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        time=createMeeting.getFixTimeForamt(time);
+        assertNotEquals("7",time);
+    }
+
+    @Test
+    public void setDateTime_update_pass(){
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, 2020);
+        myCalendar.set(Calendar.MONTH,7);
+        myCalendar.set(Calendar.DAY_OF_MONTH, 2);
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        String date=createMeeting.updateLabel(myCalendar);
+        assertEquals("02/08/2020",date);
+    }
+
+    @Test
+    public void setDateTime_update_fail(){
+        Calendar myCalendar = Calendar.getInstance();
+        myCalendar.set(Calendar.YEAR, 2020);
+        myCalendar.set(Calendar.MONTH, 8);
+        myCalendar.set(Calendar.DAY_OF_MONTH, 2);
+        CreateMeetingActivity createMeeting=new CreateMeetingActivity();
+        String date=createMeeting.updateLabel(myCalendar);
+        assertNotEquals("01/12/2020",date);
+    }
+
+    //Admin Edit Profile
+    @Test
+    public void adminUpdateValidation_namePatternFailed() {
+        AdminEditProfileActivity editActivity = new AdminEditProfileActivity();
+        assertEquals(false,editActivity.editValidation("nad3av","cohen","123456"));
+    }
+
+    @Test
+    public void adminUpdateValidation_lastNameLengthFailed() {
+        AdminEditProfileActivity editActivity = new AdminEditProfileActivity();
+        assertEquals(false,editActivity.editValidation("nadav","c","123456"));
+    }
+    @Test
+    public void adminUpdateValidation_passwordPatternFailed() {
+        AdminEditProfileActivity editActivity = new AdminEditProfileActivity();
+        assertEquals(false,editActivity.editValidation("nadav","cohen","123"));
+    }
+
+    //Find Meetings
+    @Test
+    public void isOwner_check(){
+        FindMeetingsActivity searchActvity = new FindMeetingsActivity();
+        CurrentUser.currentUserEmail = "nadavcohen@gmail.com";
+        Meeting mt = new Meeting();
+        mt.setOwner("nadavcohen@gmail.com");
+        assertEquals(true,searchActvity.isOwner(mt));
+    }
+
+    @Test
+    public void isOwner_checkFailed(){
+        FindMeetingsActivity searchActvity = new FindMeetingsActivity();
+        CurrentUser.currentUserEmail = "liel@gmail.com";
+        Meeting mt = new Meeting();
+        mt.setOwner("nadavcohen@gmail.com");
+        assertNotEquals(true,searchActvity.isOwner(mt));
+    }
+
+    @Test
+    public void isMember_check(){
+        FindMeetingsActivity searchActvity = new FindMeetingsActivity();
+        CurrentUser.currentUserEmail = "nadav@gmail.com";
+        Meeting mt = new Meeting();
+        mt.setOwner("nadav@gmail.com");
+        ArrayList<String> members = new ArrayList<String>();
+        members.add("nadav@gmail.com");
+        members.add("liel@gmail.com");
+        mt.setParticipants(members);
+        assertEquals(true,searchActvity.isMember(mt));
+    }
+
+    @Test
+    public void isMember_notMember_check(){
+        FindMeetingsActivity searchActvity = new FindMeetingsActivity();
+        CurrentUser.currentUserEmail = "nadav@gmail.com";
+        Meeting mt = new Meeting();
+        mt.setOwner("liel@gmail.com");
+        ArrayList<String> members = new ArrayList<String>();
+        members.add("or@gmail.com");
+        members.add("liel@gmail.com");
+        mt.setParticipants(members);
+        assertEquals(false,searchActvity.isMember(mt));
+    }
+
+    //join to a meeting
+    @Test
+    public void checkJoinButton(){
+        MeetingDetailsActivity joinActivity = new MeetingDetailsActivity();
+        assertEquals("בטל הצטרפות",joinActivity.checkButtonText(true,false));
+    }
+
+    @Test
+    public void checkLeaveButton(){
+        MeetingDetailsActivity joinActivity = new MeetingDetailsActivity();
+        assertEquals("הצטרף למפגש",joinActivity.checkButtonText(false,false));
+    }
+
+    @Test
+    public void checkEditButton(){
+        MeetingDetailsActivity joinActivity = new MeetingDetailsActivity();
+        assertEquals("ערוך פגישה",joinActivity.checkButtonText(false,true));
+    }
+
+    //Admin history meetings
+    @Test
+    public void checkHistory_correct() throws ParseException {
+        AdminMeetingsActivity history = new AdminMeetingsActivity();
+        Meeting mt1 = new Meeting();
+        mt1.setDate("25/05/2020");
+        Meeting mt2 = new Meeting();
+        mt2.setDate("20/05/2020");
+        Meeting mt3 = new Meeting();
+        mt3.setDate("10/05/2020");
+        ArrayList<Meeting> list = new ArrayList<Meeting>();
+        list.add(mt1);
+        list.add(mt2);
+        list.add(mt3);
+        assertEquals(2,history.getAmountOfHistoryMeetings(list));
+    }
+    @Test
+    public void checkHistory_correct2() throws ParseException {
+        AdminMeetingsActivity history = new AdminMeetingsActivity();
+        Meeting mt1 = new Meeting();
+        mt1.setDate("25/05/2020");
+        Meeting mt2 = new Meeting();
+        mt2.setDate("20/06/2020");
+        Meeting mt3 = new Meeting();
+        mt3.setDate("29/05/2020");
+        ArrayList<Meeting> list = new ArrayList<Meeting>();
+        list.add(mt1);
+        list.add(mt2);
+        list.add(mt3);
+        assertEquals(0,history.getAmountOfHistoryMeetings(list));
+    }
+
+    //Admin all Meetings
+    @Test
+    public void checkRelevant_correct() throws ParseException {
+        AdminMeetingsActivity history = new AdminMeetingsActivity();
+        Meeting mt1 = new Meeting();
+        mt1.setDate("25/05/2020");
+        Meeting mt2 = new Meeting();
+        mt2.setDate("20/06/2020");
+        Meeting mt3 = new Meeting();
+        mt3.setDate("29/05/2020");
+        ArrayList<Meeting> list = new ArrayList<Meeting>();
+        list.add(mt1);
+        list.add(mt2);
+        list.add(mt3);
+        assertEquals(3,history.getAmountOfRelevantMeetings(list));
+    }
+    //Admin Today's meetings
+    @Test
+    public void checkToday_correct() throws ParseException {
+        AdminMeetingsActivity history = new AdminMeetingsActivity();
+        Meeting mt1 = new Meeting();
+        mt1.setDate("25/04/2020");
+        Meeting mt2 = new Meeting();
+        mt2.setDate("20/04/2020");
+        Meeting mt3 = new Meeting();
+        mt3.setDate("29/04/2020");
+        ArrayList<Meeting> list = new ArrayList<Meeting>();
+        list.add(mt1);
+        list.add(mt2);
+        list.add(mt3);
+        assertEquals(0,history.getAmountOfTodayMeetings(list));
+    }
+
+    //view the participants list
+    @Test
+    public void checkAmountOfParticipants(){
+        MeetingDetailsActivity details = new MeetingDetailsActivity();
+        ArrayList<String> list = new ArrayList<String>();
+        list.add("liel@gmail.com");
+        list.add("nadav@gmail.com");
+        assertEquals(2,details.getAmountOfMembers(list));
+    }
+    //Delete meeting
+    @Test
+    public void checkAllowDelete(){
+        MeetingDetailsActivity details = new MeetingDetailsActivity();
+        Users owner = new Users();
+        owner.setEmail("nadav@gmail.com");
+        CurrentUser.currentUserEmail="nadav@gmail.com";
+        assertEquals(true,details.allowDelete(owner));
+    }
+    @Test
+    public void checkNotAllowDelete(){
+        MeetingDetailsActivity details = new MeetingDetailsActivity();
+        Users owner = new Users();
+        owner.setEmail("nadav@gmail.com");
+        CurrentUser.currentUserEmail="liel@gmail.com";
+        assertEquals(false,details.allowDelete(owner));
+    }
 }

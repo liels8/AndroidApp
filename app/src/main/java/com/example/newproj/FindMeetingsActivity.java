@@ -213,13 +213,13 @@ public class FindMeetingsActivity extends AppCompatActivity {
         intent.putExtra("image",clickedMeeting.getParkImage());
         intent.putExtra("participants",(ArrayList<String>)clickedMeeting.getParticipants());
         intent.putExtra("activityscreen","FindMeetingActivity");
-        if(isMember()){
+        if(isMember(clickedMeeting)){
             intent.putExtra("isMember",true);
         }
         else{
             intent.putExtra("isMember",false);
         }
-        if(isOwner()){
+        if(isOwner(clickedMeeting)){
             intent.putExtra("isOwner",true);
         }
         else{
@@ -229,14 +229,14 @@ public class FindMeetingsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private boolean isOwner() {
-        if(clickedMeeting.getOwner().equals(CurrentUser.currentUserEmail))
+    public boolean isOwner(Meeting clicked) {
+        if(clicked.getOwner().equals(CurrentUser.currentUserEmail))
             return true;
         return false;
     }
 
-    private boolean isMember(){
-        if(clickedMeeting.getParticipants().indexOf(CurrentUser.currentUserEmail) == -1)
+    public boolean isMember(Meeting clicked){
+        if(clicked.getParticipants().indexOf(CurrentUser.currentUserEmail) == -1)
             return false;
         return true;
     }

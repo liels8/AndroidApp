@@ -149,17 +149,21 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         else
             description.setText(getIntent().getExtras().getString("description"));
         participantsCount.setText("("+Integer.toString(getIntent().getExtras().getStringArrayList("participants").size())+")");
+
+        //button adjustment
         isMember = getIntent().getExtras().getBoolean("isMember");
         isOwner = getIntent().getExtras().getBoolean("isOwner");
 
-        if(isMember){
+        joinMeetingButton.setText(checkButtonText(isMember,isOwner));
+
+        /*if(isMember){
             joinMeetingButton.setText("בטל הצטרפות");
         }
-        dogType=getIntent().getExtras().getString("dogType").toString();
         if(isOwner){
             joinMeetingButton.setText("ערוך פגישה");
-        }
-        else if(getIntent().getExtras().getString("activityscreen").equals("AdminMeetingsActivity")||(!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל"))){
+        }*/
+        dogType=getIntent().getExtras().getString("dogType").toString();
+        if(getIntent().getExtras().getString("activityscreen").equals("AdminMeetingsActivity")||(!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל"))){
             joinMeetingButton.setEnabled(false);
         }
 
@@ -278,6 +282,10 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         dialog.show();
     }
 
+    public boolean allowDelete(Users own){
+        return CurrentUser.currentUserEmail.equals(own.getEmail());
+    }
+
     private void openEditMeeting() {
         Intent intent = new Intent(this,CreateMeetingActivity.class);
         intent.putExtra("Target","edit");
@@ -356,5 +364,18 @@ public class MeetingDetailsActivity extends AppCompatActivity {
             intent = new Intent(MeetingDetailsActivity.this,AdminMeetingsActivity.class);
         finish();
         startActivity(intent);
+    }
+
+    public int getAmountOfMembers(ArrayList<String> members){
+        return members.size();
+    }
+
+
+    public String checkButtonText(boolean is_member,boolean is_owner){
+        if(is_owner)
+            return "ערוך פגישה";
+        if(is_member)
+            return "בטל הצטרפות";
+        return "הצטרף למפגש";
     }
 }

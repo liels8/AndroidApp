@@ -179,7 +179,7 @@ public class AdminMeetingsActivity extends AppCompatActivity {
         return relevant;
     }
 
-    private ArrayList<Meeting> getHistoryMeetings(ArrayList<Meeting> list) throws ParseException {
+    public ArrayList<Meeting> getHistoryMeetings(ArrayList<Meeting> list) throws ParseException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String now = df.format(new Date());
         Date today = new SimpleDateFormat("dd/MM/yyyy").parse(now);
@@ -191,6 +191,18 @@ public class AdminMeetingsActivity extends AppCompatActivity {
             }
         }
         return relevant;
+    }
+
+    public int getAmountOfHistoryMeetings(ArrayList<Meeting> list) throws ParseException {
+        return getHistoryMeetings(list).size();
+    }
+
+    public int getAmountOfTodayMeetings(ArrayList<Meeting> list) throws ParseException {
+        return getTodayMeetings(list).size();
+    }
+
+    public int getAmountOfRelevantMeetings(ArrayList<Meeting> list) throws ParseException {
+        return getReleventMeetings(list).size();
     }
 
     private void fillList(final ArrayList<Meeting> meetings_list){
