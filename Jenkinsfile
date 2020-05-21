@@ -30,13 +30,13 @@ pipeline {
      stage('Tests') {
       //Start all the existing tests in the test package 
           steps { 
-            sh './gradlew test --rerun-tasks'1
+            sh './gradlew test --rerun-tasks'
                 }         
     }
   }
   post {
-          failure {
-             mail to: 'lielsananes8@gmail.com',
+          always {
+             mail to: 'lielsananes8@gmail.com',cc: 'nadavcohen306@gmail.com;aviramcohen1@gmail.com;orcohen733@gmail.com',
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
                 body: "${env.BUILD_URL} has result ${currentBuild.result} and ${BUILD_URL}/consoleText"
           }
