@@ -37,7 +37,7 @@ pipeline {
   }
   post {
           always{
-                  sh 'find . -name "TEST-*.xml" -exec touch {} \\;'
+                  //sh 'find . -name "TEST-*.xml" -exec touch {} \\;'
                   junit '**/*.xml'
           }
           failure {
