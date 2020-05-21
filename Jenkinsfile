@@ -30,14 +30,16 @@ pipeline {
      stage('Tests') {
       //Start all the existing tests in the test package 
           steps {
-            sh 'find . -name "TEST-*.xml" -exec touch {} \\;'
-            junit '**/*.xml'
             sh './gradlew test --rerun-tasks'
             
                 }         
     }
   }
   post {
+          always{
+                  sh 'find . -name "TEST-*.xml" -exec touch {} \\;'
+                  junit '**/*.xml'
+          }
           failure {
              mail to: 'team3sce@gmail.com',
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
