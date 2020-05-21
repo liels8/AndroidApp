@@ -30,7 +30,7 @@ pipeline {
      stage('Tests') {
       //Start all the existing tests in the test package 
           steps {
-            touch *.xml
+            touch '**/*.xml'
             junit '**/*.xml'
             sh './gradlew test --rerun-tasks'
             
