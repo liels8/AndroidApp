@@ -15,7 +15,7 @@ public class Admin_edit_profile_Integration_Test {
 
 
     @Test
-    public void name() {
+    public void put_ditails_of_user_in_fields_test() {
         AdminEditUserProfileActivity activity= Robolectric.buildActivity(AdminEditUserProfileActivity.class).create().get();
         Intent intent=new Intent(activity,AdminToUserProfileActivity.class);
         ((EditText)activity.findViewById(R.id.editFirstName)).setText("Liel");
@@ -29,7 +29,7 @@ public class Admin_edit_profile_Integration_Test {
     }
 
     @Test
-    public void yes() {
+    public void get_new_ditails_after_changed_test() {
         AdminEditUserProfileActivity activity= Robolectric.buildActivity(AdminEditUserProfileActivity.class).create().get();
         activity.getIntent().putExtra("name","Liel");
         activity.setTextsToButtons();

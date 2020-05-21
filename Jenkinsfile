@@ -27,16 +27,21 @@ pipeline {
         sh './gradlew assembleDebug' 
           } 
     }
-     stage('UnitTests') {
+     stage('Tests') {
       //Start all the existing tests in the test package 
-          steps { 
+          steps {
             sh './gradlew test --rerun-tasks'
+            
                 }         
     }
   }
   post {
-          always {
-             mail to: 'lielsananes8@gmail.com',
+          always{
+                  sh 'find . -name "TEST-*.xml" -exec touch {} \\;'
+                  junit '**/*.xml'
+          }
+          failure {
+             mail to: 'team3sce@gmail.com',
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
                 body: "${env.BUILD_URL} has result ${currentBuild.result} and ${BUILD_URL}/consoleText"
           }
