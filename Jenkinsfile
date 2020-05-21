@@ -31,7 +31,7 @@ pipeline {
       //Start all the existing tests in the test package 
           steps { 
             sh './gradlew test --rerun-tasks'
-            junit '/Test_Results.xml'
+            junit 'Test_Results.xml'
                 }         
     }
   }
