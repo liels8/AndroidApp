@@ -35,7 +35,7 @@ pipeline {
     }
   }
   post {
-          always {
+          failure {
              mail to: 'lielsananes8@gmail.com',
                 subject: "Status of pipeline: ${currentBuild.fullDisplayName}",
                 body: "${env.BUILD_URL} has result ${currentBuild.result} and ${BUILD_URL}/consoleText"
