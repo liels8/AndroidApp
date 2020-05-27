@@ -434,17 +434,17 @@ public class ExampleUnitTest {
         list.add(mt1);
         list.add(mt2);
         list.add(mt3);
-        assertEquals(2,history.getAmountOfHistoryMeetings(list));
+        assertEquals(3,history.getAmountOfHistoryMeetings(list));
     }
     @Test
     public void checkHistory_correct2() throws ParseException {
         AdminMeetingsActivity history = new AdminMeetingsActivity();
         Meeting mt1 = new Meeting();
-        mt1.setDate("25/05/2020");
+        mt1.setDate("25/05/2021");
         Meeting mt2 = new Meeting();
-        mt2.setDate("20/06/2020");
+        mt2.setDate("20/06/2021");
         Meeting mt3 = new Meeting();
-        mt3.setDate("29/05/2020");
+        mt3.setDate("29/05/2021");
         ArrayList<Meeting> list = new ArrayList<Meeting>();
         list.add(mt1);
         list.add(mt2);
@@ -457,11 +457,11 @@ public class ExampleUnitTest {
     public void checkRelevant_correct() throws ParseException {
         AdminMeetingsActivity history = new AdminMeetingsActivity();
         Meeting mt1 = new Meeting();
-        mt1.setDate("25/05/2020");
+        mt1.setDate("25/05/2021");
         Meeting mt2 = new Meeting();
-        mt2.setDate("20/06/2020");
+        mt2.setDate("20/06/2021");
         Meeting mt3 = new Meeting();
-        mt3.setDate("29/05/2020");
+        mt3.setDate("29/05/2021");
         ArrayList<Meeting> list = new ArrayList<Meeting>();
         list.add(mt1);
         list.add(mt2);
