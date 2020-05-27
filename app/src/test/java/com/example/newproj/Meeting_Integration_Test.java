@@ -1,6 +1,9 @@
 package com.example.newproj;
 import android.content.Intent;
+import android.os.Looper;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.newproj.models.Meeting;
 import com.example.newproj.models.Users;
@@ -10,16 +13,27 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.LooperMode;
 
 import java.util.ArrayList;
 
+import static org.robolectric.Shadows.shadowOf;
 import static org.testng.Assert.assertEquals;
 @Config(sdk = 21)
 @RunWith(RobolectricTestRunner.class)
+@LooperMode(LooperMode.Mode.PAUSED)
 public class Meeting_Integration_Test {
 
     @Test
     public void perform_click_Meeting_Test() {
+        MainActivity main = Robolectric.buildActivity(MainActivity.class).create().get();
+        ((TextView)main.findViewById(R.id.EmailText)).setText("nadav@gmail.com");
+        ((TextView)main.findViewById(R.id.PasswordText)).setText("123456");
+        main.setLoginUser(main.emailText.getText().toString(),main.passwordText.getText().toString(),"user");
+        ((Button)main.findViewById(R.id.login_btn)).performClick();
+        main.CheckUserDetails();
+        shadowOf(Looper.getMainLooper()).idle();
+        assertEquals(main.isFinishing(),true);
         UpcomingMeetingsActivity activity= Robolectric.buildActivity(UpcomingMeetingsActivity.class).create().get();
         ArrayList<Users> usersList = new ArrayList<Users>();
         ArrayList<Meeting> meetingsList=new ArrayList<Meeting>();;

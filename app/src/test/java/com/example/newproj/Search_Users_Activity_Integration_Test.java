@@ -1,4 +1,5 @@
 package com.example.newproj;
+import android.os.Looper;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.RadioButton;
@@ -13,15 +14,26 @@ import org.junit.runner.RunWith;
 import org.robolectric.Robolectric;
 import org.robolectric.RobolectricTestRunner;
 import org.robolectric.annotation.Config;
+import org.robolectric.annotation.LooperMode;
 
 import java.util.ArrayList;
 
+import static org.robolectric.Shadows.shadowOf;
 import static org.testng.Assert.assertEquals;
 @Config(sdk = 21)
 @RunWith(RobolectricTestRunner.class)
+@LooperMode(LooperMode.Mode.PAUSED)
 public class Search_Users_Activity_Integration_Test {
     @Test
     public void Search_Users_by_Name_Test() {
+        MainActivity main = Robolectric.buildActivity(MainActivity.class).create().get();
+        ((TextView)main.findViewById(R.id.EmailText)).setText("nadav@gmail.com");
+        ((TextView)main.findViewById(R.id.PasswordText)).setText("123456");
+        main.setLoginUser(main.emailText.getText().toString(),main.passwordText.getText().toString(),"user");
+        ((Button)main.findViewById(R.id.login_btn)).performClick();
+        main.CheckUserDetails();
+        shadowOf(Looper.getMainLooper()).idle();
+        assertEquals(main.isFinishing(),true);
         SearchUsersActivity activity= Robolectric.buildActivity(SearchUsersActivity.class).create().get();
         ((TextView)activity.findViewById(R.id.search_text)).setText("Liel");
         ArrayList<Users> userlist=new ArrayList<>();
@@ -42,6 +54,14 @@ public class Search_Users_Activity_Integration_Test {
     }
     @Test
     public void Search_Users_by_dog_type_Test() {
+        MainActivity main = Robolectric.buildActivity(MainActivity.class).create().get();
+        ((TextView)main.findViewById(R.id.EmailText)).setText("nadav@gmail.com");
+        ((TextView)main.findViewById(R.id.PasswordText)).setText("123456");
+        main.setLoginUser(main.emailText.getText().toString(),main.passwordText.getText().toString(),"user");
+        ((Button)main.findViewById(R.id.login_btn)).performClick();
+        main.CheckUserDetails();
+        shadowOf(Looper.getMainLooper()).idle();
+        assertEquals(main.isFinishing(),true);
         SearchUsersActivity activity= Robolectric.buildActivity(SearchUsersActivity.class).create().get();
         ((TextView)activity.findViewById(R.id.search_text)).setText("shimi");
         ArrayList<Users> userlist=new ArrayList<>();

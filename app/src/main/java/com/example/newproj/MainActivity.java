@@ -36,8 +36,8 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 
 public class MainActivity extends AppCompatActivity {
-    private TextView emailText,passwordText,registerText;
-    private Button loginButton;
+    public TextView emailText,passwordText,registerText;
+    public Button loginButton;
     private String type;
     private FirebaseFirestore db;
     private DocumentReference user;
@@ -177,7 +177,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
+    public void setLoginUser(String email, String pass,String type){
+        LoginUser.setEmail(email);
+        LoginUser.setPassword(pass);
+        LoginUser.setUserType(type);
+    }
 
     //switch to RegisterActivity
     private void switchToRegisterActivitiy(){
