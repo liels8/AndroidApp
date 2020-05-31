@@ -245,9 +245,11 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         builder.setItems(options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                //user chose edit
                 if(which==0) {
                     openEditMeeting();
                 }
+                //user chose delete
                 else if(which==1){
                     deleteMeeting();
                 }
