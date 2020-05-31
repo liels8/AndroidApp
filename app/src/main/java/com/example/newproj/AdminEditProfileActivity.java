@@ -111,6 +111,7 @@ public class AdminEditProfileActivity extends AppCompatActivity {
         return flag;
     }
 
+    //update the data in the database
     private void update() {
         WriteBatch batch = db.batch();
         user=db.collection("users").document(CurrentUser.currentUserEmail);
