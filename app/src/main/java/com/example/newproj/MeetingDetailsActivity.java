@@ -167,6 +167,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
             joinMeetingButton.setEnabled(false);
         }
 
+
         joinMeetingButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -176,9 +177,11 @@ public class MeetingDetailsActivity extends AppCompatActivity {
                 }
                 HashMap<String,Object> updatedList = new HashMap<>();
                 if(isMember){
+                    //the user is already participate in the meeting - will remove him from the list
                     participants.remove(CurrentUser.currentUserEmail);
                 }
                 else {
+                    //the user is not participate in the meeting - will add him to the list
                     participants.add(CurrentUser.currentUserEmail);
                 }
                 updatedList.put("Participants", participants);
