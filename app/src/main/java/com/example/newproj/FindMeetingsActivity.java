@@ -187,6 +187,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
 
     }
 
+    //get only the meetings that the date is after today's date
     private ArrayList<Meeting> getReleventMeetings(ArrayList<Meeting> list) throws ParseException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String now = df.format(new Date());
