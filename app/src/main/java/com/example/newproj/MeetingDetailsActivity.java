@@ -270,6 +270,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         builder.setPositiveButton("מחק", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 pd.show();
+                //delete meeting from database
                 db.collection("meetings").document(getIntent().getExtras().getString("id")).delete().addOnCompleteListener(new OnCompleteListener<Void>() {
                     @Override
                     public void onComplete(@NonNull Task<Void> task) {
