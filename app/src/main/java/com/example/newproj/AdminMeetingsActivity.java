@@ -179,6 +179,7 @@ public class AdminMeetingsActivity extends AppCompatActivity {
         return relevant;
     }
 
+    //get all meetings that already took place
     public ArrayList<Meeting> getHistoryMeetings(ArrayList<Meeting> list) throws ParseException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String now = df.format(new Date());
