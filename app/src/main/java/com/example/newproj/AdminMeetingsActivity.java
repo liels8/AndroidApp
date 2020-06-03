@@ -35,11 +35,11 @@ public class AdminMeetingsActivity extends AppCompatActivity {
     public ListView meetingsListView;
     private TextView meetingsCount;
     private FirebaseFirestore db;
-    private ArrayList<Meeting> meetingsList;
-    private ArrayList<Meeting> result;
+    public ArrayList<Meeting> meetingsList;
+    public ArrayList<Meeting> result;
     private ArrayList<Users> usersList;
     private Users user;
-    private RadioButton allMeetingsOption,todayOption,meetingsHistory;
+    public RadioButton allMeetingsOption,todayOption,meetingsHistory;
     private RadioGroup options;
     public Intent intent;
     public Meeting clickedMeeting;

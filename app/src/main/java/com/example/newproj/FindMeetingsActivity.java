@@ -41,10 +41,10 @@ public class FindMeetingsActivity extends AppCompatActivity {
     private Spinner parkSpinner,dateSpinner,dogSpinner;
     private Button searchMeetingsButton;
     private ListView meetingsListView;
-    private ArrayList<String> parksNames;
+    public ArrayList<String> parksNames;
     private ArrayList<String> dateOptions;
-    private ArrayList<Meeting> meetingsList;
-    private ArrayList<Meeting> result;
+    public ArrayList<Meeting> meetingsList;
+    public ArrayList<Meeting> result;
     private ArrayList<Users> usersList;
     private Users user;
     private Meeting clickedMeeting;
@@ -269,7 +269,7 @@ public class FindMeetingsActivity extends AppCompatActivity {
 
     }
 
-    private void setParksSpinner() {
+    public void setParksSpinner() {
         parksNames.add(0,"כל הפארקים");
         ArrayAdapter<String> spinnerArrayAdapter = new ArrayAdapter<String>(this,android.R.layout.simple_spinner_item, parksNames);
         spinnerArrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);

@@ -25,6 +25,7 @@ import com.example.newproj.models.Users;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.firestore.CollectionReference;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -43,11 +44,11 @@ public class MeetingDetailsActivity extends AppCompatActivity {
     private ListView participantsListView;
     private FirebaseFirestore db;
     private ArrayList<Users> usersList;
-    private ArrayList<String> participants;
+    public ArrayList<String> participants;
     private Users owner,clickedUser;
     private ImageView parkImage;
     StorageReference storageRef;
-    private boolean isMember,isOwner;
+    public boolean isMember,isOwner;
     private String dogType;
     private ProgressDialog pd;
 
@@ -56,6 +57,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_meeting_details);
 
+        FirebaseApp.initializeApp(this);
         headLine = findViewById(R.id.meeting_headline);
         description = findViewById(R.id.meeting_description);
         parkName = findViewById(R.id.park_name);
@@ -184,8 +186,9 @@ public class MeetingDetailsActivity extends AppCompatActivity {
                     //the user is not participate in the meeting - will add him to the list
                     participants.add(CurrentUser.currentUserEmail);
                 }
-                updatedList.put("Participants", participants);
-                db.collection("meetings").document(getIntent().getExtras().getString("id")).update(updatedList).addOnCompleteListener(new OnCompleteListener<Void>() {
+                if(!getIntent().getExtras().getString("activityscreen").equals("Test")) {
+                    updatedList.put("Participants", participants);
+                    db.collection("meetings").document(getIntent().getExtras().getString("id")).update(updatedList).addOnCompleteListener(new OnCompleteListener<Void>() {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
                             DocumentReference user = db.collection("users").document(CurrentUser.currentUserEmail);
@@ -203,29 +206,29 @@ public class MeetingDetailsActivity extends AppCompatActivity {
                                         newMember.setDogName(doc.get("DogName").toString());
                                         newMember.setDogType(doc.get("DogType").toString());
                                         newMember.setImage(doc.get("Image").toString());
-                                        if(isMember){
-                                            for(Users search : usersList){
-                                                if(search.getEmail().equals(CurrentUser.currentUserEmail)){
+                                        if (isMember) {
+                                            for (Users search : usersList) {
+                                                if (search.getEmail().equals(CurrentUser.currentUserEmail)) {
                                                     usersList.remove(search);
                                                 }
                                             }
                                             isMember = false;
                                             joinMeetingButton.setText("הצטרף למפגש");
                                             Toast.makeText(MeetingDetailsActivity.this, "ההצטרפות בוטלה", Toast.LENGTH_SHORT).show();
-                                        }
-                                        else {
+                                        } else {
                                             usersList.add(newMember);
                                             isMember = true;
                                             joinMeetingButton.setText("בטל הצטרפות");
                                             Toast.makeText(MeetingDetailsActivity.this, "הצטרפת בהצלחה!", Toast.LENGTH_SHORT).show();
                                         }
                                         fillList();
-                                        participantsCount.setText("("+Integer.toString(participants.size())+")");
+                                        participantsCount.setText("(" + Integer.toString(participants.size()) + ")");
                                     }
                                 }
                             });
                         }
                     });
+                }
             }
         });
 
