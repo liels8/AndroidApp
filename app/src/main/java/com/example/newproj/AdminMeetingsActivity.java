@@ -165,6 +165,7 @@ public class AdminMeetingsActivity extends AppCompatActivity {
         return relevant;
     }
 
+    //get all meetings that take place today
     private ArrayList<Meeting> getTodayMeetings(ArrayList<Meeting> list) throws ParseException {
         DateFormat df = new SimpleDateFormat("dd/MM/yyyy");
         String now = df.format(new Date());
