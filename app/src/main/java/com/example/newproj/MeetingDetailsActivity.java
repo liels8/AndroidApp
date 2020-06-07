@@ -312,6 +312,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    //open friend profile
     private void showFriendProfile() {
         Intent intent = new Intent(this,UserProfileActivity.class);
         intent.putExtra("name",clickedUser.getName());
