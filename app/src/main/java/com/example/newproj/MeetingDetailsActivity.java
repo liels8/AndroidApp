@@ -165,7 +165,7 @@ public class MeetingDetailsActivity extends AppCompatActivity {
             joinMeetingButton.setText("ערוך פגישה");
         }*/
         dogType=getIntent().getExtras().getString("dogType").toString();
-        if(getIntent().getExtras().getString("activityscreen").equals("AdminMeetingsActivity")||(!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל"))){
+        if(getIntent().getExtras().getString("activityscreen").equals("AdminMeetingsActivity")||(!isOwner&&(!dogType.equals(CurrentUser.dogType.toString()))&&(!dogType.equals("הכל")))){
             joinMeetingButton.setEnabled(false);
         }
 
